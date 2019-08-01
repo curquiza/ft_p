@@ -21,11 +21,11 @@ int		create_server(int 	port)
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 		return (ret_err_neg("During binding"));
-	listen(sock, 0);
+	listen(sock, 10);
 	return (sock);
 }
 
-void	communicate_with_new_client(int client_sock, pid_t pid)
+void	communicate_with_new_client(int client_sock)
 {
 	// int					client_sock;
 	// unsigned int		client_size;
@@ -37,7 +37,6 @@ void	communicate_with_new_client(int client_sock, pid_t pid)
 	{
 		printf("client_sock = %d\n", client_sock);
 		printf("client request = %s", buff);
-		printf("pid = %d\n", pid);
 		printf("------------------\n");
 		ft_bzero(&buff, 1024);
 	}
@@ -58,7 +57,7 @@ void	listen_to_clients(int server_sock)
 		pid = fork();
 		if (pid == 0)
 		{
-			communicate_with_new_client(client_sock, pid);
+			communicate_with_new_client(client_sock);
 		}
 		else
 		{
