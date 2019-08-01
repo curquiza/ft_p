@@ -5,6 +5,7 @@ CC = gcc $(FLAG)
 
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
+		utils.c \
 		main.c)
 
 OBJ_DIR = obj
