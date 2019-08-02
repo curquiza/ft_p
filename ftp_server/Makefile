@@ -5,7 +5,7 @@ CC = gcc $(FLAG)
 
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
-		utils.c \
+		misc.c \
 		signal.c \
 		init.c \
 		create_server.c \
