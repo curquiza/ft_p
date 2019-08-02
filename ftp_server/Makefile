@@ -5,7 +5,10 @@ CC = gcc $(FLAG)
 
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
-		utils.c \
+		misc.c \
+		signal.c \
+		create_server.c \
+		listen_to_clients.c \
 		main.c)
 
 OBJ_DIR = obj
