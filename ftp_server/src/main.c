@@ -53,7 +53,8 @@ void	listen_to_clients(int server_sock)
 		pid = fork();
 		if (pid == 0)
 		{
-			printf("Client number %d\n", client_num);
+			child_signals_handler();
+			printf("Client number %d connected\n", client_num);
 			communicate_with_new_client(client_sock);
 		}
 		else
@@ -66,7 +67,6 @@ void	listen_to_clients(int server_sock)
 
 int		main(int argc, char **argv)
 {
-	int					server_sock;
 	int					port;
 
 	if (argc != 2)
@@ -74,17 +74,17 @@ int		main(int argc, char **argv)
 		usage(argv[0]);
 		exit(1);
 	}
-
+	init();
 	port = ft_atoi(argv[1]);
-	if ((server_sock = create_server(port)) == -1)
+	if ((g_server_sock = create_server(port)) == -1)
 		return (FAILURE);
 
 	printf("FTP Server open on port %d\n", port);
 	printf("- - - - - - - - - - - - - - - -\n");
-	listen_to_clients(server_sock);
+	listen_to_clients(g_server_sock);
 
-	printf("- - - - - - - - - - - - - - - -\n");
-	printf("Closing FTP server...\n");
-	close(server_sock);
+	// printf("- - - - - - - - - - - - - - - -\n");
+	// printf("Closing FTP server...\n");
+	// close(server_sock);
 	return (SUCCESS);
 }
