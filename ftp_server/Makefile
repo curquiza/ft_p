@@ -7,8 +7,8 @@ SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
 		misc.c \
 		signal.c \
-		init.c \
 		create_server.c \
+		listen_to_clients.c \
 		main.c)
 
 OBJ_DIR = obj

@@ -1,45 +1,19 @@
 #include "server.h"
 
-void	communicate_with_new_client(int client_sock)
+static t_ex_ret	init(int argc, char **argv)
 {
-	char				buff[1024];
-
-	while (read(client_sock, buff, 1023) > 0)
+	if (argc != 2)
 	{
-		printf("------------------\nclient request = %s", buff);
-		ft_bzero(&buff, 1024);
+		usage(argv[0]);
+		return (FAILURE);
 	}
-	close(client_sock);
+	g_server_sock = -1;
+	signal(SIGINT, sigint_handler);
+	return (SUCCESS);
 }
 
-void	listen_to_clients(int server_sock)
-{
-	pid_t				pid;
-	int					client_sock;
-	unsigned int		client_size;
-	struct sockaddr_in	client_sin;
-	int					client_num;
 
-	client_num = 1;
-	while (1)
-	{
-		client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
-		pid = fork();
-		if (pid == 0)
-		{
-			child_signals_handler();
-			printf("------------------\nClient number %d connected\n", client_num);
-			communicate_with_new_client(client_sock);
-		}
-		else
-		{
-			close(client_sock);
-		}
-		client_num++;
-	}
-}
-
-uint16_t		get_port(char *port_str)
+static uint16_t		get_port(char *port_str)
 {
 	int32_t		port;
 
@@ -57,7 +31,7 @@ uint16_t		get_port(char *port_str)
 	return ((uint16_t)port);
 }
 
-int		main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	uint16_t	port;
 
