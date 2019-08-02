@@ -10,14 +10,21 @@
 
 # define LISTEN_NB		40
 
-int						g_server_sock;
+/*
+** GLOBALS
+*/
+int			g_server_sock;
 
-void	usage(char *prgm);
 
-void	sigint_handler(int sig);
-void	child_signals_handler(void);
+/*
+** FUNCTIONS
+*/
 
-void	init(void);
+void		usage(char *prgm);
 
+void		sigint_handler(int sig);
+void		child_signals_handler(void);
+
+t_ex_ret	init(int argc, char **argv);
 
 #endif

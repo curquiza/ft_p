@@ -68,12 +68,8 @@ int		main(int argc, char **argv)
 {
 	int					port;
 
-	if (argc != 2)
-	{
-		usage(argv[0]);
-		exit(1);
-	}
-	init();
+	if (init(argc, argv) == FAILURE)
+		return (FAILURE);
 	port = ft_atoi(argv[1]);
 	if ((g_server_sock = create_server(port)) == -1)
 		return (FAILURE);
