@@ -2,14 +2,26 @@
 
 static void	communicate_with_new_client(int client_sock)
 {
-	char				buff[1024];
+	char	*buff;
 
-	while (read(client_sock, buff, 1023) > 0)
+	buff = NULL;
+	while (get_next_line(client_sock, &buff) > 0)
 	{
-		printf("------------------\nclient request = %s", buff);
-		ft_bzero(&buff, 1024);
+		ft_printf("------------------\nclient request = %s\n", buff);
+		free(buff);
+		write(client_sock, "RECU !\n", 7);
 	}
 	close(client_sock);
+
+	// tester recv and send ici
+	// char	buff[1024];
+
+	// while (read(client_sock, buff, 1024) > 0)
+	// {
+	// 	ft_printf("------------------\nclient request = %s\n", buff);
+	// 	write(client_sock, "RECU !\n", 7);
+	// }
+	// close(client_sock);
 }
 
 void		listen_to_clients(int server_sock)
@@ -28,7 +40,7 @@ void		listen_to_clients(int server_sock)
 		if (pid == 0)
 		{
 			child_signals_handler();
-			printf("------------------\nClient number %d connected\n", client_num);
+			ft_printf("------------------\nClient number %d connected\n", client_num);
 			communicate_with_new_client(client_sock);
 		}
 		else
