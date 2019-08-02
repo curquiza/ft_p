@@ -9,8 +9,6 @@
 # include <arpa/inet.h>
 
 
-
 void	usage(char *prgm);
-
 
 #endif

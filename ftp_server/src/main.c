@@ -27,15 +27,10 @@ int		create_server(int 	port)
 
 void	communicate_with_new_client(int client_sock)
 {
-	// int					client_sock;
-	// unsigned int		client_size;
-	// struct sockaddr_in	client_sin;
 	char				buff[1024];
 
-	// client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
 	while (read(client_sock, buff, 1023) > 0)
 	{
-		printf("client_sock = %d\n", client_sock);
 		printf("client request = %s", buff);
 		printf("------------------\n");
 		ft_bzero(&buff, 1024);
@@ -52,7 +47,6 @@ void	listen_to_clients(int server_sock)
 
 	while (1)
 	{
-
 		client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
 		pid = fork();
 		if (pid == 0)
