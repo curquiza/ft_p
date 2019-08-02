@@ -21,7 +21,7 @@ int		create_server(int 	port)
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 		return (ret_err_neg("During binding"));
-	listen(sock, 10);
+	listen(sock, LISTEN_NB);
 	return (sock);
 }
 
@@ -44,19 +44,23 @@ void	listen_to_clients(int server_sock)
 	int					client_sock;
 	unsigned int		client_size;
 	struct sockaddr_in	client_sin;
+	int					client_num;
 
+	client_num = 1;
 	while (1)
 	{
 		client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
 		pid = fork();
 		if (pid == 0)
 		{
+			printf("Client number %d\n", client_num);
 			communicate_with_new_client(client_sock);
 		}
 		else
 		{
 			close(client_sock);
 		}
+		client_num++;
 	}
 }
 
@@ -75,10 +79,12 @@ int		main(int argc, char **argv)
 	if ((server_sock = create_server(port)) == -1)
 		return (FAILURE);
 
-	printf("server socket = %d\n", server_sock);
-	printf("- - - - - - - - - - - -\n");
+	printf("FTP Server open on port %d\n", port);
+	printf("- - - - - - - - - - - - - - - -\n");
 	listen_to_clients(server_sock);
 
+	printf("- - - - - - - - - - - - - - - -\n");
+	printf("Closing FTP server...\n");
 	close(server_sock);
 	return (SUCCESS);
 }

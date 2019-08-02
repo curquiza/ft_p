@@ -8,6 +8,8 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 
+# define LISTEN_NB		40
+
 
 void	usage(char *prgm);
 
