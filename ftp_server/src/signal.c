@@ -5,7 +5,7 @@ void	sigint_handler(int sig)
 	(void)sig;
 	if (g_server_sock == -1)
 		exit(FAILURE);
-	printf("\nClosing FTP server...\n");
+	printf("\nClosing FTP Server...\n");
 	if (close(g_server_sock) == -1)
 		exit(FAILURE);
 	exit(SUCCESS);

@@ -43,7 +43,7 @@ int					main(int argc, char **argv)
 	if ((g_server_sock = create_server(port)) == -1)
 		return (FAILURE);
 
-	printf("FTP Server open on port %d\n", port);
+	printf("Opening FTP Server on port %d\n", port);
 	listen_to_clients(g_server_sock);
 
 	return (SUCCESS);
