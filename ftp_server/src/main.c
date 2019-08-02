@@ -31,8 +31,7 @@ void	communicate_with_new_client(int client_sock)
 
 	while (read(client_sock, buff, 1023) > 0)
 	{
-		printf("client request = %s", buff);
-		printf("------------------\n");
+		printf("------------------\nclient request = %s", buff);
 		ft_bzero(&buff, 1024);
 	}
 	close(client_sock);
@@ -54,7 +53,7 @@ void	listen_to_clients(int server_sock)
 		if (pid == 0)
 		{
 			child_signals_handler();
-			printf("Client number %d connected\n", client_num);
+			printf("------------------\nClient number %d connected\n", client_num);
 			communicate_with_new_client(client_sock);
 		}
 		else
@@ -80,11 +79,7 @@ int		main(int argc, char **argv)
 		return (FAILURE);
 
 	printf("FTP Server open on port %d\n", port);
-	printf("- - - - - - - - - - - - - - - -\n");
 	listen_to_clients(g_server_sock);
 
-	// printf("- - - - - - - - - - - - - - - -\n");
-	// printf("Closing FTP server...\n");
-	// close(server_sock);
 	return (SUCCESS);
 }
