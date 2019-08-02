@@ -27,6 +27,8 @@ void		usage(char *prgm);
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
+int			create_server(uint16_t port);
+
 t_ex_ret	init(int argc, char **argv);
 
 #endif
