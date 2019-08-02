@@ -12,6 +12,16 @@ static void	communicate_with_new_client(int client_sock)
 		write(client_sock, "RECU !\n", 7);
 	}
 	close(client_sock);
+
+	// tester recv and send ici
+	// char	buff[1024];
+
+	// while (read(client_sock, buff, 1024) > 0)
+	// {
+	// 	ft_printf("------------------\nclient request = %s\n", buff);
+	// 	write(client_sock, "RECU !\n", 7);
+	// }
+	// close(client_sock);
 }
 
 void		listen_to_clients(int server_sock)
