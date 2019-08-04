@@ -2,14 +2,19 @@
 
 static void	communicate_with_new_client(int client_sock)
 {
-	char	*buff;
+	// char	*buff;
+	char	buff[1024];
+	int		len;
 
-	buff = NULL;
-	while (get_next_line(client_sock, &buff) > 0)
+	// buff = NULL;
+	// while (get_next_line(client_sock, &buff) > 0)
+	while ((len = recv(client_sock, &buff, 1023, 0)) > 0)
 	{
-		ft_printf("------------------\nclient request = %s\n", buff);
-		free(buff);
-		write(client_sock, "RECU !\n", 7);
+		buff[len] = '\0';
+		ft_printf("------------------\nclient request = %s", buff);
+		// free(buff);
+		// write(client_sock, "RECU !\n", 7);
+		send(client_sock, "RECU !\n", 7, 0);
 	}
 	close(client_sock);
 
