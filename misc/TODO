@@ -1,3 +1,4 @@
 - gerer les signaux
 - reussir à faire que le client se ferme quand le server s'eteint
 - retour inet_addr
+- client doit gerer localhost

@@ -27,40 +27,44 @@ t_ex_ret	communicate_with_server(int sock)
 {
 	char	*cmd;
 	char	*buff;
-	int		read_ret;
+	int		ret;
 
 	buff = NULL;
 	while (1)
 	{
-		// FGET USER COMMAND
+		// GET USER COMMAND
 		ft_printf("Your command: ");
-		read_ret = get_next_line(0, &buff);
-		if (read_ret == -1)
+		ret = get_next_line(0, &buff);
+		if (ret == -1)
 			return (ft_ret_err(READ_CMD_ERR));
-		else if (read_ret == 0)
+		else if (ret == 0)
 			break ;
+		cmd = ft_strjoin(buff, "\n");
 
 		// CHECK QUIT COMMAND
-		if (ft_strcmp(buff, "quit") == 0)
+		if (ft_strcmp(cmd, "quit\n") == 0)
 		{
 			free(buff);
+			free(cmd);
 			break ;
 		}
 
 		// WRITE TO SERVER
-		cmd = ft_strjoin(buff, "\n");
-		write(sock, cmd, ft_strlen(cmd));
+		send(sock, cmd, ft_strlen(cmd), 0);
 		free(buff);
 		free(cmd);
 
-		// READ SERVER QNSWER
-		read_ret = get_next_line(sock, &buff);
-		if (read_ret == -1)
+		// READ SERVER ANSWER
+		char	buff2[500001];
+		ret = recv(sock, &buff2, 500000, 0);
+		// ret = read(sock, &buff2, 500000);
+		buff2[ret] = '\0';
+		if (ret == -1)
 			return (ft_ret_err(READ_SERV_ASW_ERR));
-		else if (read_ret == 0)
+		else if (ret == 0)
 			break ;
-		ft_printf("Server answer: %s\n", buff);
-		free(buff);
+		ft_printf("Server answer: %s", buff2);
+		ft_printf("(recv return = %d)\n", ret);
 	}
 	return (SUCCESS);
 }

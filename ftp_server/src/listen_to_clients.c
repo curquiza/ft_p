@@ -1,27 +1,47 @@
 #include "server.h"
 
+void		transit_file(int client_sock)
+{
+	struct stat		stat_struct;
+	int				size;
+	t_byte			*ptr;
+
+	int fd = open("test/input/package-lock.json", O_RDONLY);
+	fstat(fd, &stat_struct);
+	size = stat_struct.st_size;
+	// ft_printf("size = %d\n", size);
+	ptr = NULL;
+	ptr = mmap(ptr, size, PROT_READ, MAP_PRIVATE, fd, 0);
+	int s = send(client_sock, ptr, size, 0);
+	// int s = write(client_sock, ptr, size);
+	ft_printf("Sending file...\n");
+	ft_printf("send return = %d\n", s);
+	close(fd);
+}
+
+void		exec_ls(int client_sock)
+{
+	send(client_sock, "LS !\n", 5, 0);
+}
+
 static void	communicate_with_new_client(int client_sock)
 {
-	char	*buff;
+	char	cmd[1024];
+	int		len;
 
-	buff = NULL;
-	while (get_next_line(client_sock, &buff) > 0)
+	while ((len = recv(client_sock, &cmd, 1023, 0)) > 0)
 	{
-		ft_printf("------------------\nclient request = %s\n", buff);
-		free(buff);
-		write(client_sock, "RECU !\n", 7);
+		cmd[len] = '\0';
+		ft_printf("------------------\nClient command = %s", cmd);
+
+		if (ft_strcmp(cmd, "GET\n") == 0)
+			transit_file(client_sock);
+		else if (ft_strcmp(cmd, "LS\n") == 0)
+			exec_ls(client_sock);
+		else
+			send(client_sock, "RECU !\n", 7, 0);
 	}
 	close(client_sock);
-
-	// tester recv and send ici
-	// char	buff[1024];
-
-	// while (read(client_sock, buff, 1024) > 0)
-	// {
-	// 	ft_printf("------------------\nclient request = %s\n", buff);
-	// 	write(client_sock, "RECU !\n", 7);
-	// }
-	// close(client_sock);
 }
 
 void		listen_to_clients(int server_sock)
