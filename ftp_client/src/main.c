@@ -27,7 +27,6 @@ t_ex_ret	communicate_with_server(int sock)
 {
 	char	*cmd;
 	char	*buff;
-	char	buff2[10001];
 	int		ret;
 
 	buff = NULL;
@@ -51,13 +50,12 @@ t_ex_ret	communicate_with_server(int sock)
 		}
 
 		// WRITE TO SERVER
-		// write(sock, cmd, ft_strlen(cmd));
 		send(sock, cmd, ft_strlen(cmd), 0);
 		free(buff);
 		free(cmd);
 
 		// READ SERVER ANSWER
-		// read_ret = get_next_line(sock, &buff);
+		char	buff2[10001];
 		ret = recv(sock, &buff2, 10000, 0);
 		buff2[ret] = '\0';
 		if (ret == -1)
@@ -65,7 +63,6 @@ t_ex_ret	communicate_with_server(int sock)
 		else if (ret == 0)
 			break ;
 		ft_printf("Server answer: %s", buff2);
-		// free(buff);
 	}
 	return (SUCCESS);
 }
