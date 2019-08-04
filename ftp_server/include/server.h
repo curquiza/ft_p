@@ -8,6 +8,9 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <limits.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <sys/mman.h>
 
 # define PORT_ERR		"Port number unavailable (1-65335)"
 # define LISTEN_NB		40
