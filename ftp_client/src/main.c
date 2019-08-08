@@ -64,7 +64,7 @@ t_ex_ret	communicate_with_server(int sock)
 		else if (ret == 0)
 			break ;
 		ft_printf("Server answer: %s", buff2);
-		ft_printf("(recv return = %d)\n", ret);
+		// ft_printf("(recv return = %d)\n", ret);
 	}
 	return (SUCCESS);
 }

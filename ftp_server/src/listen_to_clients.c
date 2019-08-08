@@ -21,7 +21,23 @@ void		transit_file(int client_sock)
 
 void		exec_ls(int client_sock)
 {
-	send(client_sock, "LS !\n", 5, 0);
+	char	*args[3] = { "/bin/ls", "-la", NULL };
+	pid_t	pid;
+	// int		status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(client_sock, STDOUT_FILENO);
+		execv(args[0], args); // END OF CHILD PROCESS
+		ft_dprintf(STDERR_FILENO, "Error during execv\n");
+		exit(1);
+	}
+	else
+	{
+		// wait4(0, &status, 0, NULL);
+		// ft_printf("pid = %d - status = %d\n", pid, status);
+	}
 }
 
 static void	communicate_with_new_client(int client_sock)
@@ -41,7 +57,6 @@ static void	communicate_with_new_client(int client_sock)
 		else
 			send(client_sock, "RECU !\n", 7, 0);
 	}
-	close(client_sock);
 }
 
 void		listen_to_clients(int server_sock)
@@ -62,6 +77,8 @@ void		listen_to_clients(int server_sock)
 			child_signals_handler();
 			ft_printf("------------------\nClient number %d connected\n", client_num);
 			communicate_with_new_client(client_sock);
+			ft_printf("Client number %d has quit...\n", client_num);
+			close(client_sock);
 		}
 		else
 		{
