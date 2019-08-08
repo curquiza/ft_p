@@ -1,0 +1,13 @@
+COMMANDES :
+=========
+
+Une commande c'est
+- un code
+- des arguments
+
+Code = au plus 4 caractères alphabétiques, sans tenir compte de la casse.
+
+La casse ne s'applique pas non plus au code valeur des arguments.
+(Je ne sais pas encore ce qu'est un code valeur d'argument. L'exemple pris est 'a' ou 'A' pour le type ascii)
+
+Une commande (C-->S) ou une réponse (C<--S) se termine par un CRLF = \r\n = char 13 + char 10
