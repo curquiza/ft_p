@@ -6,6 +6,7 @@ CC = gcc $(FLAG)
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
 		options.c \
+		verbose.c \
 		misc.c \
 		signal.c \
 		close_server.c \

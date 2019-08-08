@@ -27,9 +27,6 @@ static int	get_port_index(int argc, char **argv)
 	return (port_index);
 }
 
-
-
-
 static uint16_t		get_port_uint16(char *port_str)
 {
 	int32_t		port;
