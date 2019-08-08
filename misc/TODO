@@ -5,3 +5,10 @@
 - retour de fork
 - gerer un maximum de client connecté ?
 - faire des vrais recv avec comme arret le CRLF
+
+
+SERVER:
+- gérer la connexion -> si elle reussit, ou fail
+- les différentes commandes et leurs possibles réponses
+- la creation du canal de données
+- la fermeture ?
