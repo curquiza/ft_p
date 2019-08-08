@@ -4,3 +4,4 @@
 - client doit gerer localhost
 - retour de fork
 - gerer un maximum de client connecté ?
+- faire des vrais recv avec comme arret le CRLF

@@ -13,7 +13,6 @@ void		transit_file(int client_sock)
 	ptr = mmap(ptr, size, PROT_READ, MAP_PRIVATE, fd, 0);
 	send(client_sock, ptr, size, 0);
 	// write(client_sock, ptr, size);
-	ft_printf("Sending file...\n");
 	close(fd);
 }
 
@@ -38,21 +37,20 @@ void		exec_ls(int client_sock)
 	}
 }
 
-static void	communicate_with_new_client(int client_sock)
+static void	communicate_with_new_client(int client_sock, int client_num)
 {
 	char	cmd[1024];
 	int		len;
 
 	while ((len = recv(client_sock, &cmd, 1023, 0)) > 0)
 	{
-		cmd[len] = '\0';
-		ft_printf("Client command = %s", cmd);
-
-		if (ft_strcmp(cmd, "GET\n") == 0)
+		cmd[len - 1] = '\0';
+		print_verbose_siss("Client", client_num, "command :", cmd);
+		if (ft_strcmp(cmd, "GET") == 0)
 			transit_file(client_sock);
-		else if (ft_strcmp(cmd, "LS\n") == 0)
+		else if (ft_strcmp(cmd, "LS") == 0)
 			exec_ls(client_sock);
-		else if (ft_strcmp(cmd, "QUIT\n") == 0)
+		else if (ft_strcmp(cmd, "QUIT") == 0)
 			break ;
 		else
 			send(client_sock, "RECU !\n", 7, 0);
@@ -75,9 +73,9 @@ void		listen_to_clients(int server_sock)
 		if (pid == 0)
 		{
 			child_signals_handler();
-			ft_printf("Client number %d connected\n", client_num);
-			communicate_with_new_client(client_sock);
-			ft_printf("Client number %d has quit...\n", client_num);
+			print_verbose_sis("Client", client_num, "connected");
+			communicate_with_new_client(client_sock, client_num);
+			print_verbose_sis("Client", client_num, "has quit...");
 			close(client_sock);
 			exit(0);
 		}
