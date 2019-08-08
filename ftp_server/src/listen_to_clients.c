@@ -52,6 +52,8 @@ static void	communicate_with_new_client(int client_sock)
 			transit_file(client_sock);
 		else if (ft_strcmp(cmd, "LS\n") == 0)
 			exec_ls(client_sock);
+		else if (ft_strcmp(cmd, "QUIT\n") == 0)
+			break ;
 		else
 			send(client_sock, "RECU !\n", 7, 0);
 	}
