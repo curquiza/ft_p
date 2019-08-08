@@ -30,6 +30,7 @@ uint8_t		g_flags;
 
 t_ex_ret	activate_opt(char opt_letter);
 t_bool		opt_is_activated(char opt_letter);
+int			get_all_options(int argc, char **argv);
 
 void		usage(char *prgm);
 t_ex_ret	close_server(int server_sock);
