@@ -79,6 +79,7 @@ void		listen_to_clients(int server_sock)
 			communicate_with_new_client(client_sock);
 			ft_printf("Client number %d has quit...\n", client_num);
 			close(client_sock);
+			exit(0);
 		}
 		else
 		{
