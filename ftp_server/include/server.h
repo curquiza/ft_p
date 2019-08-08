@@ -26,6 +26,7 @@ int			g_server_sock;
 */
 
 void		usage(char *prgm);
+t_ex_ret	close_server(int server_sock);
 
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
