@@ -1,6 +1,6 @@
 #include "server.h"
 
-void	send_oneline_answer_to_client(int client_sock, char *str)
+void	send_oneline_answer_to_client(int client_sock, int client_num, char *str)
 {
 	char	*cmd;
 	size_t	str_len;
@@ -12,5 +12,6 @@ void	send_oneline_answer_to_client(int client_sock, char *str)
 	cmd[str_len] = '\r';
 	cmd[str_len + 1] = '\n';
 	send(client_sock, cmd, str_len + 2, 0);
+	print_verbose_siss("Sent to Client", client_num, ":", str);
 	free(cmd);
 }

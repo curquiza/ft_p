@@ -46,6 +46,7 @@ void		child_signals_handler(void);
 int			create_server(uint16_t port);
 void		listen_to_clients(int server_sock);
 
-void		send_oneline_answer_to_client(int client_sock, char *str);
+void		send_oneline_answer_to_client(int client_sock, int client_num,
+				char *str);
 
 #endif
