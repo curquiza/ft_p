@@ -43,7 +43,7 @@ static void	communicate_with_new_client(int client_sock, int client_num)
 	int		len;
 
 	send_oneline_answer_to_client(client_sock, client_num, "220 Service ready");
-	while ((len = recv(client_sock, &cmd, 1023, 0)) > 0)
+	while ((len = recv(client_sock, &cmd, 1024, 0)) > 0)
 	{
 		if (len >= 2 && cmd[len - 2] == '\r')
 			cmd[len - 2] = '\0';

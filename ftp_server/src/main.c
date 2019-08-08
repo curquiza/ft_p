@@ -37,7 +37,7 @@ static uint16_t		get_port_uint16(char *port_str)
 		return (0);
 	}
 	port = ft_atoi(port_str);
-	if (port <= 0 || port > USHRT_MAX)
+	if (port <= 1023 || port > USHRT_MAX)
 	{
 		ft_dprintf(2, "Error: %d: %s\n", port, PORT_ERR);
 		return (0);
