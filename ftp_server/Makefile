@@ -12,6 +12,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		close_server.c \
 		create_server.c \
 		listen_to_clients.c \
+		send.c \
 		main.c)
 
 OBJ_DIR = obj

@@ -18,7 +18,7 @@ void		transit_file(int client_sock)
 
 void		exec_ls(int client_sock)
 {
-	char	*args[3] = { "/bin/ls", "-la", NULL };
+	char	*args[3] = { "/bin/ls", "-l", NULL };
 	pid_t	pid;
 	// int		status;
 
@@ -42,6 +42,7 @@ static void	communicate_with_new_client(int client_sock, int client_num)
 	char	cmd[1024];
 	int		len;
 
+	send_oneline_answer_to_client(client_sock, "220 Service ready");
 	while ((len = recv(client_sock, &cmd, 1023, 0)) > 0)
 	{
 		cmd[len - 1] = '\0';

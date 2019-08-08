@@ -1,0 +1,16 @@
+#include "server.h"
+
+void	send_oneline_answer_to_client(int client_sock, char *str)
+{
+	char	*cmd;
+	size_t	str_len;
+
+	str_len = ft_strlen(str);
+	if ((cmd = ft_memalloc(str_len + 2)) == NULL)
+		ft_exit(MALLOC_ERR, FAILURE);
+	ft_memmove(cmd, str, str_len);
+	cmd[str_len] = '\r';
+	cmd[str_len + 1] = '\n';
+	send(client_sock, cmd, str_len + 2, 0);
+	free(cmd);
+}
