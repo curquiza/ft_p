@@ -17,13 +17,32 @@
 # define MALLOC_ERR		"During malloc. Exiting..."
 # define PORT_ERR		"Port number unavailable (1-65335)"
 # define LISTEN_NB		40
-# define PORT_MIN_RANGE	50000
+# define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
+# define DEF_SIN_ADDR	INADDR_ANY
+
+# define RES_125	"125 Data connection already open. Transfer starting."
+# define RES_220	"220 Service ready for new user."
+# define RES_226	"226 Transfer complete."		// 226 Closing data connection.
+
+/*
+** STRUCTURES
+*/
+
+typedef struct		s_user
+{
+	int		num;
+	int		cmd_client_sock;
+	int		dt_server_sock;
+	int		dt_client_sock;
+}					t_user;
+
 /*
 ** GLOBALS
 */
 
 int			g_server_sock;
+// int			g_dt_client_sock;
 uint8_t		g_flags;
 
 /*
@@ -48,7 +67,7 @@ int			create_socket_server(uint16_t port);
 int			create_socket_server_on_random_port(uint16_t *assigned_port);
 t_ex_ret	listen_to_clients(int server_sock);
 
-void		send_oneline_answer_to_client(int client_sock, int client_num,
+void		send_oneline_reply_to_user(int client_sock, int client_num,
 				char *str);
 
 #endif

@@ -16,9 +16,9 @@ int		create_socket_server(uint16_t port)
 		return (ret_err_neg("During getprotobyname"));
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
 		return (ret_err_neg("During socket server creation"));
-	sin.sin_family = AF_INET;  // adress family internet
+	sin.sin_family = AF_INET; // adress family internet
 	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
+	sin.sin_addr.s_addr = htonl(DEF_SIN_ADDR);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 		return (ret_err_neg("During binding"));
 	listen(sock, LISTEN_NB);
@@ -36,8 +36,8 @@ int		create_socket_server_on_random_port(uint16_t *assigned_port)
 		return (ret_err_neg("During getprotobyname"));
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
 		return (ret_err_neg("During socket server creation"));
-	sin.sin_family = AF_INET;  // adress family internet
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
+	sin.sin_family = AF_INET; // adress family internet
+	sin.sin_addr.s_addr = htonl(DEF_SIN_ADDR);
 
 	port = PORT_MIN_RANGE;
 	while (port <= PORT_MAX_RANGE)
@@ -47,6 +47,7 @@ int		create_socket_server_on_random_port(uint16_t *assigned_port)
 		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) != -1)
 		{
 			*assigned_port = port;
+			ft_printf("Success to connect to port %d\n", *assigned_port);
 			break;
 		}
 		port++;

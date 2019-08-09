@@ -1,6 +1,6 @@
 #include "server.h"
 
-void	send_oneline_answer_to_client(int client_sock, int client_num, char *str)
+void	send_oneline_reply_to_user(int client_sock, int client_num, char *str)
 {
 	char	*cmd;
 	size_t	str_len;
