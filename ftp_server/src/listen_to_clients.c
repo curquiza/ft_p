@@ -68,7 +68,7 @@ static void	communicate_with_new_client(int client_sock, int client_num)
 	}
 }
 
-void		listen_to_clients(int server_sock)
+t_ex_ret	listen_to_clients(int server_sock)
 {
 	pid_t				pid;
 	int					client_sock;
@@ -80,7 +80,10 @@ void		listen_to_clients(int server_sock)
 	while (1)
 	{
 		client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
-		pid = fork();
+		if (client_sock < 0)
+			return (ft_ret_err("During accept"));
+		if ((pid = fork()) < 0)
+			return (ft_ret_err("During fork"));
 		if (pid == 0)
 		{
 			child_signals_handler();
@@ -96,4 +99,5 @@ void		listen_to_clients(int server_sock)
 		}
 		client_num++;
 	}
+	return (SUCCESS);
 }

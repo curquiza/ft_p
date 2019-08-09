@@ -43,12 +43,12 @@ int		create_socket_server_on_random_port(uint16_t *assigned_port)
 	while (port <= PORT_MAX_RANGE)
 	{
 		sin.sin_port = htons(port);
+		ft_printf("Test port %d...\n", port);
 		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) != -1)
 		{
 			*assigned_port = port;
 			break;
 		}
-		ft_printf("Test port %d\n",port);
 		port++;
 	}
 	if (port > PORT_MAX_RANGE)
