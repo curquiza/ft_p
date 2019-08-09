@@ -37,6 +37,11 @@ void		exec_ls(int client_sock)
 	}
 }
 
+static void		passif_mode(int client_sock)
+{
+	send(client_sock, "RECU !\n", 7, 0);
+}
+
 static void	communicate_with_new_client(int client_sock, int client_num)
 {
 	char	cmd[1024];
@@ -56,6 +61,8 @@ static void	communicate_with_new_client(int client_sock, int client_num)
 			exec_ls(client_sock);
 		else if (ft_strcmp(cmd, "QUIT") == 0)
 			break ;
+		else if (ft_strcmp(cmd, "PASV") == 0)
+			passif_mode(client_sock);
 		else
 			send(client_sock, "RECU !\n", 7, 0);
 	}

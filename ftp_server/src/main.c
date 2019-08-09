@@ -56,7 +56,7 @@ int					main(int argc, char **argv)
 		return (FAILURE);
 	if ((port = get_port_uint16(argv[port_index])) == 0)
 		return (FAILURE);
-	if ((g_server_sock = create_server(port)) == -1)
+	if ((g_server_sock = create_socket_server(port)) == -1)
 		return (FAILURE);
 	printf("Opening FTP Server on port %d\n", port);
 	listen_to_clients(g_server_sock);

@@ -17,7 +17,8 @@
 # define MALLOC_ERR		"During malloc. Exiting..."
 # define PORT_ERR		"Port number unavailable (1-65335)"
 # define LISTEN_NB		40
-
+# define PORT_MIN_RANGE	50000
+# define PORT_MAX_RANGE	USHRT_MAX
 /*
 ** GLOBALS
 */
@@ -43,7 +44,8 @@ t_ex_ret	close_server(int server_sock);
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
-int			create_server(uint16_t port);
+int			create_socket_server(uint16_t port);
+int			create_socket_server_on_random_port(uint16_t *assigned_port);
 void		listen_to_clients(int server_sock);
 
 void		send_oneline_answer_to_client(int client_sock, int client_num,
