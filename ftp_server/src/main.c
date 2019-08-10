@@ -37,7 +37,7 @@ static uint16_t		get_port_uint16(char *port_str)
 		return (0);
 	}
 	port = ft_atoi(port_str);
-	if (port <= 0 || port > USHRT_MAX)
+	if (port < PORT_MIN_RANGE || port > USHRT_MAX)
 	{
 		ft_dprintf(2, "Error: %d: %s\n", port, PORT_ERR);
 		return (0);
@@ -56,9 +56,8 @@ int					main(int argc, char **argv)
 		return (FAILURE);
 	if ((port = get_port_uint16(argv[port_index])) == 0)
 		return (FAILURE);
-	if ((g_server_sock = create_server(port)) == -1)
+	if ((g_server_sock = create_server_socket(port)) == -1)
 		return (FAILURE);
 	printf("Opening FTP Server on port %d\n", port);
-	listen_to_clients(g_server_sock);
-	return (SUCCESS);
+	return (listen_to_clients(g_server_sock));
 }

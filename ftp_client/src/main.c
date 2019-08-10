@@ -54,7 +54,7 @@ t_ex_ret	communicate_with_server(int sock)
 		free(buff);
 		free(cmd);
 
-		// READ SERVER ANSWER
+		// READ SERVER reply
 		char	buff2[500001];
 		ret = recv(sock, &buff2, 500000, 0);
 		// ret = read(sock, &buff2, 500000);
@@ -63,7 +63,7 @@ t_ex_ret	communicate_with_server(int sock)
 			return (ft_ret_err(READ_SERV_ASW_ERR));
 		else if (ret == 0)
 			break ;
-		ft_printf("Server answer: %s", buff2);
+		ft_printf("Server reply: %s", buff2);
 		// ft_printf("(recv return = %d)\n", ret);
 	}
 	return (SUCCESS);

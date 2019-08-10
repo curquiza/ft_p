@@ -7,7 +7,7 @@
 # include <arpa/inet.h>
 
 # define READ_CMD_ERR		"When reading user command"
-# define READ_SERV_ASW_ERR	"When reading server answer"
+# define READ_SERV_ASW_ERR	"When reading server reply"
 
 void	usage(char *prgm);
 
