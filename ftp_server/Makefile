@@ -10,7 +10,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		misc.c \
 		signal.c \
 		close_server.c \
-		socket_server.c \
+		server_socket.c \
 		listen_to_clients.c \
 		send.c \
 		main.c)

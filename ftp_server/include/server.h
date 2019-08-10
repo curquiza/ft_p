@@ -15,7 +15,7 @@
 # define OPTIONS		"v"
 
 # define MALLOC_ERR		"During malloc. Exiting..."
-# define PORT_ERR		"Port number unavailable (1-65335)"
+# define PORT_ERR		"Port number unavailable (1024-65335)"
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
@@ -42,7 +42,6 @@ typedef struct		s_user
 */
 
 int			g_server_sock;
-// int			g_dt_client_sock;
 uint8_t		g_flags;
 
 /*
@@ -63,8 +62,8 @@ t_ex_ret	close_server(int server_sock);
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
-int			create_socket_server(uint16_t port);
-int			create_socket_server_on_random_port(uint16_t *assigned_port);
+int			create_server_socket(uint16_t port);
+int			create_server_socket_on_random_port(uint16_t *assigned_port);
 t_ex_ret	listen_to_clients(int server_sock);
 
 void		send_oneline_reply_to_user(int client_sock, int client_num,

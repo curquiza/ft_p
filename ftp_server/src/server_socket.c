@@ -6,7 +6,7 @@ static int		ret_err_neg(char *s)
 	return (-1);
 }
 
-int		create_socket_server(uint16_t port)
+int		create_server_socket(uint16_t port)
 {
 	int 				sock;
 	struct protoent		*proto;
@@ -25,7 +25,7 @@ int		create_socket_server(uint16_t port)
 	return (sock);
 }
 
-int		create_socket_server_on_random_port(uint16_t *assigned_port)
+int		create_server_socket_on_random_port(uint16_t *assigned_port)
 {
 	int 				sock;
 	struct protoent		*proto;

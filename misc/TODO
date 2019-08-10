@@ -1,18 +1,19 @@
 - gerer les signaux
-- reussir à faire que le client se ferme quand le server s'eteint
-- retour inet_addr
-- client doit gerer localhost
-- retour de fork
-- gerer un maximum de client connecté ?
+- retour de tous les appels : listen, inet_addr, fork, accept, connect, fstat...
 - faire des vrais recv avec comme arret le CRLF
 
 
 SERVER:
-- gérer la connexion -> si elle reussit, ou fail
 - les différentes commandes et leurs possibles réponses
 - la creation du canal de données
 - la fermeture ?
+- changer le verbose
+- gerer les arguments du LS
+- gerer un maximum de client connecté ? => gerer les signaux
 
+CLIENT:
+- gerer localhost
+- reussir à faire que le client se ferme quand le server s'eteint ?
 
 DONE
 - est ce que se connecter sur le server marche depuis une autre machine sur le même réseau ? Oui grace au ANYADRESS
