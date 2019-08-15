@@ -43,11 +43,11 @@ int		create_server_socket_on_random_port(uint16_t *assigned_port)
 	while (port <= PORT_MAX_RANGE)
 	{
 		sin.sin_port = htons(port);
-		ft_printf("Test port %d...\n", port);
+		print_debug_output("Testing port", port, "for DT channel...", NULL);
 		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) != -1)
 		{
 			*assigned_port = port;
-			ft_printf("Success to connect to port %d\n", *assigned_port);
+			print_debug_output("Succeeded to connect to port", *assigned_port, NULL, NULL);
 			break;
 		}
 		port++;

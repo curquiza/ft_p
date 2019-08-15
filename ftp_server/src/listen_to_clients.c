@@ -17,7 +17,7 @@ void		transit_file(int client_sock)
 
 static void	close_user_data_channel(t_user *user)
 {
-	ft_printf("Closing DT channel for Client %d\n", user->num);
+	print_data_output("Closing DT channel on port", user->dt_port, NULL, NULL);
 	close(user->dt_client_sock);
 	close(user->dt_server_sock);
 	user->dt_client_sock = -1;
@@ -34,7 +34,7 @@ void		exec_ls(t_user *user)
 		return ; // return une reply d'erreur
 	if (pid == 0)
 	{
-		send_oneline_reply_to_user(user->cmd_client_sock, user->num, RES_125);
+		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_125);
 		dup2(user->dt_client_sock, STDOUT_FILENO);	// PAS LE BON CANAL
 		execv(args[0], args);
 		ft_dprintf(STDERR_FILENO, "Error during execv\n");
@@ -43,9 +43,9 @@ void		exec_ls(t_user *user)
 	else
 	{
 		wait4(0, NULL, 0, NULL);
-		print_verbose_sis("Sent to Client", user->num, ": * LS output *");
+		print_data_output("--> Sent in DT channel on port", user->dt_port, ": * LS output *", NULL);
 		close_user_data_channel(user);
-		send_oneline_reply_to_user(user->cmd_client_sock, user->num, RES_226);
+		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_226);
 	}
 }
 
@@ -73,14 +73,15 @@ static void		passif_mode(t_user *user)
 	user->dt_server_sock = create_server_socket_on_random_port(&port);
 	if (user->dt_server_sock == -1)
 		return ; // send error reply to user
-	ft_printf("Server socket for DT channel created on port %d\n", port);
+	user->dt_port = port;
+	print_data_output("Socket server listening on port", user->dt_port, NULL, NULL);
 	response = get_pasv_response(DEF_SIN_ADDR, port);
-	send_oneline_reply_to_user(user->cmd_client_sock, user->num, response);
+	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, response);
 
 	user->dt_client_sock = accept(user->dt_server_sock, (struct sockaddr *)&dt_sin, &dt_size);
 	if (user->dt_client_sock < 0)
 		return ; // send error reply to user
-	ft_printf("Connection accepted on DT channel\n");
+	print_data_output("Connection accepted on port", user->dt_port, ": DT channel created", NULL);
 	free(response);
 }
 
@@ -89,16 +90,16 @@ static void		communicate_with_new_user(t_user *user)
 	char	cmd[1024];
 	int		len;
 
-	send_oneline_reply_to_user(user->cmd_client_sock, user->num, RES_220);
-	while ((len = recv(user->cmd_client_sock, &cmd, 1024, 0)) > 0)
+	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_220);
+	while ((len = recv(user->ctrl_client_sock, &cmd, 1024, 0)) > 0)
 	{
 		if (len >= 2 && cmd[len - 2] == '\r')
 			cmd[len - 2] = '\0';
 		else if (len >= 1 && cmd[len - 1] == '\n')
 			cmd[len - 1] = '\0';
-		print_verbose_siss("Got from Client", user->num, ":", cmd);
+		print_ctrl_output("<-- Received from Client", user->num, ":", cmd);
 		if (ft_strcmp(cmd, "GET") == 0)
-			transit_file(user->cmd_client_sock);
+			transit_file(user->ctrl_client_sock);
 		else if (ft_strcmp(cmd, "LIST") == 0)
 			exec_ls(user);
 		else if (ft_strcmp(cmd, "QUIT") == 0)
@@ -106,54 +107,55 @@ static void		communicate_with_new_user(t_user *user)
 		else if (ft_strcmp(cmd, "PASV") == 0)
 			passif_mode(user);
 		else
-			send(user->cmd_client_sock, "RECU !\n", 7, 0);
+			send(user->ctrl_client_sock, "RECU !\n", 7, 0);
 	}
 }
 
-static void	init_new_user(t_user *user, int cmd_client_sock, int user_num)
+static void	init_new_user(t_user *user, int ctrl_client_sock, int user_num)
 {
 	user->num = user_num;
-	user->cmd_client_sock = cmd_client_sock;
+	user->ctrl_client_sock = ctrl_client_sock;
 	user->dt_server_sock = -1;
 	user->dt_client_sock = -1;
+	user->dt_port = -1;
 }
 
-static void	child_process(int num, int cmd_client_sock)
+static void	child_process(int num, int ctrl_client_sock)
 {
 	t_user				user;
 
 	child_signals_handler();
-	print_verbose_sis("Client", num, "connected");
-	init_new_user(&user, cmd_client_sock, num);
+	print_ctrl_output("Client", num, "connected", NULL);
+	init_new_user(&user, ctrl_client_sock, num);
 	communicate_with_new_user(&user);
-	print_verbose_sis("Client", num, "has quit...");
-	close(cmd_client_sock);
+	print_ctrl_output("Client", num, "has quit...", NULL);
+	close(ctrl_client_sock);
 }
 
 t_ex_ret	listen_to_clients(int server_sock)
 {
 	pid_t				pid;
 	int					num;
-	int					cmd_client_sock;
+	int					ctrl_client_sock;
 	unsigned int		client_size;
 	struct sockaddr_in	client_sin;
 
 	num = 1;
 	while (1)
 	{
-		cmd_client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
-		if (cmd_client_sock < 0)
+		ctrl_client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
+		if (ctrl_client_sock < 0)
 			return (ft_ret_err("During accept"));
 		if ((pid = fork()) < 0)
 			return (ft_ret_err("During fork"));
 		if (pid == 0)
 		{
-			child_process(num, cmd_client_sock);
+			child_process(num, ctrl_client_sock);
 			exit(0);
 		}
 		else
 		{
-			close(cmd_client_sock);
+			close(ctrl_client_sock);
 		}
 		num++;
 	}
