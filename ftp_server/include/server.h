@@ -55,6 +55,10 @@ int			get_all_options(int argc, char **argv);
 void		print_verbose_ss(char *s1, char *s2);
 void		print_verbose_sis(char *s1, int i, char *s2);
 void		print_verbose_siss(char *s1, int i, char *s2, char *s3);
+void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
+void		print_data_output(char *s1, int i, char *s2, char *s3);
+void		print_debug_output(char *s1, int i, char *s2, char *s3);
+
 
 void		usage(char *prgm);
 t_ex_ret	close_server(int server_sock);
