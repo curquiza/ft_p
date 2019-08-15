@@ -43,7 +43,7 @@ void		exec_ls(t_user *user)
 	else
 	{
 		wait4(0, NULL, 0, NULL);
-		print_verbose_sis("Sent to Client", user->num, ": * LS output *");
+		print_data_output("--> Sent to Client", user->num, ": * LS output *", NULL);
 		close_user_data_channel(user);
 		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_226);
 	}
@@ -96,7 +96,7 @@ static void		communicate_with_new_user(t_user *user)
 			cmd[len - 2] = '\0';
 		else if (len >= 1 && cmd[len - 1] == '\n')
 			cmd[len - 1] = '\0';
-		print_verbose_siss("Got from Client", user->num, ":", cmd);
+		print_ctrl_output("<-- Received from Client", user->num, ":", cmd);
 		if (ft_strcmp(cmd, "GET") == 0)
 			transit_file(user->ctrl_client_sock);
 		else if (ft_strcmp(cmd, "LIST") == 0)
@@ -123,10 +123,10 @@ static void	child_process(int num, int ctrl_client_sock)
 	t_user				user;
 
 	child_signals_handler();
-	print_verbose_sis("Client", num, "connected");
+	print_ctrl_output("Client", num, "connected", NULL);
 	init_new_user(&user, ctrl_client_sock, num);
 	communicate_with_new_user(&user);
-	print_verbose_sis("Client", num, "has quit...");
+	print_ctrl_output("Client", num, "has quit...", NULL);
 	close(ctrl_client_sock);
 }
 

@@ -12,6 +12,6 @@ void	send_oneline_reply_to_user(int client_sock, int client_num, char *str)
 	cmd[str_len] = '\r';
 	cmd[str_len + 1] = '\n';
 	send(client_sock, cmd, str_len + 2, 0);
-	print_verbose_siss("Sent to Client", client_num, ":", str);
+	print_ctrl_output("--> Sent to Client", client_num, ":", str);
 	free(cmd);
 }
