@@ -31,10 +31,11 @@
 
 typedef struct		s_user
 {
-	int		num;
-	int		ctrl_client_sock;
-	int		dt_server_sock;
-	int		dt_client_sock;
+	int			num;
+	int			ctrl_client_sock;
+	int			dt_server_sock;
+	int			dt_client_sock;
+	uint16_t	dt_port;
 }					t_user;
 
 /*

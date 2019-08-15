@@ -2,7 +2,9 @@
 
 static void	print_output(char *s1, int i, char *s2, char *s3)
 {
-	if (s2 == NULL)
+	if (s1 == NULL)
+		ft_printf("%s\n", s2);
+	else if (s2 == NULL)
 		ft_printf("%s %d\n", s1, i);
 	else if (s3 == NULL)
 		ft_printf("%s %d %s\n", s1, i, s2);
