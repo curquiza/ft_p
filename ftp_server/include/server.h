@@ -32,7 +32,7 @@
 typedef struct		s_user
 {
 	int		num;
-	int		cmd_client_sock;
+	int		ctrl_client_sock;
 	int		dt_server_sock;
 	int		dt_client_sock;
 }					t_user;
