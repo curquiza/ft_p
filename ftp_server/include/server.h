@@ -12,7 +12,7 @@
 # include <sys/stat.h>
 # include <sys/mman.h>
 
-# define OPTIONS		"v"
+# define OPTIONS		"d"
 
 # define MALLOC_ERR		"During malloc. Exiting..."
 # define PORT_ERR		"Port number unavailable (1024-65335)"

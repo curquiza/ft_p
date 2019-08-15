@@ -2,6 +2,6 @@
 
 void	usage(char *prgm)
 {
-	ft_dprintf(2, "Usage: %s: ./server [-v] <port>\n", prgm);
-	ft_dprintf(2, "  -v : verbose mode\n");
+	ft_dprintf(2, "Usage: %s: ./server [-d] <port>\n", prgm);
+	ft_dprintf(2, "  -d : debug mode\n");
 }
