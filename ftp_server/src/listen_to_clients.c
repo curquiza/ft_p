@@ -107,7 +107,7 @@ static void		communicate_with_new_user(t_user *user)
 		else if (ft_strcmp(cmd, "PASV") == 0)
 			passif_mode(user);
 		else
-			send(user->ctrl_client_sock, "RECU !\n", 7, 0);
+			send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_500);
 	}
 }
 

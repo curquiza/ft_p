@@ -24,6 +24,7 @@
 # define RES_125	"125 Data connection already open. Transfer starting."
 # define RES_220	"220 Service ready for new user."
 # define RES_226	"226 Transfer complete."		// 226 Closing data connection.
+# define RES_500	"500 Syntax error, command unrecognized."
 
 /*
 ** STRUCTURES
