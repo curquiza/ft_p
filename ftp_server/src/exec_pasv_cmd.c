@@ -14,13 +14,14 @@ static char		*get_pasv_response(int addr, uint16_t port)
 	return (s);
 }
 
-void		pasv_cmd(t_user *user)
+void		exec_pasv_cmd(t_user *user, char *cmd)
 {
 	uint16_t			port;
 	char				*response;
 	unsigned int		dt_size;
 	struct sockaddr_in	dt_sin;
 
+	(void)cmd;
 	user->dt_server_sock = create_server_socket_on_random_port(&port);
 	if (user->dt_server_sock == -1)
 		return ; // send error reply to user

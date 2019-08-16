@@ -2,25 +2,45 @@
 
 t_cmd	g_cmd_tab[CMD_NB] =
 {
-	{ "PASV", &pasv_cmd },
-	{ "LIST", &list_cmd },
-	{ "GET", &get_cmd }
+	{ "PASV", &exec_pasv_cmd },
+	{ "PORT", &exec_port_cmd },
+	{ "LIST", &exec_list_cmd },
+	{ "GET", &exec_get_cmd }
 };
+
+static char		*get_cmd_name(char *cmd)
+{
+	int		i;
+	char	*cmd_name;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != '\n' && cmd[i] != '\r')
+		i++;
+	cmd_name = ft_strnew(i);
+	if (cmd_name == NULL)
+		ft_exit(MALLOC_ERR, 1);
+	ft_memmove(cmd_name, cmd, i);
+	return (cmd_name);
+}
 
 static void		exec_cmd(t_user *user, char *cmd)
 {
 	int		i;
+	char	*cmd_name;
 
 	i = 0;
+	cmd_name = get_cmd_name(cmd);
 	while (i < CMD_NB)
 	{
-		if (ft_strcmp(cmd, g_cmd_tab[i].name) == 0)
+		if (ft_strcmp(cmd_name, g_cmd_tab[i].name) == 0)
 		{
-			g_cmd_tab[i].f(user);
+			g_cmd_tab[i].f(user, cmd);
+			free(cmd_name);
 			return ;
 		}
 		i++;
 	}
+	free(cmd_name);
 	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_500);
 }
 

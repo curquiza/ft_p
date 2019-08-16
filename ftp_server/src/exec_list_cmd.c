@@ -1,10 +1,11 @@
 # include "server.h"
 
-void		list_cmd(t_user *user)
+void		exec_list_cmd(t_user *user, char *cmd)
 {
 	char	*args[3] = { "/bin/ls", "-l", NULL };
 	pid_t	pid;
 
+	(void)cmd;
 	if (user->dt_client_sock == -1)
 	{
 		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_426);
