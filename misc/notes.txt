@@ -26,6 +26,3 @@ logging.basicConfig(level=logging.DEBUG)
 
 server = FTPServer(("127.0.0.1", 2121), handler)
 server.serve_forever()
-
-
-=> tester python3 lib sur deux machines différentes
