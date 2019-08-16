@@ -7,98 +7,6 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "GET", &get_cmd }
 };
 
-void		get_cmd(t_user *user)
-{
-	struct stat		stat_struct;
-	int				size;
-	t_byte			*ptr;
-
-	int fd = open("test/input/package-lock.json", O_RDONLY);
-	fstat(fd, &stat_struct);
-	size = stat_struct.st_size;
-	ptr = NULL;
-	ptr = mmap(ptr, size, PROT_READ, MAP_PRIVATE, fd, 0);
-	send(user->ctrl_client_sock, ptr, size, 0);
-	close(fd);
-}
-
-static void	close_user_data_channel(t_user *user)
-{
-	print_data_output("Closing DT channel on port", user->dt_port, NULL, NULL);
-	close(user->dt_client_sock);
-	close(user->dt_server_sock);
-	user->dt_client_sock = -1;
-	user->dt_server_sock = -1;
-}
-
-void		list_cmd(t_user *user)
-{
-	char	*args[3] = { "/bin/ls", "-l", NULL };
-	pid_t	pid;
-
-	if (user->dt_client_sock == -1)
-	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_426);
-		return ;
-	}
-	if ((pid = fork()) < 0)
-	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_451);
-		return ;
-	}
-	if (pid == 0)
-	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_125);
-		dup2(user->dt_client_sock, STDOUT_FILENO);	// PAS LE BON CANAL
-		execv(args[0], args);
-		ft_dprintf(STDERR_FILENO, "Error during execv\n");
-		exit(1);
-	}
-	else
-	{
-		wait4(0, NULL, 0, NULL);
-		print_data_output("--> Sent in DT channel on port", user->dt_port, ": * LS output *", NULL);
-		close_user_data_channel(user);
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_226);
-	}
-}
-
-static char		*get_pasv_response(int addr, uint16_t port)
-{
-	char		*s;
-	t_byte		p1;
-	t_byte		p2;
-
-	(void)addr;
-	p2 = (t_byte)(port & 0x00ff);
-	p1 = (t_byte)((port >> 8) & 0x00ff);
-	asprintf(&s, "227 Entering Passive Mode (0,0,0,0,%hhu,%hhu)", p1, p2); // !!!
-
-	return (s);
-}
-
-void		pasv_cmd(t_user *user)
-{
-	uint16_t			port;
-	char				*response;
-	unsigned int		dt_size;
-	struct sockaddr_in	dt_sin;
-
-	user->dt_server_sock = create_server_socket_on_random_port(&port);
-	if (user->dt_server_sock == -1)
-		return ; // send error reply to user
-	user->dt_port = port;
-	print_data_output("Socket server listening on port", user->dt_port, NULL, NULL);
-	response = get_pasv_response(DEF_SIN_ADDR, port);
-	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, response);
-
-	user->dt_client_sock = accept(user->dt_server_sock, (struct sockaddr *)&dt_sin, &dt_size);
-	if (user->dt_client_sock < 0)
-		return ; // send error reply to user
-	print_data_output("Connection accepted on port", user->dt_port, ": DT channel created", NULL);
-	free(response);
-}
-
 static void		exec_cmd(t_user *user, char *cmd)
 {
 	int		i;
@@ -129,7 +37,6 @@ static void		communicate_with_new_user(t_user *user)
 		else if (len >= 1 && cmd[len - 1] == '\n')
 			cmd[len - 1] = '\0';
 		print_ctrl_output("<-- Received from Client", user->num, ":", cmd);
-
 		if (ft_strcmp(cmd, "QUIT") == 0)
 			break ;
 		exec_cmd(user, cmd);
