@@ -83,6 +83,7 @@ void		get_cmd(t_user *user);
 
 void		usage(char *prgm);
 t_ex_ret	close_server(int server_sock);
+void		close_user_data_channel(t_user *user);
 
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
