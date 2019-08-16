@@ -14,7 +14,7 @@ static char		*get_cmd_name(char *cmd)
 	char	*cmd_name;
 
 	i = 0;
-	while (cmd[i] && cmd[i] != '\n' && cmd[i] != '\r')
+	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\n' && cmd[i] != '\r')
 		i++;
 	cmd_name = ft_strnew(i);
 	if (cmd_name == NULL)
