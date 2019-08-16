@@ -70,6 +70,7 @@ static void	init_new_user(t_user *user, int ctrl_client_sock, int user_num)
 	user->dt_server_sock = -1;
 	user->dt_client_sock = -1;
 	user->dt_port = -1;
+	user->mode = NONE;
 }
 
 static void	child_process(int num, int ctrl_client_sock)

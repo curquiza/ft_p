@@ -6,7 +6,7 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	pid_t	pid;
 
 	(void)cmd;
-	if (user->dt_client_sock == -1)
+	if (is_dt_channel_open(user) == FALSE)
 	{
 		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_426);
 		return ;

@@ -33,6 +33,7 @@ void		exec_pasv_cmd(t_user *user, char *cmd)
 	user->dt_client_sock = accept(user->dt_server_sock, (struct sockaddr *)&dt_sin, &dt_size);
 	if (user->dt_client_sock < 0)
 		return ; // send error reply to user
-	print_data_output("Connection accepted on port", user->dt_port, ": DT channel created", NULL);
+	print_data_output("Connection accepted on port", user->dt_port, ": DT channel created [PASSIVE MODE]", NULL);
+	user->mode = PASSIVE;
 	free(response);
 }

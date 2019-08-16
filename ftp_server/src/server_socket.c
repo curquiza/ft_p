@@ -47,7 +47,7 @@ int		create_server_socket_on_random_port(uint16_t *assigned_port)
 		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) != -1)
 		{
 			*assigned_port = port;
-			print_debug_output("Succeeded to connect to port", *assigned_port, NULL, NULL);
+			print_debug_output("Available port found", *assigned_port, NULL, NULL);
 			break;
 		}
 		port++;
