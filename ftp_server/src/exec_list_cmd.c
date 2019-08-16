@@ -10,8 +10,6 @@ static char		*get_ls_arg(char *cmd)
 	if (!args)
 		ft_exit(MALLOC_ERR, 1);
 	size = ft_tablen(args);
-	// if (size != 1 && size != 2)
-	// 	rslt = NULL;
 	rslt = NULL;
 	if (size == 1)
 		rslt = ft_strdup(".");
@@ -19,27 +17,45 @@ static char		*get_ls_arg(char *cmd)
 		rslt = ft_strdup(args[1]);
 	ft_tabdel(&args);
 	return (rslt);
+
+	// refuser si commence comme un argument (-)
+	// verifier que ca ne remonte pas loin dans l'arborescence et renvoyer le bon argument
 }
 
 static void	child_process(t_user *user, char *ls_arg)
 {
-	char	*args[3] = { "/bin/ls", "-l", NULL };
+	char	*args[4];
 
-	(void)ls_arg;
+	args[0] = "/bin/ls";
+	args[1] = "-l";
+	args[2] = ls_arg;
+	args[3] = NULL;
 	send_oneline_reply_to_user(user, RES_125);
 	dup2(user->dt_client_sock, STDOUT_FILENO);
 	execv(args[0], args);
-	ft_dprintf(STDERR_FILENO, "Error during execv\n");
+	free(ls_arg);
 	exit(1);
 }
 
 static void	parent_process(t_user *user)
 {
-	wait4(0, NULL, 0, NULL);
+	int		status;
+
+	status = 0;
+	wait4(0, &status, 0, NULL);
+	if (status == 256)
+	{
+		print_data_output(NULL, 0, "Error during ls execution", NULL);
+		send_oneline_reply_to_user(user, RES_451);
+		close_user_data_channel(user);
+		return ;
+	}
 	if (user->mode == PASSIVE)
-		print_data_output("--> Sent through DT channel on port", user->dt_port, ": * LS output *", NULL);
+		print_data_output("--> Sent through DT channel on port",
+			user->dt_port, ": * LS output *", NULL);
 	else
-		print_data_output("--> Sent through DT channel on user's port", user->dt_port, ": * LS output *", NULL);
+		print_data_output("--> Sent through DT channel on user's port",
+			user->dt_port, ": * LS output *", NULL);
 	close_user_data_channel(user);
 	send_oneline_reply_to_user(user, RES_226);
 }
