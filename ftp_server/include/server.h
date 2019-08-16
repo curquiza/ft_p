@@ -78,28 +78,26 @@ t_ex_ret	activate_opt(char opt_letter);
 t_bool		opt_is_activated(char opt_letter);
 int			get_all_options(int argc, char **argv);
 
-void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
-void		print_data_output(char *s1, int i, char *s2, char *s3);
-void		print_debug_output(char *s1, int i, char *s2, char *s3);
-
-
-void		exec_pasv_cmd(t_user *user, char *cmd);
-void		exec_port_cmd(t_user *user, char *cmd);
-void		exec_list_cmd(t_user *user, char *cmd);
-void		exec_get_cmd(t_user *user, char *cmd);
-
-
 void		usage(char *prgm);
 t_bool		is_dt_channel_open(t_user *user);
-t_ex_ret	close_server(int server_sock);
-void		close_user_data_channel(t_user *user);
 
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
 t_ex_ret	listen_to_clients(int server_sock);
 
-void		send_oneline_reply_to_user(int client_sock, int client_num,
-				char *str);
+void		send_oneline_reply_to_user(t_user *user, char *str);
+
+void		exec_pasv_cmd(t_user *user, char *cmd);
+void		exec_port_cmd(t_user *user, char *cmd);
+void		exec_list_cmd(t_user *user, char *cmd);
+void		exec_get_cmd(t_user *user, char *cmd);
+
+t_ex_ret	close_server(int server_sock);
+void		close_user_data_channel(t_user *user);
+
+void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
+void		print_data_output(char *s1, int i, char *s2, char *s3);
+void		print_debug_output(char *s1, int i, char *s2, char *s3);
 
 #endif

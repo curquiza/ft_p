@@ -100,7 +100,7 @@ void		exec_port_cmd(t_user *user, char *cmd)
 
 	if ((arg_tab = get_arg_tab(cmd)) == NULL)
 	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_501);
+		send_oneline_reply_to_user(user, RES_501);
 		return ;
 	}
 	get_addr(arg_tab, addr);
@@ -110,12 +110,12 @@ void		exec_port_cmd(t_user *user, char *cmd)
 		"on address", addr);
 	user->dt_client_sock = connect_to_user(addr, user->dt_port);
 	if (user->dt_client_sock == -1)
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_425);
+		send_oneline_reply_to_user(user, RES_425);
 	else
 	{
 		print_data_output("Connection etablished with user's port",
 			user->dt_port, ": DT channel created [ACTIVE MODE]", NULL);
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_200);
+		send_oneline_reply_to_user(user, RES_200);
 		user->mode = ACTIVE;
 	}
 };

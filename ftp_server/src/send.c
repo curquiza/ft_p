@@ -1,6 +1,6 @@
 #include "server.h"
 
-void	send_oneline_reply_to_user(int client_sock, int client_num, char *str)
+void	send_oneline_reply_to_user(t_user *user, char *str)
 {
 	char	*cmd;
 	size_t	str_len;
@@ -11,7 +11,7 @@ void	send_oneline_reply_to_user(int client_sock, int client_num, char *str)
 	ft_memmove(cmd, str, str_len);
 	cmd[str_len] = '\r';
 	cmd[str_len + 1] = '\n';
-	send(client_sock, cmd, str_len + 2, 0);
-	print_ctrl_output("--> Sent to Client", client_num, ":", str);
+	send(user->ctrl_client_sock, cmd, str_len + 2, 0);
+	print_ctrl_output("--> Sent to Client", user->num, ":", str);
 	free(cmd);
 }
