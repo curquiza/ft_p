@@ -9,9 +9,12 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		debug.c \
 		misc.c \
 		signal.c \
-		close_server.c \
-		server_socket.c \
+		close_connection.c \
 		listen_to_clients.c \
+		exec_get_cmd.c \
+		exec_pasv_cmd.c \
+		exec_list_cmd.c \
+		exec_port_cmd.c \
 		send.c \
 		main.c)
 
