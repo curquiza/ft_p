@@ -1,6 +1,13 @@
 #include "server.h"
 
-void		transit_file(int client_sock)
+t_cmd	g_cmd_tab[CMD_NB] =
+{
+	{ "PASV", &pasv_cmd },
+	{ "LIST", &list_cmd },
+	{ "GET", &get_cmd }
+};
+
+void		get_cmd(t_user *user)
 {
 	struct stat		stat_struct;
 	int				size;
@@ -11,7 +18,7 @@ void		transit_file(int client_sock)
 	size = stat_struct.st_size;
 	ptr = NULL;
 	ptr = mmap(ptr, size, PROT_READ, MAP_PRIVATE, fd, 0);
-	send(client_sock, ptr, size, 0);
+	send(user->ctrl_client_sock, ptr, size, 0);
 	close(fd);
 }
 
@@ -24,7 +31,7 @@ static void	close_user_data_channel(t_user *user)
 	user->dt_server_sock = -1;
 }
 
-void		exec_ls(t_user *user)
+void		list_cmd(t_user *user)
 {
 	char	*args[3] = { "/bin/ls", "-l", NULL };
 	pid_t	pid;
@@ -70,7 +77,7 @@ static char		*get_pasv_response(int addr, uint16_t port)
 	return (s);
 }
 
-static void		passif_mode(t_user *user)
+void		pasv_cmd(t_user *user)
 {
 	uint16_t			port;
 	char				*response;
@@ -92,6 +99,23 @@ static void		passif_mode(t_user *user)
 	free(response);
 }
 
+static void		exec_cmd(t_user *user, char *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (i < CMD_NB)
+	{
+		if (ft_strcmp(cmd, g_cmd_tab[i].name) == 0)
+		{
+			g_cmd_tab[i].f(user);
+			return ;
+		}
+		i++;
+	}
+	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_500);
+}
+
 static void		communicate_with_new_user(t_user *user)
 {
 	char	cmd[1024];
@@ -105,16 +129,10 @@ static void		communicate_with_new_user(t_user *user)
 		else if (len >= 1 && cmd[len - 1] == '\n')
 			cmd[len - 1] = '\0';
 		print_ctrl_output("<-- Received from Client", user->num, ":", cmd);
-		if (ft_strcmp(cmd, "GET") == 0)
-			transit_file(user->ctrl_client_sock);
-		else if (ft_strcmp(cmd, "LIST") == 0)
-			exec_ls(user);
-		else if (ft_strcmp(cmd, "QUIT") == 0)
+
+		if (ft_strcmp(cmd, "QUIT") == 0)
 			break ;
-		else if (ft_strcmp(cmd, "PASV") == 0)
-			passif_mode(user);
-		else
-			send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_500);
+		exec_cmd(user, cmd);
 	}
 }
 

@@ -20,6 +20,7 @@
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
+# define CMD_NB			3
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -45,12 +46,19 @@ typedef struct		s_user
 	uint16_t	dt_port;
 }					t_user;
 
+typedef struct		s_cmd
+{
+	char		*name;
+	void		(*f)(t_user *user);
+} 					t_cmd;
+
 /*
 ** GLOBALS
 */
 
 int			g_server_sock;
 uint8_t		g_flags;
+t_cmd		g_cmd_tab[CMD_NB];
 
 /*
 ** FUNCTIONS
@@ -66,6 +74,11 @@ void		print_verbose_siss(char *s1, int i, char *s2, char *s3);
 void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
 void		print_data_output(char *s1, int i, char *s2, char *s3);
 void		print_debug_output(char *s1, int i, char *s2, char *s3);
+
+
+void		list_cmd(t_user *user);
+void		pasv_cmd(t_user *user);
+void		get_cmd(t_user *user);
 
 
 void		usage(char *prgm);
