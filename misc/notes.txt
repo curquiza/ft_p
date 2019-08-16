@@ -14,7 +14,15 @@ Une commande (C-->S) ou une réponse (C<--S) se termine par un CRLF = \r\n = cha
 
 
 
-DIFFERENCE MON SERVER ET RFC
-============================
+DIFFERENCE ENTRE MON SERVER ET RFC
+==================================
 
 - les commandes PORT et PASV peuvent renvoyer une réponse "425 Can't open data connection."
+
+
+DIVERS
+======
+- LIST : la commande n'essaie pas d'ouvrir le canal DT. Soit il est ouvert et on passe les données, soit il l'est pas et on renvoie une "426 Connection closed; transfer aborted."
+  Le client ftp de MacOs fait pareil : il envoie toujours la commande PASV ou PORT avant d'envoyer LIST.
+- Le server clot toujours le DT channel après avoir envoyé des données.
+  Un nouveau DT channel est donc réouvert à chaque fois que des données sont passées.

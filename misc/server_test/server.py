@@ -12,3 +12,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 server = FTPServer(("127.0.0.1", 2121), handler)
 server.serve_forever()
+
+# $> git clonehttps://github.com/giampaolo/pyftpdlib.git
+# $> cd pyftpdlib
+# $> cp ~/Documents/ft_p/misc/server_test/server.py .
+# $> python3 server.py
+# user : 'user'
+# password '12345'
