@@ -5,7 +5,7 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	char	*args[3] = { "/bin/ls", "-l", NULL };
 	pid_t	pid;
 
-	(void)cmd;
+	(void)cmd; // check si good parametre
 	if (is_dt_channel_open(user) == FALSE)
 	{
 		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_426);
@@ -27,7 +27,10 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	else
 	{
 		wait4(0, NULL, 0, NULL);
-		print_data_output("--> Sent in DT channel on port", user->dt_port, ": * LS output *", NULL);
+		if (user->mode == PASSIVE)
+			print_data_output("--> Sent through DT channel on port", user->dt_port, ": * LS output *", NULL);
+		else
+			print_data_output("--> Sent through DT channel on user's port", user->dt_port, ": * LS output *", NULL);
 		close_user_data_channel(user);		// necessaire de close ??
 		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_226);
 	}

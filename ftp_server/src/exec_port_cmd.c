@@ -16,12 +16,10 @@ static t_bool	args_are_valid(char **args)
 	return (TRUE);
 }
 
-static char	*get_addr(char **args)
+static void		get_addr(char **args, char *addr)
 {
-	char	*addr;
 	int		len;
 
-	addr = ft_strnew(15);
 	ft_strcpy(addr, args[0]);
 	len = ft_strlen(args[0]) + 1;
 	addr[len - 1] = '.';
@@ -32,7 +30,8 @@ static char	*get_addr(char **args)
 	len += ft_strlen(args[2]) + 1;
 	addr[len - 1] = '.';
 	ft_strcpy(addr + len, args[3]);
-	return (addr);
+	len += ft_strlen(args[3]);
+	addr[len] = 0;
 }
 
 static uint16_t	get_port(char **args)
@@ -60,7 +59,11 @@ static int	connect_to_user(char *addr, uint16_t port)
 		print_debug_output(NULL, 0, "Error during getprotobyname", NULL);
 		return (-1);
 	}
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
+	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) < 0)
+	{
+		print_debug_output(NULL, 0, "Error during socket creation", NULL);
+		return (-1);
+	}
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = inet_addr(addr);
@@ -77,7 +80,7 @@ void	exec_port_cmd(t_user *user, char *cmd)
 	char		*arg_addr;
 	char		*arg;
 	char		**subargs;
-	char		*addr;
+	char		addr[15];
 
 	arg_addr = ft_strchr(cmd, ' ');
 	if (arg_addr == NULL)
@@ -96,7 +99,7 @@ void	exec_port_cmd(t_user *user, char *cmd)
 		free(subargs);
 		return ;
 	}
-	addr = get_addr(subargs);
+	get_addr(subargs, addr);
 	user->dt_port = get_port(subargs);
 	print_debug_output("Trying to connect to port", user->dt_port, "on address", addr);
 	user->dt_client_sock = connect_to_user(addr, user->dt_port);
@@ -109,5 +112,4 @@ void	exec_port_cmd(t_user *user, char *cmd)
 		user->mode = ACTIVE;
 	}
 	free(subargs);
-	free(addr);
 };

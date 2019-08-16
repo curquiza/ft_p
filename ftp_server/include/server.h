@@ -97,8 +97,6 @@ void		close_user_data_channel(t_user *user);
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
-int			create_server_socket(uint16_t port);
-int			create_server_socket_on_random_port(uint16_t *assigned_port);
 t_ex_ret	listen_to_clients(int server_sock);
 
 void		send_oneline_reply_to_user(int client_sock, int client_num,
