@@ -29,9 +29,16 @@ void		exec_ls(t_user *user)
 	char	*args[3] = { "/bin/ls", "-l", NULL };
 	pid_t	pid;
 
-	// si pas de DT channel, envoyer une reply.
+	if (user->dt_client_sock == -1)
+	{
+		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_426);
+		return ;
+	}
 	if ((pid = fork()) < 0)
-		return ; // return une reply d'erreur
+	{
+		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_451);
+		return ;
+	}
 	if (pid == 0)
 	{
 		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_125);

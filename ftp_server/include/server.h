@@ -22,8 +22,14 @@
 # define DEF_SIN_ADDR	INADDR_ANY
 
 # define RES_125	"125 Data connection already open. Transfer starting."
+
 # define RES_220	"220 Service ready for new user."
-# define RES_226	"226 Transfer complete."		// 226 Closing data connection.
+# define RES_226	"226 Closing data connection."
+
+# define RES_425	"425 Can't open data connection."
+# define RES_426	"426 Connection closed; transfer aborted."
+# define RES_451	"451 Requested action aborted: local error in processing."
+
 # define RES_500	"500 Syntax error, command unrecognized."
 
 /*
