@@ -128,7 +128,7 @@ static void	child_process(int num, int ctrl_client_sock)
 	print_ctrl_output("Client", num, "connected", NULL);
 	init_new_user(&user, ctrl_client_sock, num);
 	communicate_with_new_user(&user);
-	print_ctrl_output("Client", num, "has quit...", NULL);
+	print_ctrl_output("Client", num, "has quit", NULL);
 	close(ctrl_client_sock);
 }
 
