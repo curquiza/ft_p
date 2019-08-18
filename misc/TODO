@@ -7,6 +7,7 @@ SERVER:
 - gerer les arguments du LS
 - gerer un maximum de client connecté ? => gerer les signaux
 - mettre des beaux [ERROR] à la place de Error
+- LIST : si erreur de syntax, close quand mm la connexion du DT
 
 CLIENT:
 - gerer localhost

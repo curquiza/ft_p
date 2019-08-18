@@ -14,8 +14,11 @@ static char		*get_ls_arg(char *cmd)
 	if (size == 1)
 		rslt = ft_strdup(".");
 	else if (size == 2 && args[1][0] != '-')
-		rslt = ft_strdup(args[1]);
+		// rslt = ft_strdup(args[1]);
+		rslt = get_path_in_server(args[1]);
 	ft_tabdel(&args);
+	ft_printf("VALID PATH = %s\n", rslt);
+	ft_printf("CURRENT PATH = %s\n", getcwd(NULL, 0));
 	return (rslt);
 	// /!\ verifier que ca ne remonte pas loin dans l'arborescence et renvoyer le bon argument
 }

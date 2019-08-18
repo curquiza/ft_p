@@ -17,6 +17,7 @@
 # define MALLOC_ERR		"During malloc. Exiting..."
 # define PORT_ERR		"Port number unavailable (1024-65335)"
 # define ROOT_PATH_ERR	"Error when getting server root path. Exiting..."
+
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
@@ -87,6 +88,7 @@ void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
 char		*get_root_path(void);
+char 		*get_path_in_server(char *path);
 
 t_ex_ret	listen_to_clients(int server_sock);
 
