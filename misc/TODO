@@ -6,6 +6,7 @@ SERVER:
 - les différentes commandes et leurs possibles réponses
 - gerer les arguments du LS
 - gerer un maximum de client connecté ? => gerer les signaux
+- mettre des beaux [ERROR] à la place de Error
 
 CLIENT:
 - gerer localhost

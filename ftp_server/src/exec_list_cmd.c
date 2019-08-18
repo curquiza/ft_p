@@ -13,13 +13,11 @@ static char		*get_ls_arg(char *cmd)
 	rslt = NULL;
 	if (size == 1)
 		rslt = ft_strdup(".");
-	else if (size == 2)
+	else if (size == 2 && args[1][0] != '-')
 		rslt = ft_strdup(args[1]);
 	ft_tabdel(&args);
 	return (rslt);
-
-	// refuser si commence comme un argument (-)
-	// verifier que ca ne remonte pas loin dans l'arborescence et renvoyer le bon argument
+	// /!\ verifier que ca ne remonte pas loin dans l'arborescence et renvoyer le bon argument
 }
 
 static void	child_process(t_user *user, char *ls_arg)
