@@ -9,6 +9,7 @@ static t_ex_ret	init(int argc, char **argv)
 	}
 	g_server_sock = -1;
 	g_flags = 0;
+	g_root_path = NULL;
 	signal(SIGINT, sigint_handler);
 	return (SUCCESS);
 }
@@ -82,6 +83,8 @@ int					main(int argc, char **argv)
 	if ((port = get_port_uint16(argv[port_index])) == 0)
 		return (FAILURE);
 	if ((g_server_sock = create_server_socket(port)) == -1)
+		return (FAILURE);
+	if ((g_root_path = get_root_path()) == NULL)
 		return (FAILURE);
 	print_ctrl_output("Opening FTP Server on port", port, NULL, NULL);
 	return (listen_to_clients(g_server_sock));

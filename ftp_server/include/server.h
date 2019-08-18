@@ -16,6 +16,7 @@
 
 # define MALLOC_ERR		"During malloc. Exiting..."
 # define PORT_ERR		"Port number unavailable (1024-65335)"
+# define ROOT_PATH_ERR	"Error when getting server root path. Exiting..."
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
@@ -69,6 +70,7 @@ typedef struct		s_cmd
 int			g_server_sock;
 uint8_t		g_flags;
 t_cmd		g_cmd_tab[CMD_NB];
+char		*g_root_path;
 
 /*
 ** FUNCTIONS
@@ -83,6 +85,8 @@ t_bool		is_dt_channel_open(t_user *user);
 
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
+
+char		*get_root_path(void);
 
 t_ex_ret	listen_to_clients(int server_sock);
 
