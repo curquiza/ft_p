@@ -25,6 +25,6 @@ void		close_user_data_channel(t_user *user)
 		close(user->dt_server_sock);
 	user->dt_client_sock = -1;
 	user->dt_server_sock = -1;
-	user->dt_port = -1;
+	user->dt_port = 0;
 	user->mode = NONE;
 }

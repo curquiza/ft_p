@@ -70,7 +70,7 @@ static void	init_new_user(t_user *user, int ctrl_client_sock, int user_num)
 	user->ctrl_client_sock = ctrl_client_sock;
 	user->dt_server_sock = -1;
 	user->dt_client_sock = -1;
-	user->dt_port = -1;
+	user->dt_port = 0;
 	user->mode = NONE;
 }
 
