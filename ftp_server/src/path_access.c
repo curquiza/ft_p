@@ -10,11 +10,6 @@ char	*get_root_path(void)
 	return (path);
 }
 
-static t_bool	path_is_in_server_folder(char *path)
-{
-	return (ft_strstr(path, g_root_path) == path);
-}
-
 /*
 ** Retry needed because user can ask for "ls <filename>"
 ** and not only "ls <foldername>"

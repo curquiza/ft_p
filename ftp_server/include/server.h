@@ -22,7 +22,7 @@
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
-# define CMD_NB			4
+# define CMD_NB			5
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -36,7 +36,8 @@
 
 # define RES_500	"500 Syntax error, command unrecognized."
 # define RES_501	"501 Syntax error in parameters or arguments."
-# define RES_550	"550 Requested action not taken. File unavailable."
+# define RES_550_1	"550 Requested action not taken."
+# define RES_550_2	"550 File unavailable."
 
 /*
 ** STRUCTURES
@@ -84,6 +85,8 @@ int			get_all_options(int argc, char **argv);
 
 void		usage(char *prgm);
 t_bool		is_dt_channel_open(t_user *user);
+t_bool		path_is_in_server_folder(char *path);
+t_bool		cmd_has_no_arg(t_user *user, char *cmd);
 
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
@@ -99,6 +102,7 @@ void		exec_pasv_cmd(t_user *user, char *cmd);
 void		exec_port_cmd(t_user *user, char *cmd);
 void		exec_list_cmd(t_user *user, char *cmd);
 void		exec_get_cmd(t_user *user, char *cmd);
+void		exec_pwd_cmd(t_user *user, char *cmd);
 
 t_ex_ret	close_server(int server_sock);
 void		close_user_data_channel(t_user *user);

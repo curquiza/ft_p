@@ -23,7 +23,7 @@ static char		*get_ls_arg(t_user *user, char *cmd)
 		rslt = get_path_for_list_cmd(args[1]);
 	ft_tabdel(&args);
 	if (rslt == NULL)
-		send_oneline_reply_to_user(user, RES_550);
+		send_oneline_reply_to_user(user, RES_550_2);
 	return (rslt);
 }
 
