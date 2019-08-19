@@ -6,7 +6,7 @@ CC = gcc $(FLAG)
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
 		options.c \
-		debug.c \
+		display_logs.c \
 		misc.c \
 		signal.c \
 		close_connection.c \
