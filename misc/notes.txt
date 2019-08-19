@@ -17,10 +17,11 @@ Une commande (C-->S) ou une réponse (C<--S) se termine par un CRLF = \r\n = cha
 DIFFERENCE ENTRE MON SERVER ET RFC
 ==================================
 
-- les commandes PORT et PASV peuvent renvoyer une réponse "425 Can't open data connection."
+PORT et PASV :
+    - peuvent renvoyer une réponse "425 Can't open data connection."
 
 LIST :
-    - on peut renvoyer une réponse "550 No such file..."
+    - on peut renvoyer une réponse "550 Requested action not taken" (= no such file) quand on sort du scope du server
     - quand on fait "ls .." on renvoie une 550
     - pas ouf : on peut faire "ls ../ftp_server/." et ca marche
     - pas ouf : on peut faire "ls /src/signal.c" et on voit tout le path

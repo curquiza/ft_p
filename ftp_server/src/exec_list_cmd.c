@@ -10,7 +10,7 @@ static char		*get_ls_arg(t_user *user, char *cmd)
 	if (!args)
 		ft_exit(MALLOC_ERR, 1);
 	size = ft_tablen(args);
-	if (size > 2)
+	if (size > 2 || (size == 2 && args[1][0] == '-'))
 	{
 		send_oneline_reply_to_user(user, RES_501);
 		ft_tabdel(&args);
@@ -19,7 +19,7 @@ static char		*get_ls_arg(t_user *user, char *cmd)
 	rslt = NULL;
 	if (size == 1)
 		rslt = ft_strdup(".");
-	else if (size == 2 && args[1][0] != '-')
+	else if (size == 2)
 		rslt = get_path_for_list_cmd(args[1]);
 	ft_tabdel(&args);
 	if (rslt == NULL)
@@ -75,11 +75,15 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	pid_t	pid;
 
 	if (!(ls_arg = get_ls_arg(user, cmd)))
+	{
+		close_user_data_channel(user);
 		return ;
+	}
 	if (is_dt_channel_open(user) == FALSE)
 	{
 		free(ls_arg);
 		send_oneline_reply_to_user(user, RES_426);
+		close_user_data_channel(user);
 		return ;
 	}
 	if ((pid = fork()) < 0)
