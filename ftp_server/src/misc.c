@@ -12,3 +12,8 @@ t_bool	is_dt_channel_open(t_user *user)
 		return (FALSE);
 	return (TRUE);
 }
+
+t_bool	path_is_in_server_folder(char *path)
+{
+	return (ft_strstr(path, g_root_path) == path);
+}
