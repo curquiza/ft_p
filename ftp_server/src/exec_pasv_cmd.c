@@ -61,7 +61,8 @@ void		exec_pasv_cmd(t_user *user, char *cmd)
 	unsigned int		dt_size;
 	struct sockaddr_in	dt_sin;
 
-	(void)cmd; // check si zero parametre
+	if (cmd_has_no_arg(user, cmd) == FALSE)
+		return ;
 	if ((user->dt_server_sock = create_server_socket_on_valid_port(user)) == -1)
 	{
 		send_oneline_reply_to_user(user, RES_425);

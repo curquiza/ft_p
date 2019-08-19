@@ -30,6 +30,6 @@ t_bool	cmd_has_no_arg(t_user *user, char *cmd)
 		send_oneline_reply_to_user(user, RES_501);
 		ret = FALSE;
 	}
-	ft_tabdel(args);
+	ft_tabdel(&args);
 	return (ret);
 }
