@@ -36,7 +36,8 @@
 
 # define RES_500	"500 Syntax error, command unrecognized."
 # define RES_501	"501 Syntax error in parameters or arguments."
-# define RES_550	"550 Requested action not taken. File unavailable."
+# define RES_550_1	"550 Requested action not taken."
+# define RES_550_2	"550 File unavailable."
 
 /*
 ** STRUCTURES
