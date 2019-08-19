@@ -1,12 +1,13 @@
 #include "server.h"
 
-void		exec_pwd_cmd(t_user *user, char *cmd)
+void			exec_pwd_cmd(t_user *user, char *cmd)
 {
 	char	*tmp_res;
 	char	*current_path;
 	char	*new_path;
 
-	(void)cmd;
+	if (cmd_has_no_arg(user, cmd) == FALSE)
+		return ;
 	current_path = getcwd(NULL, 0);
 	if (!current_path || path_is_in_server_folder(current_path) == FALSE)
 	{

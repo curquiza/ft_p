@@ -17,3 +17,16 @@ t_bool	path_is_in_server_folder(char *path)
 {
 	return (ft_strstr(path, g_root_path) == path);
 }
+
+t_bool	cmd_has_no_arg(t_user *user, char *cmd)
+{
+	char 	**args;
+
+	args = ft_strsplit(cmd, ' ');
+	if (!args || ft_tablen(args) != 1)
+	{
+		send_oneline_reply_to_user(user, RES_501);
+		return FALSE;
+	}
+	return (TRUE);
+}
