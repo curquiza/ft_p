@@ -18,6 +18,7 @@ DIFFERENCE ENTRE MON SERVER ET RFC
 ==================================
 
 - les commandes PORT et PASV peuvent renvoyer une réponse "425 Can't open data connection."
+- la command LIST peut renvoyer une réponse "550 No such file..."
 
 
 DIVERS

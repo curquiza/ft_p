@@ -36,6 +36,7 @@
 
 # define RES_500	"500 Syntax error, command unrecognized."
 # define RES_501	"501 Syntax error in parameters or arguments."
+# define RES_550	"550 No such file or directory"
 
 /*
 ** STRUCTURES
@@ -88,7 +89,7 @@ void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
 char		*get_root_path(void);
-char 		*get_path_in_server(char *path);
+char 		*get_path_for_list_cmd(char *path);
 
 t_ex_ret	listen_to_clients(int server_sock);
 

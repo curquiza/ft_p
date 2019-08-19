@@ -10,9 +10,37 @@ char	*get_root_path(void)
 	return (path);
 }
 
-static t_bool	path_is_in_server(char *path)
+static t_bool	path_is_in_server_folder(char *path)
 {
 	return (ft_strstr(path, g_root_path) == path);
+}
+
+/*
+** Retry needed because user can ask for "ls <filename>"
+** and not only "ls <foldername>"
+*/
+
+static void		retry_chdir_with_new_path(char *path)
+{
+	int		len;
+	char	*new_path;
+	char	*tmp_path;
+	int		index;
+
+	len = ft_strlen(path);
+	new_path = ft_strdup(path);
+	if (len > 0 && new_path[len - 1] == '/')
+		new_path[len - 1] = '\0';
+	tmp_path = ft_strrchr(new_path, '/');
+	if (tmp_path == NULL)
+	{
+		free(new_path);
+		return ;
+	}
+	index = tmp_path - new_path;
+	new_path[index] = '\0';
+	chdir(new_path);
+	free(new_path);
 }
 
 static void		check_path_in_child_process(char *path)
@@ -20,22 +48,22 @@ static void		check_path_in_child_process(char *path)
 	char	*tmp_path;
 	t_bool	ret;
 
-	chdir(path);
+	if (chdir(path) != 0)
+		retry_chdir_with_new_path(path);
 	tmp_path = getcwd(NULL, 0);
 	if (tmp_path == NULL)
 		exit(1);
-	ret = path_is_in_server(ft_strstr(tmp_path, g_root_path));
+	ret = path_is_in_server_folder(tmp_path);
 	free(tmp_path);
 	if (ret == TRUE)
 		exit(0);
 	exit(1);
 }
 
-char 			*get_path_in_server(char *path)
+char 			*get_path_for_list_cmd(char *path)
 {
 	pid_t	pid;
 	int		status;
-	// char	*tmp_path;
 
 	status = 0;
 	if ((pid = fork()) < 0)
@@ -45,9 +73,6 @@ char 			*get_path_in_server(char *path)
 	else
 		wait4(0, &status, 0, NULL);
 	if (status == 0)
-	{
-		// tmp_path = ft_strstr(path, g_root_path) + ft_strlen(g_root_path);
 		return (ft_strdup(path));
-	}
-	return (ft_strdup("."));
+	return (NULL);
 }

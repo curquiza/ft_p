@@ -1,6 +1,6 @@
 # include "server.h"
 
-static char		*get_ls_arg(char *cmd)
+static char		*get_ls_arg(t_user *user, char *cmd)
 {
 	char	**args;
 	int		size;
@@ -10,17 +10,21 @@ static char		*get_ls_arg(char *cmd)
 	if (!args)
 		ft_exit(MALLOC_ERR, 1);
 	size = ft_tablen(args);
+	if (size > 2)
+	{
+		send_oneline_reply_to_user(user, RES_501);
+		ft_tabdel(&args);
+		return (NULL);
+	}
 	rslt = NULL;
 	if (size == 1)
 		rslt = ft_strdup(".");
 	else if (size == 2 && args[1][0] != '-')
-		// rslt = ft_strdup(args[1]);
-		rslt = get_path_in_server(args[1]);
+		rslt = get_path_for_list_cmd(args[1]);
 	ft_tabdel(&args);
-	ft_printf("VALID PATH = %s\n", rslt);
-	ft_printf("CURRENT PATH = %s\n", getcwd(NULL, 0));
+	if (rslt == NULL)
+		send_oneline_reply_to_user(user, RES_550);
 	return (rslt);
-	// /!\ verifier que ca ne remonte pas loin dans l'arborescence et renvoyer le bon argument
 }
 
 static void	child_process(t_user *user, char *ls_arg)
@@ -67,11 +71,8 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	char	*ls_arg;
 	pid_t	pid;
 
-	if (!(ls_arg = get_ls_arg(cmd)))
-	{
-		send_oneline_reply_to_user(user, RES_501);
+	if (!(ls_arg = get_ls_arg(user, cmd)))
 		return ;
-	}
 	if (is_dt_channel_open(user) == FALSE)
 	{
 		free(ls_arg);
