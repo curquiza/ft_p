@@ -21,12 +21,15 @@ t_bool	path_is_in_server_folder(char *path)
 t_bool	cmd_has_no_arg(t_user *user, char *cmd)
 {
 	char 	**args;
+	t_bool	ret;
 
 	args = ft_strsplit(cmd, ' ');
+	ret = TRUE;
 	if (!args || ft_tablen(args) != 1)
 	{
 		send_oneline_reply_to_user(user, RES_501);
-		return FALSE;
+		ret = FALSE;
 	}
-	return (TRUE);
+	ft_tabdel(args);
+	return (ret);
 }
