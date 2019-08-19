@@ -41,7 +41,7 @@ static void		exec_cmd(t_user *user, char *cmd)
 		i++;
 	}
 	free(cmd_name);
-	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_500);
+	send_oneline_reply_to_user(user, RES_500);
 }
 
 static void		communicate_with_new_user(t_user *user)
@@ -49,7 +49,7 @@ static void		communicate_with_new_user(t_user *user)
 	char	cmd[1024];
 	int		len;
 
-	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_220);
+	send_oneline_reply_to_user(user, RES_220);
 	while ((len = recv(user->ctrl_client_sock, &cmd, 1024, 0)) > 0)
 	{
 		if (len >= 2 && cmd[len - 2] == '\r')

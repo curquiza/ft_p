@@ -1,19 +1,22 @@
 - gerer les signaux
 - retour de tous les appels : listen, inet_addr, fork, accept, connect, fstat...
 - faire des vrais recv avec comme arret le CRLF
-
+- checker les leaks
 
 SERVER:
 - les différentes commandes et leurs possibles réponses
-- la creation du canal de données
-- la fermeture ?
-- changer le verbose
-- gerer les arguments du LS
 - gerer un maximum de client connecté ? => gerer les signaux
+- mettre des beaux [ERROR] à la place de Error
 
 CLIENT:
 - gerer localhost
+- le client doit verifier que le DT est ouvert avant de lancer des commandes type LIST
 - reussir à faire que le client se ferme quand le server s'eteint ?
 
-DONE
+DONE:
 - est ce que se connecter sur le server marche depuis une autre machine sur le même réseau ? Oui grace au ANYADRESS
+- changer le verbose
+- la creation du canal de données
+- la fermeture du canal de donnée ? Oui, fait
+- gerer les arguments du LS
+- LIST : si erreur de syntax, close quand mm la connexion du DT

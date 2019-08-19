@@ -64,18 +64,18 @@ void		exec_pasv_cmd(t_user *user, char *cmd)
 	(void)cmd; // check si zero parametre
 	if ((user->dt_server_sock = create_server_socket_on_valid_port(user)) == -1)
 	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_425);
+		send_oneline_reply_to_user(user, RES_425);
 		return ;
 	}
 	print_data_output("Socket server listening on port", user->dt_port,
 		NULL, NULL);
 	response = get_pasv_response(DEF_SIN_ADDR, user->dt_port);
-	send_oneline_reply_to_user(user->ctrl_client_sock, user->num, response);
+	send_oneline_reply_to_user(user, response);
 	if ((user->dt_client_sock
 	= accept(user->dt_server_sock, (struct sockaddr *)&dt_sin, &dt_size)) < 0)
 	{
 		print_debug_output(NULL, 0, "Error during accept", NULL);
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_425);
+		send_oneline_reply_to_user(user, RES_425);
 		return ;
 	}
 	print_data_output("Connection accepted on port", user->dt_port,

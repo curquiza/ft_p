@@ -1,37 +1,100 @@
 # include "server.h"
 
+static char		*get_ls_arg(t_user *user, char *cmd)
+{
+	char	**args;
+	int		size;
+	char	*rslt;
+
+	args = ft_strsplit(cmd, ' ');
+	if (!args)
+		ft_exit(MALLOC_ERR, 1);
+	size = ft_tablen(args);
+	if (size > 2 || (size == 2 && args[1][0] == '-'))
+	{
+		send_oneline_reply_to_user(user, RES_501);
+		ft_tabdel(&args);
+		return (NULL);
+	}
+	rslt = NULL;
+	if (size == 1)
+		rslt = ft_strdup(".");
+	else if (size == 2)
+		rslt = get_path_for_list_cmd(args[1]);
+	ft_tabdel(&args);
+	if (rslt == NULL)
+		send_oneline_reply_to_user(user, RES_550);
+	return (rslt);
+}
+
+static void	child_process(t_user *user, char *ls_arg)
+{
+	char	*args[4];
+
+	args[0] = "/bin/ls";
+	args[1] = "-l";
+	args[2] = ls_arg;
+	args[3] = NULL;
+	send_oneline_reply_to_user(user, RES_125);
+	dup2(user->dt_client_sock, STDOUT_FILENO);
+	dup2(user->dt_client_sock, STDERR_FILENO);
+	execv(args[0], args);
+	free(ls_arg);
+	exit(-1);
+}
+
+/*
+**	65280 => -1
+*/
+static void	parent_process(t_user *user)
+{
+	int		status;
+
+	status = 0;
+	wait4(0, &status, 0, NULL);
+	if (status == 65280)
+	{
+		print_data_output(NULL, 0, "Error during ls execution", NULL);
+		send_oneline_reply_to_user(user, RES_451);
+		close_user_data_channel(user);
+		return ;
+	}
+	if (user->mode == PASSIVE)
+		print_data_output("--> Sent through DT channel on port",
+			user->dt_port, ": * LS output *", NULL);
+	else
+		print_data_output("--> Sent through DT channel on user's port",
+			user->dt_port, ": * LS output *", NULL);
+	close_user_data_channel(user);
+	send_oneline_reply_to_user(user, RES_226);
+}
+
 void		exec_list_cmd(t_user *user, char *cmd)
 {
-	char	*args[3] = { "/bin/ls", "-l", NULL };
+	char	*ls_arg;
 	pid_t	pid;
 
-	(void)cmd; // check si good parametre
+	if (!(ls_arg = get_ls_arg(user, cmd)))
+	{
+		close_user_data_channel(user);
+		return ;
+	}
 	if (is_dt_channel_open(user) == FALSE)
 	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_426);
+		free(ls_arg);
+		send_oneline_reply_to_user(user, RES_426);
+		close_user_data_channel(user);
 		return ;
 	}
 	if ((pid = fork()) < 0)
 	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_451);
+		free(ls_arg);
+		send_oneline_reply_to_user(user, RES_451);
 		return ;
 	}
 	if (pid == 0)
-	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_125);
-		dup2(user->dt_client_sock, STDOUT_FILENO);
-		execv(args[0], args);
-		ft_dprintf(STDERR_FILENO, "Error during execv\n");
-		exit(1);
-	}
+		child_process(user, ls_arg);
 	else
-	{
-		wait4(0, NULL, 0, NULL);
-		if (user->mode == PASSIVE)
-			print_data_output("--> Sent through DT channel on port", user->dt_port, ": * LS output *", NULL);
-		else
-			print_data_output("--> Sent through DT channel on user's port", user->dt_port, ": * LS output *", NULL);
-		close_user_data_channel(user);		// necessaire de close ??
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_226);
-	}
+		parent_process(user);
+	free(ls_arg);
 }

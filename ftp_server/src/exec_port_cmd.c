@@ -75,41 +75,47 @@ static int	connect_to_user(char *addr, uint16_t port)
 	return (sock);
 }
 
-void	exec_port_cmd(t_user *user, char *cmd)
+static char	**get_arg_tab(char *cmd)
 {
-	char		*arg_addr;
-	char		*arg;
-	char		**subargs;
+	char		**cmd_args;
+	char		**arg_tab;
+
+	cmd_args = ft_strsplit(cmd, ' ');
+	if (!cmd_args || ft_tablen(cmd_args) != 2)
+	{
+		ft_tabdel(&cmd_args);
+		return (NULL);
+	}
+	arg_tab = ft_strsplit(cmd_args[1], ',');
+	ft_tabdel(&cmd_args);
+	if (!arg_tab || ft_tablen(arg_tab) != 6 || args_are_valid(arg_tab) == FALSE)
+		return (NULL);
+	return (arg_tab);
+}
+
+void		exec_port_cmd(t_user *user, char *cmd)
+{
+	char		**arg_tab;
 	char		addr[15];
 
-	arg_addr = ft_strchr(cmd, ' ');
-	if (arg_addr == NULL)
+	if ((arg_tab = get_arg_tab(cmd)) == NULL)
 	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_501);
+		send_oneline_reply_to_user(user, RES_501);
 		return ;
 	}
-	arg = ft_strtrim(arg_addr);
-	subargs = ft_strsplit(arg, ',');
-	free(arg);
-	if (subargs == NULL
-		|| ft_tablen(subargs) != 6
-		|| args_are_valid(subargs) == FALSE)
-	{
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_501);
-		free(subargs);
-		return ;
-	}
-	get_addr(subargs, addr);
-	user->dt_port = get_port(subargs);
-	print_debug_output("Trying to connect to port", user->dt_port, "on address", addr);
+	get_addr(arg_tab, addr);
+	user->dt_port = get_port(arg_tab);
+	ft_tabdel(&arg_tab);
+	print_debug_output("Trying to connect to port", user->dt_port,
+		"on address", addr);
 	user->dt_client_sock = connect_to_user(addr, user->dt_port);
 	if (user->dt_client_sock == -1)
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_425);
+		send_oneline_reply_to_user(user, RES_425);
 	else
 	{
-		print_data_output("Connection etablished with user's port", user->dt_port, ": DT channel created [ACTIVE MODE]", NULL);
-		send_oneline_reply_to_user(user->ctrl_client_sock, user->num, RES_200);
+		print_data_output("Connection etablished with user's port",
+			user->dt_port, ": DT channel created [ACTIVE MODE]", NULL);
+		send_oneline_reply_to_user(user, RES_200);
 		user->mode = ACTIVE;
 	}
-	free(subargs);
 };

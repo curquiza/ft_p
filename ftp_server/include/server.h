@@ -16,6 +16,8 @@
 
 # define MALLOC_ERR		"During malloc. Exiting..."
 # define PORT_ERR		"Port number unavailable (1024-65335)"
+# define ROOT_PATH_ERR	"Error when getting server root path. Exiting..."
+
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
@@ -34,6 +36,7 @@
 
 # define RES_500	"500 Syntax error, command unrecognized."
 # define RES_501	"501 Syntax error in parameters or arguments."
+# define RES_550	"550 Requested action not taken. File unavailable."
 
 /*
 ** STRUCTURES
@@ -69,6 +72,7 @@ typedef struct		s_cmd
 int			g_server_sock;
 uint8_t		g_flags;
 t_cmd		g_cmd_tab[CMD_NB];
+char		*g_root_path;
 
 /*
 ** FUNCTIONS
@@ -78,28 +82,29 @@ t_ex_ret	activate_opt(char opt_letter);
 t_bool		opt_is_activated(char opt_letter);
 int			get_all_options(int argc, char **argv);
 
-void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
-void		print_data_output(char *s1, int i, char *s2, char *s3);
-void		print_debug_output(char *s1, int i, char *s2, char *s3);
+void		usage(char *prgm);
+t_bool		is_dt_channel_open(t_user *user);
 
+void		sigint_handler(int sig);
+void		child_signals_handler(void);
+
+char		*get_root_path(void);
+char 		*get_path_for_list_cmd(char *path);
+
+t_ex_ret	listen_to_clients(int server_sock);
+
+void		send_oneline_reply_to_user(t_user *user, char *str);
 
 void		exec_pasv_cmd(t_user *user, char *cmd);
 void		exec_port_cmd(t_user *user, char *cmd);
 void		exec_list_cmd(t_user *user, char *cmd);
 void		exec_get_cmd(t_user *user, char *cmd);
 
-
-void		usage(char *prgm);
-t_bool		is_dt_channel_open(t_user *user);
 t_ex_ret	close_server(int server_sock);
 void		close_user_data_channel(t_user *user);
 
-void		sigint_handler(int sig);
-void		child_signals_handler(void);
-
-t_ex_ret	listen_to_clients(int server_sock);
-
-void		send_oneline_reply_to_user(int client_sock, int client_num,
-				char *str);
+void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
+void		print_data_output(char *s1, int i, char *s2, char *s3);
+void		print_debug_output(char *s1, int i, char *s2, char *s3);
 
 #endif
