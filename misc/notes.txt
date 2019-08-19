@@ -18,12 +18,18 @@ DIFFERENCE ENTRE MON SERVER ET RFC
 ==================================
 
 - les commandes PORT et PASV peuvent renvoyer une réponse "425 Can't open data connection."
-- la command LIST peut renvoyer une réponse "550 No such file..."
+
+LIST :
+    - on peut renvoyer une réponse "550 No such file..."
+    - quand on fait "ls .." on renvoie une 550
+    - pas ouf : on peut faire "ls ../ftp_server/." et ca marche
+    - pas ouf : on peut faire "ls /src/signal.c" et on voit tout le path
 
 
 DIVERS
 ======
-- LIST : la commande n'essaie pas d'ouvrir le canal DT. Soit il est ouvert et on passe les données, soit il l'est pas et on renvoie une "426 Connection closed; transfer aborted."
-  Le client ftp de MacOs fait pareil : il envoie toujours la commande PASV ou PORT avant d'envoyer LIST.
 - Le server clot toujours le DT channel après avoir envoyé des données.
   Un nouveau DT channel est donc réouvert à chaque fois que des données sont passées.
+- LIST : La commande n'essaie pas d'ouvrir le canal DT.
+  Soit il est ouvert et on passe les données, soit il l'est pas et on renvoie une "426 Connection closed; transfer aborted."
+  Le client ftp de MacOs fait pareil : il envoie toujours la commande PASV ou PORT avant d'envoyer LIST.

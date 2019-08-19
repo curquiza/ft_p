@@ -43,6 +43,9 @@ static void	child_process(t_user *user, char *ls_arg)
 	exit(-1);
 }
 
+/*
+**	65280 => -1
+*/
 static void	parent_process(t_user *user)
 {
 	int		status;
