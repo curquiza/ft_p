@@ -3,13 +3,18 @@
 static void		send_pasv_response(t_user *user, int addr)
 {
 	char		*response;
-	t_byte		p1;
-	t_byte		p2;
+	char		*tmp_int;
+	char		*tmp_res;
 
 	(void)addr;
-	p2 = (t_byte)(user->dt_port & 0x00ff);
-	p1 = (t_byte)((user->dt_port >> 8) & 0x00ff);
-	asprintf(&response, "227 Entering Passive Mode (0,0,0,0,%hhu,%hhu)", p1, p2); // !!!
+	tmp_int = ft_itoa((int)((t_byte)((user->dt_port >> 8) & 0x00ff)));
+	response = ft_strjoin3("227 Entering Passive Mode (0,0,0,0,", tmp_int, ",");
+	free(tmp_int);
+	tmp_int = ft_itoa((int)((t_byte)(user->dt_port & 0x00ff)));
+	tmp_res = response;
+	response = ft_strjoin3(response, tmp_int, ")");
+	free(tmp_res);
+	free(tmp_int);
 	send_oneline_reply_to_user(user, response);
 	free(response);
 }
