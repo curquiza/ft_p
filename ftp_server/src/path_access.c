@@ -55,7 +55,7 @@ static void		check_path_in_child_process(char *path)
 	exit(1);
 }
 
-char 			*get_path_for_list_cmd(char *path)
+char 			*get_valid_path_for_cmd(char *path)
 {
 	char	*new_path;
 	pid_t	pid;

@@ -20,7 +20,7 @@ static char		*get_ls_arg(t_user *user, char *cmd)
 	if (size == 1)
 		rslt = ft_strdup(".");
 	else if (size == 2)
-		rslt = get_path_for_list_cmd(args[1]);
+		rslt = get_valid_path_for_cmd(args[1]);
 	ft_tabdel(&args);
 	if (rslt == NULL)
 		send_oneline_reply_to_user(user, RES_550_2);

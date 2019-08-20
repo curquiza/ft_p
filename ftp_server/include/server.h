@@ -38,6 +38,7 @@
 # define RES_501	"501 Syntax error in parameters or arguments."
 # define RES_550_1	"550 Requested action not taken."
 # define RES_550_2	"550 File unavailable."
+# define RES_550_3	"550 Not a directory."
 
 /*
 ** STRUCTURES
@@ -92,7 +93,7 @@ void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
 char		*get_root_path(void);
-char 		*get_path_for_list_cmd(char *path);
+char 		*get_valid_path_for_cmd(char *path);
 
 t_ex_ret	listen_to_clients(int server_sock);
 
