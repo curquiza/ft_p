@@ -22,7 +22,7 @@
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
-# define CMD_NB			5
+# define CMD_NB			6
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -103,6 +103,7 @@ void		exec_port_cmd(t_user *user, char *cmd);
 void		exec_list_cmd(t_user *user, char *cmd);
 void		exec_get_cmd(t_user *user, char *cmd);
 void		exec_pwd_cmd(t_user *user, char *cmd);
+void		exec_cwd_cmd(t_user *user, char *cmd);
 
 t_ex_ret	close_server(int server_sock);
 void		close_user_data_channel(t_user *user);

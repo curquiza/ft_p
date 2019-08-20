@@ -2,11 +2,12 @@
 
 t_cmd	g_cmd_tab[CMD_NB] =
 {
-	{ "PASV", &exec_pasv_cmd },
-	{ "PORT", &exec_port_cmd },
-	{ "LIST", &exec_list_cmd },
-	{ "GET", &exec_get_cmd },
-	{ "PWD", &exec_pwd_cmd }
+	{ "PASV",	&exec_pasv_cmd },
+	{ "PORT",	&exec_port_cmd },
+	{ "LIST",	&exec_list_cmd },
+	{ "GET",	&exec_get_cmd },
+	{ "PWD",	&exec_pwd_cmd },
+	{ "CWD",	&exec_cwd_cmd }
 };
 
 static char		*get_cmd_name(char *cmd)
