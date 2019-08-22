@@ -7,7 +7,8 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "LIST", &exec_list_cmd },
 	{ "PWD", &exec_pwd_cmd },
 	{ "CWD", &exec_cwd_cmd },
-	{ "RETR", &exec_retr_cmd }
+	{ "RETR", &exec_retr_cmd },
+	{ "TYPE", &exec_type_cmd }
 };
 
 static char	*get_cmd_name(char *cmd)

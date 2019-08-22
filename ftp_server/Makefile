@@ -16,6 +16,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		exec_list_cmd.c \
 		exec_port_cmd.c \
 		exec_pwd_cmd.c \
+		exec_type_cmd.c \
 		exec_cwd_cmd.c \
 		path_access.c \
 		send.c \
