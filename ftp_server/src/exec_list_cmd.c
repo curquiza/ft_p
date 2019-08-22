@@ -36,8 +36,9 @@ static void	child_process(t_user *user, char *ls_arg)
 	args[2] = ls_arg;
 	args[3] = NULL;
 	send_oneline_reply_to_user(user, RES_125);
-	dup2(user->dt_client_sock, STDOUT_FILENO);
-	dup2(user->dt_client_sock, STDERR_FILENO);
+	if (dup2(user->dt_client_sock, STDOUT_FILENO) == -1
+		|| dup2(user->dt_client_sock, STDERR_FILENO) == -1)
+		exit(-1);
 	execv(args[0], args);
 	free(ls_arg);
 	exit(-1);
@@ -54,7 +55,7 @@ static void	parent_process(t_user *user)
 	wait4(0, &status, 0, NULL);
 	if (status == 65280)
 	{
-		print_data_output(NULL, 0, "Error during ls execution", NULL);
+		print_data_output(NULL, 0, "Error during ls execution process", NULL);
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
 		return ;
