@@ -71,6 +71,17 @@ static int		create_server_socket(uint16_t port)
 	return (sock);
 }
 
+
+static char	*get_root_path(void)
+{
+	char	*path;
+
+	path = getcwd(NULL, 0);
+	if (path == NULL)
+		ft_dprintf(2, ROOT_PATH_ERR);
+	return (path);
+}
+
 int					main(int argc, char **argv)
 {
 	uint16_t	port;

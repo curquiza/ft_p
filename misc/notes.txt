@@ -26,6 +26,11 @@ LIST :
     - pas ouf : on peut faire "ls ../ftp_server/." et ca marche
     - pas ouf : on peut faire "ls /src/signal.c" et on voit tout le path
 
+CWD:
+    - la RFC se contredit entre la section "Commande FTP" (4.1) et l'Appendice II : l'un indique que CWD doit renvoyer une 250 alors que l'appendix une 200.
+    - Pareil, l'appendice demande, en cas d'erreur de retourner une "431 Not a directory". Numéro d'erreur qui n'exite pas dans la section 4.2 qui liste les differents type d'erreurs
+    => parti pris : je renvoie une 200, comme dans l'appendix, et je retourne une 550 en cas d'erreur pour etre cohérente avec mes autres commandes.
+
 
 DIVERS
 ======

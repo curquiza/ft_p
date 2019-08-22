@@ -86,13 +86,12 @@ int			get_all_options(int argc, char **argv);
 
 void		usage(char *prgm);
 t_bool		is_dt_channel_open(t_user *user);
-t_bool		path_is_in_server_folder(char *path);
 t_bool		cmd_has_no_arg(t_user *user, char *cmd);
 
 void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
-char		*get_root_path(void);
+char		*get_current_wd_in_server(void);
 char 		*get_valid_path_for_cmd(char *path);
 
 t_ex_ret	listen_to_clients(int server_sock);

@@ -35,8 +35,14 @@ void			exec_cwd_cmd(t_user *user, char *cmd)
 		send_oneline_reply_to_user(user, RES_451);
 	else
 	{
-		// mettre un pimpé pour la réponse en faisant un cwd.
-		// utiliser la fonction dans pwd
+		free(path);
+		path = get_current_wd_in_server();
+		if (!path)
+		{
+			send_oneline_reply_to_user(user, RES_550_1);
+			free(path);
+			return ;
+		}
 		res = ft_strjoin("200 directory changed to ", path);
 		send_oneline_reply_to_user(user, res);
 		free(res);
