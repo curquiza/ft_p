@@ -1,5 +1,23 @@
 #include "server.h"
 
+static t_bool	is_dir(char *path)
+{
+	int			fd;
+	struct stat	buff;
+	t_bool		ret;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		return (FALSE);
+	if (fstat(fd, &buff) == -1)
+		return (FALSE);
+	ret = FALSE;
+	if (S_ISDIR(buff.st_mode) == TRUE)
+		ret = TRUE;
+	close(fd);
+	return (ret);
+}
+
 static char		*get_cwd_arg(t_user *user, char *cmd)
 {
 	char	**args;
@@ -18,9 +36,10 @@ static char		*get_cwd_arg(t_user *user, char *cmd)
 	}
 	rslt = get_valid_path_for_cmd(args[1]);
 	ft_tabdel(&args);
-	// return RES_550_3 si le path est un fichier
 	if (!rslt)
 		send_oneline_reply_to_user(user, RES_550_1);
+	else if (is_dir(rslt) == FALSE)
+		send_oneline_reply_to_user(user, RES_550_3);
 	return (rslt);
 }
 

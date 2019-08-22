@@ -1,5 +1,5 @@
 - gerer les signaux
-- retour de tous les appels : listen, inet_addr, fork, accept, connect, fstat...
+- retour de tous les appels : listen, inet_addr, fork, accept, connect, fstat, dup2...
 - faire des vrais recv avec comme arret le CRLF
 - checker les leaks
 

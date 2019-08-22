@@ -30,6 +30,7 @@ CWD:
     - la RFC se contredit entre la section "Commande FTP" (4.1) et l'Appendice II : l'un indique que CWD doit renvoyer une 250 alors que l'appendix une 200.
     - Pareil, l'appendice demande, en cas d'erreur de retourner une "431 Not a directory". Numéro d'erreur qui n'exite pas dans la section 4.2 qui liste les differents type d'erreurs
     => parti pris : je renvoie une 200, comme dans l'appendix, et je retourne une 550 en cas d'erreur pour etre cohérente avec mes autres commandes.
+    - pas ouf : si je cd un folder avec des pb de permissions, je retourne : 550 No a directory.
 
 
 DIVERS
