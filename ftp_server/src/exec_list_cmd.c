@@ -45,7 +45,7 @@ static void	child_process(t_user *user, char *ls_arg)
 }
 
 /*
-**	65280 => -1
+**	255 => -1
 */
 static void	parent_process(t_user *user)
 {
@@ -53,7 +53,8 @@ static void	parent_process(t_user *user)
 
 	status = 0;
 	wait4(0, &status, 0, NULL);
-	if (status == 65280)
+	if ((WIFEXITED(status) == TRUE && WEXITSTATUS(status) == 255)
+		|| (WIFEXITED(status) == FALSE))
 	{
 		print_data_output(NULL, 0, "Error during ls execution process", NULL);
 		send_oneline_reply_to_user(user, RES_451);

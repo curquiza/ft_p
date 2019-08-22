@@ -39,7 +39,11 @@ static char		*get_cwd_arg(t_user *user, char *cmd)
 	if (!rslt)
 		send_oneline_reply_to_user(user, RES_550_1);
 	else if (is_dir(rslt) == FALSE)
+	{
+		free(rslt);
 		send_oneline_reply_to_user(user, RES_550_3);
+		return (NULL);
+	}
 	return (rslt);
 }
 
@@ -51,7 +55,10 @@ void			exec_cwd_cmd(t_user *user, char *cmd)
 	if ((path = get_cwd_arg(user, cmd)) == NULL)
 		return ;
 	if (chdir(path) != 0)
+	{
+		print_debug_output(NULL, 0, "Syscall chdir failed", NULL);
 		send_oneline_reply_to_user(user, RES_451);
+	}
 	else
 	{
 		free(path);

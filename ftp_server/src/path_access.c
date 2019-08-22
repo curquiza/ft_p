@@ -67,7 +67,7 @@ char 			*get_valid_path_for_cmd(char *path) // à retravailler, notamment son no
 		check_path_in_child_process(new_path);
 	else
 		wait4(0, &status, 0, NULL);
-	if (status == 0)
+	if (WIFEXITED(status) == TRUE && WEXITSTATUS(status) == 0)
 		return (new_path);
 	return (NULL);
 }
