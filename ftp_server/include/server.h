@@ -23,7 +23,7 @@
 # define BIND_ERR			"ERROR: bind syscall."
 # define LISTEN_ERR			"ERROR: listen syscall."
 # define CHDIR_ERR			"ERROR: chdir syscall."
-# define PROTOBYNAME_ERR	"ERROR: getprotobyname."
+# define PROTOBYNAME_ERR	"ERROR: getprotobyname function."
 # define INET_ERR			"ERROR: inet_addr."
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
@@ -34,6 +34,7 @@
 # define DEF_SIN_ADDR	INADDR_ANY
 # define CMD_NB			6
 # define TCP_PROTONAME	"tcp"
+# define BUFF_SIZE		2048
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -112,7 +113,7 @@ void			send_oneline_reply_to_user(t_user *user, char *str);
 void			exec_pasv_cmd(t_user *user, char *cmd);
 void			exec_port_cmd(t_user *user, char *cmd);
 void			exec_list_cmd(t_user *user, char *cmd);
-void			exec_get_cmd(t_user *user, char *cmd);
+void			exec_retr_cmd(t_user *user, char *cmd);
 void			exec_pwd_cmd(t_user *user, char *cmd);
 void			exec_cwd_cmd(t_user *user, char *cmd);
 

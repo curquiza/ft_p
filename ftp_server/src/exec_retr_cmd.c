@@ -1,6 +1,6 @@
 #include "server.h"
 
-void		exec_get_cmd(t_user *user, char *cmd)
+void		exec_retr_cmd(t_user *user, char *cmd)
 {
 	struct stat		stat_struct;
 	int				size;
