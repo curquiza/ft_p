@@ -6,10 +6,11 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "PORT", &exec_port_cmd },
 	{ "LIST", &exec_list_cmd },
 	{ "GET", &exec_get_cmd },
-	{ "PWD", &exec_pwd_cmd }
+	{ "PWD", &exec_pwd_cmd },
+	{ "CWD", &exec_cwd_cmd }
 };
 
-static char		*get_cmd_name(char *cmd)
+static char	*get_cmd_name(char *cmd)
 {
 	int		i;
 	char	*cmd_name;
@@ -24,7 +25,7 @@ static char		*get_cmd_name(char *cmd)
 	return (cmd_name);
 }
 
-static void		exec_cmd(t_user *user, char *cmd)
+static void	exec_cmd(t_user *user, char *cmd)
 {
 	int		i;
 	char	*cmd_name;
@@ -45,7 +46,7 @@ static void		exec_cmd(t_user *user, char *cmd)
 	send_oneline_reply_to_user(user, RES_500);
 }
 
-static void		communicate_with_new_user(t_user *user)
+static void	communicate_with_new_user(t_user *user)
 {
 	char	cmd[1024];
 	int		len;
@@ -97,7 +98,8 @@ t_ex_ret	listen_to_clients(int server_sock)
 	num = 1;
 	while (1)
 	{
-		ctrl_client_sock = accept(server_sock, (struct sockaddr *)&client_sin, &client_size);
+		ctrl_client_sock = accept(server_sock,
+			(struct sockaddr *)&client_sin, &client_size);
 		if (ctrl_client_sock < 0)
 			return (ft_ret_err("During accept"));
 		if ((pid = fork()) < 0)
@@ -108,9 +110,7 @@ t_ex_ret	listen_to_clients(int server_sock)
 			exit(0);
 		}
 		else
-		{
 			close(ctrl_client_sock);
-		}
 		num++;
 	}
 	return (SUCCESS);

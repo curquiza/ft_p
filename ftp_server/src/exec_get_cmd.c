@@ -5,9 +5,10 @@ void		exec_get_cmd(t_user *user, char *cmd)
 	struct stat		stat_struct;
 	int				size;
 	t_byte			*ptr;
+	int				fd;
 
 	(void)cmd;
-	int fd = open("test/input/package-lock.json", O_RDONLY);
+	fd = open("test/input/package-lock.json", O_RDONLY);
 	fstat(fd, &stat_struct);
 	size = stat_struct.st_size;
 	ptr = NULL;

@@ -13,11 +13,6 @@ t_bool	is_dt_channel_open(t_user *user)
 	return (TRUE);
 }
 
-t_bool	path_is_in_server_folder(char *path)
-{
-	return (ft_strstr(path, g_root_path) == path);
-}
-
 t_bool	cmd_has_no_arg(t_user *user, char *cmd)
 {
 	char 	**args;

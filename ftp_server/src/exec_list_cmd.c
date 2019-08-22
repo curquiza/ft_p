@@ -1,4 +1,4 @@
-# include "server.h"
+#include "server.h"
 
 static char		*get_ls_arg(t_user *user, char *cmd)
 {
@@ -20,7 +20,7 @@ static char		*get_ls_arg(t_user *user, char *cmd)
 	if (size == 1)
 		rslt = ft_strdup(".");
 	else if (size == 2)
-		rslt = get_path_for_list_cmd(args[1]);
+		rslt = get_valid_path_from_user_input(args[1]);
 	ft_tabdel(&args);
 	if (rslt == NULL)
 		send_oneline_reply_to_user(user, RES_550_2);
@@ -36,25 +36,28 @@ static void	child_process(t_user *user, char *ls_arg)
 	args[2] = ls_arg;
 	args[3] = NULL;
 	send_oneline_reply_to_user(user, RES_125);
-	dup2(user->dt_client_sock, STDOUT_FILENO);
-	dup2(user->dt_client_sock, STDERR_FILENO);
+	if (dup2(user->dt_client_sock, STDOUT_FILENO) == -1
+		|| dup2(user->dt_client_sock, STDERR_FILENO) == -1)
+		exit(-1);
 	execv(args[0], args);
 	free(ls_arg);
 	exit(-1);
 }
 
 /*
-**	65280 => -1
+**	255 => -1
 */
+
 static void	parent_process(t_user *user)
 {
 	int		status;
 
 	status = 0;
 	wait4(0, &status, 0, NULL);
-	if (status == 65280)
+	if ((WIFEXITED(status) == TRUE && WEXITSTATUS(status) == 255)
+		|| (WIFEXITED(status) == FALSE))
 	{
-		print_data_output(NULL, 0, "Error during ls execution", NULL);
+		print_data_output(NULL, 0, LS_ERR, NULL);
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
 		return ;
@@ -75,16 +78,12 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	pid_t	pid;
 
 	if (!(ls_arg = get_ls_arg(user, cmd)))
-	{
-		close_user_data_channel(user);
-		return ;
-	}
+		return (close_user_data_channel(user));
 	if (is_dt_channel_open(user) == FALSE)
 	{
 		free(ls_arg);
 		send_oneline_reply_to_user(user, RES_426);
-		close_user_data_channel(user);
-		return ;
+		return (close_user_data_channel(user));
 	}
 	if ((pid = fork()) < 0)
 	{

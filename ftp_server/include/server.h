@@ -14,15 +14,26 @@
 
 # define OPTIONS		"d"
 
-# define MALLOC_ERR		"During malloc. Exiting..."
-# define PORT_ERR		"Port number unavailable (1024-65335)"
-# define ROOT_PATH_ERR	"Error when getting server root path. Exiting..."
+# define PORT_ERR			"Port number unavailable (1024-65335)"
+# define ROOT_PATH_ERR		"ERROR: when getting server root path. Exiting..."
+# define MALLOC_ERR			"ERROR: malloc. Exiting..."
+# define SOCKET_ERR			"ERROR: socket syscall."
+# define ACCEPT_ERR			"ERROR: accept syscall."
+# define CONNECT_ERR		"ERROR: connect syscall."
+# define BIND_ERR			"ERROR: bind syscall."
+# define LISTEN_ERR			"ERROR: listen syscall."
+# define CHDIR_ERR			"ERROR: chdir syscall."
+# define PROTOBYNAME_ERR	"ERROR: getprotobyname."
+# define INET_ERR			"ERROR: inet_addr."
+# define NO_PORT_ERR		"ERROR: no port available to create DT channel."
+# define LS_ERR				"ERROR: during ls execution process."
 
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
-# define CMD_NB			5
+# define CMD_NB			6
+# define TCP_PROTONAME	"tcp"
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -38,77 +49,78 @@
 # define RES_501	"501 Syntax error in parameters or arguments."
 # define RES_550_1	"550 Requested action not taken."
 # define RES_550_2	"550 File unavailable."
+# define RES_550_3	"550 Not a directory."
 
 /*
 ** STRUCTURES
 */
 
-typedef enum		e_mode
+typedef enum	e_mode
 {
 	NONE,
 	PASSIVE,
 	ACTIVE
-}					s_mode;
+}				t_mode;
 
-typedef struct		s_user
+typedef struct	s_user
 {
 	int			num;
-	s_mode		mode;
+	t_mode		mode;
 	int			ctrl_client_sock;
 	int			dt_server_sock;
 	int			dt_client_sock;
 	uint16_t	dt_port;
-}					t_user;
+}				t_user;
 
-typedef struct		s_cmd
+typedef struct	s_cmd
 {
 	char		*name;
 	void		(*f)(t_user *user, char *cmd);
-} 					t_cmd;
+}				t_cmd;
 
 /*
 ** GLOBALS
 */
 
-int			g_server_sock;
-uint8_t		g_flags;
-t_cmd		g_cmd_tab[CMD_NB];
-char		*g_root_path;
+int				g_server_sock;
+uint8_t			g_flags;
+t_cmd			g_cmd_tab[CMD_NB];
+char			*g_root_path;
 
 /*
 ** FUNCTIONS
 */
 
-t_ex_ret	activate_opt(char opt_letter);
-t_bool		opt_is_activated(char opt_letter);
-int			get_all_options(int argc, char **argv);
+t_ex_ret		activate_opt(char opt_letter);
+t_bool			opt_is_activated(char opt_letter);
+int				get_all_options(int argc, char **argv);
 
-void		usage(char *prgm);
-t_bool		is_dt_channel_open(t_user *user);
-t_bool		path_is_in_server_folder(char *path);
-t_bool		cmd_has_no_arg(t_user *user, char *cmd);
+void			usage(char *prgm);
+t_bool			is_dt_channel_open(t_user *user);
+t_bool			cmd_has_no_arg(t_user *user, char *cmd);
 
-void		sigint_handler(int sig);
-void		child_signals_handler(void);
+void			sigint_handler(int sig);
+void			child_signals_handler(void);
 
-char		*get_root_path(void);
-char 		*get_path_for_list_cmd(char *path);
+char			*get_current_wd_in_server(void);
+char			*get_valid_path_from_user_input(char *path);
 
-t_ex_ret	listen_to_clients(int server_sock);
+t_ex_ret		listen_to_clients(int server_sock);
 
-void		send_oneline_reply_to_user(t_user *user, char *str);
+void			send_oneline_reply_to_user(t_user *user, char *str);
 
-void		exec_pasv_cmd(t_user *user, char *cmd);
-void		exec_port_cmd(t_user *user, char *cmd);
-void		exec_list_cmd(t_user *user, char *cmd);
-void		exec_get_cmd(t_user *user, char *cmd);
-void		exec_pwd_cmd(t_user *user, char *cmd);
+void			exec_pasv_cmd(t_user *user, char *cmd);
+void			exec_port_cmd(t_user *user, char *cmd);
+void			exec_list_cmd(t_user *user, char *cmd);
+void			exec_get_cmd(t_user *user, char *cmd);
+void			exec_pwd_cmd(t_user *user, char *cmd);
+void			exec_cwd_cmd(t_user *user, char *cmd);
 
-t_ex_ret	close_server(int server_sock);
-void		close_user_data_channel(t_user *user);
+t_ex_ret		close_server(int server_sock);
+void			close_user_data_channel(t_user *user);
 
-void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
-void		print_data_output(char *s1, int i, char *s2, char *s3);
-void		print_debug_output(char *s1, int i, char *s2, char *s3);
+void			print_ctrl_output(char *s1, int i, char *s2, char *s3);
+void			print_data_output(char *s1, int i, char *s2, char *s3);
+void			print_debug_output(char *s1, int i, char *s2, char *s3);
 
 #endif

@@ -1,13 +1,8 @@
 #include "server.h"
 
-char	*get_root_path(void)
+static t_bool	path_is_in_server_folder(char *path)
 {
-	char	*path;
-
-	path = getcwd(NULL, 0);
-	if (path == NULL)
-		ft_dprintf(2, ROOT_PATH_ERR);
-	return (path);
+	return (ft_strstr(path, g_root_path) == path);
 }
 
 /*
@@ -55,7 +50,7 @@ static void		check_path_in_child_process(char *path)
 	exit(1);
 }
 
-char 			*get_path_for_list_cmd(char *path)
+char			*get_valid_path_from_user_input(char *path)
 {
 	char	*new_path;
 	pid_t	pid;
@@ -67,12 +62,30 @@ char 			*get_path_for_list_cmd(char *path)
 		new_path = ft_strdup(path);
 	status = 0;
 	if ((pid = fork()) < 0)
-		return (ft_strdup("."));
+		return (NULL);
 	if (pid == 0)
 		check_path_in_child_process(new_path);
 	else
 		wait4(0, &status, 0, NULL);
-	if (status == 0)
+	if (WIFEXITED(status) == TRUE && WEXITSTATUS(status) == 0)
 		return (new_path);
 	return (NULL);
+}
+
+char	*get_current_wd_in_server(void)
+{
+	char	*current_path;
+	char	*new_path;
+
+	current_path = getcwd(NULL, 0);
+	if (!current_path || path_is_in_server_folder(current_path) == FALSE)
+	{
+		free(current_path);
+		return (NULL);
+	}
+	if (*(current_path + ft_strlen(g_root_path)) == 0)
+		new_path = ft_strjoin("/", current_path + ft_strlen(g_root_path));
+	else
+		new_path = ft_strdup(current_path + ft_strlen(g_root_path));
+	return (new_path);
 }

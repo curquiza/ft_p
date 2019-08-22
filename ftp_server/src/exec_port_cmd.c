@@ -45,37 +45,41 @@ static uint16_t	get_port(char **args)
 	addr = addr << 8;
 	tmp = ft_atoi(args[5]);
 	addr |= (tmp & 0x000000ff);
-	return addr;
+	return (addr);
 }
 
-static int	connect_to_user(char *addr, uint16_t port)
+static int		connect_to_user(char *addr, uint16_t port)
 {
 	int					sock;
 	struct protoent		*proto;
 	struct sockaddr_in	sin;
 
-	if ((proto = getprotobyname("tcp")) == NULL)
+	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 	{
-		print_debug_output(NULL, 0, "Error during getprotobyname", NULL);
+		print_debug_output(NULL, 0, PROTOBYNAME_ERR, NULL);
 		return (-1);
 	}
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) < 0)
 	{
-		print_debug_output(NULL, 0, "Error during socket creation", NULL);
+		print_debug_output(NULL, 0, SOCKET_ERR, NULL);
 		return (-1);
 	}
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = inet_addr(addr);
+	if ((sin.sin_addr.s_addr = inet_addr(addr)) == 0)
+	{
+		print_debug_output(NULL, 0, INET_ERR, NULL);
+		return (-1);
+	}
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
-		print_debug_output(NULL, 0, "Error during connect", NULL);
+		print_debug_output(NULL, 0, CONNECT_ERR, NULL);
 		return (-1);
 	}
 	return (sock);
 }
 
-static char	**get_arg_tab(char *cmd)
+static char		**get_arg_tab(char *cmd)
 {
 	char		**cmd_args;
 	char		**arg_tab;
@@ -93,7 +97,7 @@ static char	**get_arg_tab(char *cmd)
 	return (arg_tab);
 }
 
-void		exec_port_cmd(t_user *user, char *cmd)
+void			exec_port_cmd(t_user *user, char *cmd)
 {
 	char		**arg_tab;
 	char		addr[15];
@@ -118,4 +122,4 @@ void		exec_port_cmd(t_user *user, char *cmd)
 		send_oneline_reply_to_user(user, RES_200);
 		user->mode = ACTIVE;
 	}
-};
+}
