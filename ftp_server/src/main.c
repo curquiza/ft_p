@@ -34,13 +34,13 @@ static uint16_t	get_port_uint16(char *port_str)
 
 	if (ft_is_int(port_str) == FALSE)
 	{
-		ft_dprintf(2, "Error: %s: %s\n", port_str, PORT_ERR);
+		ft_dprintf(2, "ERROR: %s: %s\n", port_str, PORT_ERR);
 		return (0);
 	}
 	port = ft_atoi(port_str);
 	if (port < PORT_MIN_RANGE || port > USHRT_MAX)
 	{
-		ft_dprintf(2, "Error: %d: %s\n", port, PORT_ERR);
+		ft_dprintf(2, "ERROR: %d: %s\n", port, PORT_ERR);
 		return (0);
 	}
 	return ((uint16_t)port);
@@ -48,7 +48,7 @@ static uint16_t	get_port_uint16(char *port_str)
 
 static int		ret_err_neg(char *s)
 {
-	ft_dprintf(2, "Error: %s\n", s);
+	ft_dprintf(2, "%s\n", s);
 	return (-1);
 }
 
@@ -58,16 +58,17 @@ static int		create_server_socket(uint16_t port)
 	struct protoent		*proto;
 	struct sockaddr_in	sin;
 
-	if ((proto = getprotobyname("tcp")) == NULL)
-		return (ret_err_neg("During getprotobyname"));
+	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
+		return (ret_err_neg(PROTOBYNAME_ERR));
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
-		return (ret_err_neg("During socket server creation"));
+		return (ret_err_neg(SOCKET_ERR));
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = htonl(DEF_SIN_ADDR);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-		return (ret_err_neg("During binding"));
-	listen(sock, LISTEN_NB);
+		return (ret_err_neg(BIND_ERR));
+	if (listen(sock, LISTEN_NB) == -1)
+		return (ret_err_neg(LISTEN_ERR));
 	return (sock);
 }
 

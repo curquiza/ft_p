@@ -14,15 +14,25 @@
 
 # define OPTIONS		"d"
 
-# define MALLOC_ERR		"During malloc. Exiting..."
-# define PORT_ERR		"Port number unavailable (1024-65335)"
-# define ROOT_PATH_ERR	"Error when getting server root path. Exiting..."
+# define PORT_ERR			"Port number unavailable (1024-65335)"
+# define ROOT_PATH_ERR		"ERROR: when getting server root path. Exiting..."
+# define MALLOC_ERR			"ERROR: malloc. Exiting..."
+# define SOCKET_ERR			"ERROR: socket syscall."
+# define ACCEPT_ERR			"ERROR: accept syscall."
+# define CONNECT_ERR		"ERROR: connect syscall."
+# define BIND_ERR			"ERROR: bind syscall."
+# define LISTEN_ERR			"ERROR: listen syscall."
+# define CHDIR_ERR			"ERROR: chdir syscall."
+# define PROTOBYNAME_ERR	"ERROR: getprotobyname."
+# define NO_PORT_ERR		"ERROR: no port available to create DT channel."
+# define LS_ERR				"ERROR: during ls execution process."
 
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
 # define CMD_NB			6
+# define TCP_PROTONAME	"tcp"
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 

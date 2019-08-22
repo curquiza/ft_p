@@ -47,23 +47,26 @@ static int		create_server_socket_on_valid_port(t_user *user)
 	int					sock;
 	struct protoent		*proto;
 
-	if ((proto = getprotobyname("tcp")) == NULL)
+	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 	{
-		print_debug_output(NULL, 0, "Error during getprotobyname", NULL);
+		print_debug_output(NULL, 0, PROTOBYNAME_ERR, NULL);
 		return (-1);
 	}
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
 	{
-		print_debug_output(NULL, 0, "Error during socket server creation", NULL);
+		print_debug_output(NULL, 0, SOCKET_ERR, NULL);
 		return (-1);
 	}
 	if (get_user_dt_port(user, sock) == FAILURE)
 	{
-		print_debug_output(NULL, 0, "No port available to create DT channel",
-			NULL);
+		print_debug_output(NULL, 0, NO_PORT_ERR, NULL);
 		return (-1);
 	}
-	listen(sock, LISTEN_NB);
+	if (listen(sock, LISTEN_NB) == -1)
+	{
+		print_debug_output(NULL, 0, LISTEN_ERR, NULL);
+		return (-1);
+	}
 	return (sock);
 }
 
@@ -85,7 +88,7 @@ void		exec_pasv_cmd(t_user *user, char *cmd)
 	if ((user->dt_client_sock = accept(user->dt_server_sock,
 		(struct sockaddr *)&dt_sin, &dt_size)) < 0)
 	{
-		print_debug_output(NULL, 0, "Error during accept", NULL);
+		print_debug_output(NULL, 0, ACCEPT_ERR, NULL);
 		send_oneline_reply_to_user(user, RES_425);
 		return ;
 	}

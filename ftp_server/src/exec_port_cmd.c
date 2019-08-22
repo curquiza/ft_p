@@ -54,14 +54,14 @@ static int		connect_to_user(char *addr, uint16_t port)
 	struct protoent		*proto;
 	struct sockaddr_in	sin;
 
-	if ((proto = getprotobyname("tcp")) == NULL)
+	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 	{
-		print_debug_output(NULL, 0, "Error during getprotobyname", NULL);
+		print_debug_output(NULL, 0, PROTOBYNAME_ERR, NULL);
 		return (-1);
 	}
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) < 0)
 	{
-		print_debug_output(NULL, 0, "Error during socket creation", NULL);
+		print_debug_output(NULL, 0, SOCKET_ERR, NULL);
 		return (-1);
 	}
 	sin.sin_family = AF_INET;
@@ -69,7 +69,7 @@ static int		connect_to_user(char *addr, uint16_t port)
 	sin.sin_addr.s_addr = inet_addr(addr);
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
-		print_debug_output(NULL, 0, "Error during connect", NULL);
+		print_debug_output(NULL, 0, CONNECT_ERR, NULL);
 		return (-1);
 	}
 	return (sock);

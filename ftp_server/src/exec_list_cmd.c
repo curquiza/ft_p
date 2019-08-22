@@ -57,7 +57,7 @@ static void	parent_process(t_user *user)
 	if ((WIFEXITED(status) == TRUE && WEXITSTATUS(status) == 255)
 		|| (WIFEXITED(status) == FALSE))
 	{
-		print_data_output(NULL, 0, "Error during ls execution process", NULL);
+		print_data_output(NULL, 0, LS_ERR, NULL);
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
 		return ;
