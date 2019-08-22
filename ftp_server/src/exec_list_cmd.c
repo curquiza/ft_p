@@ -1,4 +1,4 @@
-# include "server.h"
+#include "server.h"
 
 static char		*get_ls_arg(t_user *user, char *cmd)
 {
@@ -47,6 +47,7 @@ static void	child_process(t_user *user, char *ls_arg)
 /*
 **	255 => -1
 */
+
 static void	parent_process(t_user *user)
 {
 	int		status;
@@ -77,16 +78,12 @@ void		exec_list_cmd(t_user *user, char *cmd)
 	pid_t	pid;
 
 	if (!(ls_arg = get_ls_arg(user, cmd)))
-	{
-		close_user_data_channel(user);
-		return ;
-	}
+		return (close_user_data_channel(user));
 	if (is_dt_channel_open(user) == FALSE)
 	{
 		free(ls_arg);
 		send_oneline_reply_to_user(user, RES_426);
-		close_user_data_channel(user);
-		return ;
+		return (close_user_data_channel(user));
 	}
 	if ((pid = fork()) < 0)
 	{

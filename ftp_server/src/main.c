@@ -14,7 +14,7 @@ static t_ex_ret	init(int argc, char **argv)
 	return (SUCCESS);
 }
 
-static int	get_port_index(int argc, char **argv)
+static int		get_port_index(int argc, char **argv)
 {
 	int			port_index;
 
@@ -28,7 +28,7 @@ static int	get_port_index(int argc, char **argv)
 	return (port_index);
 }
 
-static uint16_t		get_port_uint16(char *port_str)
+static uint16_t	get_port_uint16(char *port_str)
 {
 	int32_t		port;
 
@@ -54,15 +54,15 @@ static int		ret_err_neg(char *s)
 
 static int		create_server_socket(uint16_t port)
 {
-	int 				sock;
+	int					sock;
 	struct protoent		*proto;
-	struct sockaddr_in	sin;			// /usr/include/netinet/in.h
+	struct sockaddr_in	sin;
 
 	if ((proto = getprotobyname("tcp")) == NULL)
 		return (ret_err_neg("During getprotobyname"));
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
 		return (ret_err_neg("During socket server creation"));
-	sin.sin_family = AF_INET; // adress family internet
+	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = htonl(DEF_SIN_ADDR);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
@@ -71,8 +71,7 @@ static int		create_server_socket(uint16_t port)
 	return (sock);
 }
 
-
-static char	*get_root_path(void)
+static char		*get_root_path(void)
 {
 	char	*path;
 
@@ -82,7 +81,7 @@ static char	*get_root_path(void)
 	return (path);
 }
 
-int					main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	uint16_t	port;
 	int			port_index;

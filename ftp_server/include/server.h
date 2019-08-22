@@ -44,72 +44,72 @@
 ** STRUCTURES
 */
 
-typedef enum		e_mode
+typedef enum	e_mode
 {
 	NONE,
 	PASSIVE,
 	ACTIVE
-}					s_mode;
+}				t_mode;
 
-typedef struct		s_user
+typedef struct	s_user
 {
 	int			num;
-	s_mode		mode;
+	t_mode		mode;
 	int			ctrl_client_sock;
 	int			dt_server_sock;
 	int			dt_client_sock;
 	uint16_t	dt_port;
-}					t_user;
+}				t_user;
 
-typedef struct		s_cmd
+typedef struct	s_cmd
 {
 	char		*name;
 	void		(*f)(t_user *user, char *cmd);
-} 					t_cmd;
+}				t_cmd;
 
 /*
 ** GLOBALS
 */
 
-int			g_server_sock;
-uint8_t		g_flags;
-t_cmd		g_cmd_tab[CMD_NB];
-char		*g_root_path;
+int				g_server_sock;
+uint8_t			g_flags;
+t_cmd			g_cmd_tab[CMD_NB];
+char			*g_root_path;
 
 /*
 ** FUNCTIONS
 */
 
-t_ex_ret	activate_opt(char opt_letter);
-t_bool		opt_is_activated(char opt_letter);
-int			get_all_options(int argc, char **argv);
+t_ex_ret		activate_opt(char opt_letter);
+t_bool			opt_is_activated(char opt_letter);
+int				get_all_options(int argc, char **argv);
 
-void		usage(char *prgm);
-t_bool		is_dt_channel_open(t_user *user);
-t_bool		cmd_has_no_arg(t_user *user, char *cmd);
+void			usage(char *prgm);
+t_bool			is_dt_channel_open(t_user *user);
+t_bool			cmd_has_no_arg(t_user *user, char *cmd);
 
-void		sigint_handler(int sig);
-void		child_signals_handler(void);
+void			sigint_handler(int sig);
+void			child_signals_handler(void);
 
-char		*get_current_wd_in_server(void);
-char 		*get_valid_path_from_user_input(char *path);
+char			*get_current_wd_in_server(void);
+char			*get_valid_path_from_user_input(char *path);
 
-t_ex_ret	listen_to_clients(int server_sock);
+t_ex_ret		listen_to_clients(int server_sock);
 
-void		send_oneline_reply_to_user(t_user *user, char *str);
+void			send_oneline_reply_to_user(t_user *user, char *str);
 
-void		exec_pasv_cmd(t_user *user, char *cmd);
-void		exec_port_cmd(t_user *user, char *cmd);
-void		exec_list_cmd(t_user *user, char *cmd);
-void		exec_get_cmd(t_user *user, char *cmd);
-void		exec_pwd_cmd(t_user *user, char *cmd);
-void		exec_cwd_cmd(t_user *user, char *cmd);
+void			exec_pasv_cmd(t_user *user, char *cmd);
+void			exec_port_cmd(t_user *user, char *cmd);
+void			exec_list_cmd(t_user *user, char *cmd);
+void			exec_get_cmd(t_user *user, char *cmd);
+void			exec_pwd_cmd(t_user *user, char *cmd);
+void			exec_cwd_cmd(t_user *user, char *cmd);
 
-t_ex_ret	close_server(int server_sock);
-void		close_user_data_channel(t_user *user);
+t_ex_ret		close_server(int server_sock);
+void			close_user_data_channel(t_user *user);
 
-void		print_ctrl_output(char *s1, int i, char *s2, char *s3);
-void		print_data_output(char *s1, int i, char *s2, char *s3);
-void		print_debug_output(char *s1, int i, char *s2, char *s3);
+void			print_ctrl_output(char *s1, int i, char *s2, char *s3);
+void			print_data_output(char *s1, int i, char *s2, char *s3);
+void			print_debug_output(char *s1, int i, char *s2, char *s3);
 
 #endif

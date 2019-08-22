@@ -50,7 +50,7 @@ static void		check_path_in_child_process(char *path)
 	exit(1);
 }
 
-char 			*get_valid_path_from_user_input(char *path)
+char			*get_valid_path_from_user_input(char *path)
 {
 	char	*new_path;
 	pid_t	pid;
@@ -71,7 +71,6 @@ char 			*get_valid_path_from_user_input(char *path)
 		return (new_path);
 	return (NULL);
 }
-
 
 char	*get_current_wd_in_server(void)
 {

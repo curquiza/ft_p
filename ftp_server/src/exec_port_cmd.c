@@ -45,10 +45,10 @@ static uint16_t	get_port(char **args)
 	addr = addr << 8;
 	tmp = ft_atoi(args[5]);
 	addr |= (tmp & 0x000000ff);
-	return addr;
+	return (addr);
 }
 
-static int	connect_to_user(char *addr, uint16_t port)
+static int		connect_to_user(char *addr, uint16_t port)
 {
 	int					sock;
 	struct protoent		*proto;
@@ -75,7 +75,7 @@ static int	connect_to_user(char *addr, uint16_t port)
 	return (sock);
 }
 
-static char	**get_arg_tab(char *cmd)
+static char		**get_arg_tab(char *cmd)
 {
 	char		**cmd_args;
 	char		**arg_tab;
@@ -93,7 +93,7 @@ static char	**get_arg_tab(char *cmd)
 	return (arg_tab);
 }
 
-void		exec_port_cmd(t_user *user, char *cmd)
+void			exec_port_cmd(t_user *user, char *cmd)
 {
 	char		**arg_tab;
 	char		addr[15];
@@ -118,4 +118,4 @@ void		exec_port_cmd(t_user *user, char *cmd)
 		send_oneline_reply_to_user(user, RES_200);
 		user->mode = ACTIVE;
 	}
-};
+}
