@@ -34,7 +34,7 @@
 # define DEF_SIN_ADDR	INADDR_ANY
 # define CMD_NB			6
 # define TCP_PROTONAME	"tcp"
-# define BUFF_SIZE		2048
+# define READ_BUFF		2048
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
