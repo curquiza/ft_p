@@ -34,7 +34,7 @@ static char		*get_cwd_arg(t_user *user, char *cmd)
 		ft_tabdel(&args);
 		return (NULL);
 	}
-	rslt = get_valid_path_for_cmd(args[1]);
+	rslt = get_valid_path_from_user_input(args[1]);
 	ft_tabdel(&args);
 	if (!rslt)
 		send_oneline_reply_to_user(user, RES_550_1);

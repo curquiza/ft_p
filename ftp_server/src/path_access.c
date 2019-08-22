@@ -50,7 +50,7 @@ static void		check_path_in_child_process(char *path)
 	exit(1);
 }
 
-char 			*get_valid_path_for_cmd(char *path) // à retravailler, notamment son nom et ses retours, bref son utilité.
+char 			*get_valid_path_from_user_input(char *path)
 {
 	char	*new_path;
 	pid_t	pid;
@@ -62,7 +62,7 @@ char 			*get_valid_path_for_cmd(char *path) // à retravailler, notamment son no
 		new_path = ft_strdup(path);
 	status = 0;
 	if ((pid = fork()) < 0)
-		return (ft_strdup("."));
+		return (NULL);
 	if (pid == 0)
 		check_path_in_child_process(new_path);
 	else

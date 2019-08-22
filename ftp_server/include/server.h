@@ -92,7 +92,7 @@ void		sigint_handler(int sig);
 void		child_signals_handler(void);
 
 char		*get_current_wd_in_server(void);
-char 		*get_valid_path_for_cmd(char *path);
+char 		*get_valid_path_from_user_input(char *path);
 
 t_ex_ret	listen_to_clients(int server_sock);
 
