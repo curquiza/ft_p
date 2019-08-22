@@ -6,7 +6,6 @@
 SERVER:
 - les différentes commandes et leurs possibles réponses
 - gerer un maximum de client connecté ? => gerer les signaux
-- mettre des beaux [ERROR] à la place de Error
 
 CLIENT:
 - gerer localhost
@@ -20,3 +19,4 @@ DONE:
 - la fermeture du canal de donnée ? Oui, fait
 - gerer les arguments du LS
 - LIST : si erreur de syntax, close quand mm la connexion du DT
+- mettre des beaux [ERROR] à la place de Error
