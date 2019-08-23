@@ -84,7 +84,6 @@ static int		get_file_size(t_user *user, int fd)
 	{
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
-		// close(fd);
 		return (-1);
 	}
 	return (stat_struct.st_size);
