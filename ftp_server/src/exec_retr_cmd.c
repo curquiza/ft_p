@@ -123,7 +123,10 @@ void			exec_retr_cmd(t_user *user, char *cmd)
 	if (ret == -1)
 		send_oneline_reply_to_user(user, RES_451);
 	else
+	{
 		send_oneline_reply_to_user(user, RES_226);
+		log_data_sent_into_dt_channel(user, "* FILE *");
+	}
 	close_user_data_channel(user);
 	close(fd);
 }

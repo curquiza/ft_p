@@ -112,7 +112,10 @@ void			exec_stor_cmd(t_user *user, char *cmd)
 	if (write_content_into_new_file(fd, file_content, file_size) == FAILURE)
 		send_oneline_reply_to_user(user, RES_451);
 	else
+	{
+		log_data_received_from_dt_channel(user, "* FILE *");
 		send_oneline_reply_to_user(user, RES_226);
+	}
 	close(fd);
 	free(file_content);
 	close_user_data_channel(user);

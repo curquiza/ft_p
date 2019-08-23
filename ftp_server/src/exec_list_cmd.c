@@ -62,12 +62,7 @@ static void	parent_process(t_user *user)
 		close_user_data_channel(user);
 		return ;
 	}
-	if (user->mode == PASSIVE)
-		print_data_output("--> Sent through DT channel on port",
-			user->dt_port, ": * LS output *", NULL);
-	else
-		print_data_output("--> Sent through DT channel on user's port",
-			user->dt_port, ": * LS output *", NULL);
+	log_data_sent_into_dt_channel(user, "* LS OUTPUT *");
 	close_user_data_channel(user);
 	send_oneline_reply_to_user(user, RES_226);
 }

@@ -125,5 +125,7 @@ void			close_user_data_channel(t_user *user);
 void			print_ctrl_output(char *s1, int i, char *s2, char *s3);
 void			print_data_output(char *s1, int i, char *s2, char *s3);
 void			print_debug_output(char *s1, int i, char *s2, char *s3);
+void			log_data_sent_into_dt_channel(t_user *user, char *s);
+void			log_data_received_from_dt_channel(t_user *user, char *s);
 
 #endif
