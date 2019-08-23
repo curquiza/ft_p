@@ -47,41 +47,64 @@ static char		*get_retr_arg(t_user *user, char *cmd)
 	return (rslt);
 }
 
-void		exec_retr_cmd(t_user *user, char *cmd)
+static int	get_fd_for_transfer(t_user *user, char *cmd)
 {
-	struct stat		stat_struct;
-	int				size;
-	t_byte			*ptr;
-	int				fd;
 	char			*path;
-	int				total_send;
+	int				fd;
 
 	if ((path = get_retr_arg(user, cmd)) == NULL)
 	{
 		close_user_data_channel(user);
-		return ;
+		return (-1);
 	}
 	if (is_dt_channel_open(user) == FALSE)
 	{
 		free(path);
 		send_oneline_reply_to_user(user, RES_426);
 		close_user_data_channel(user);
-		return ;
+		return (-1);
 	}
-	send_oneline_reply_to_user(user, RES_125);
-	if ((fd = open(path, O_RDONLY)) == -1
-		|| fstat(fd, &stat_struct) == -1)
+	if ((fd = open(path, O_RDONLY)) == -1)
 	{
 		free(path);
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
+		return (-1);
+	}
+	send_oneline_reply_to_user(user, RES_125);
+	free(path);
+	return (fd);
+}
+
+static int		get_file_size(t_user *user, int fd)
+{
+	struct stat		stat_struct;
+
+	if (fstat(fd, &stat_struct) == -1)
+	{
+		send_oneline_reply_to_user(user, RES_451);
+		close_user_data_channel(user);
+		// close(fd);
+		return (-1);
+	}
+	return (stat_struct.st_size);
+}
+
+void			exec_retr_cmd(t_user *user, char *cmd)
+{
+	int				size;
+	t_byte			*ptr;
+	int				fd;
+	int				total_send;
+
+	if ((fd = get_fd_for_transfer(user, cmd)) == -1)
+		return ;
+	if ((size = get_file_size(user, fd)) == -1)
+	{
 		close(fd);
 		return ;
 	}
-	free(path);
-	size = stat_struct.st_size;
-	ptr = NULL;
-	if ((ptr = mmap(ptr, size, PROT_READ, MAP_PRIVATE, fd, 0)) == NULL)
+	if ((ptr = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0)) == NULL)
 	{
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
