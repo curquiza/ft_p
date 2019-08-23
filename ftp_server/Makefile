@@ -11,11 +11,12 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		signal.c \
 		close_connection.c \
 		listen_to_clients.c \
-		exec_get_cmd.c \
+		exec_retr_cmd.c \
 		exec_pasv_cmd.c \
 		exec_list_cmd.c \
 		exec_port_cmd.c \
 		exec_pwd_cmd.c \
+		exec_type_cmd.c \
 		exec_cwd_cmd.c \
 		path_access.c \
 		send.c \

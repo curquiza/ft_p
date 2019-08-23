@@ -2,10 +2,12 @@
 - retour de tous les appels : listen, inet_addr, fork, accept, connect, fstat, dup2...
 - faire des vrais recv avec comme arret le CRLF
 - checker les leaks
+- les liens symboliques
 
 SERVER:
 - les différentes commandes et leurs possibles réponses
 - gerer un maximum de client connecté ? => gerer les signaux
+- pq les leaks ??
 
 CLIENT:
 - gerer localhost
