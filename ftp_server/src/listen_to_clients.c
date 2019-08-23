@@ -60,6 +60,8 @@ static void	communicate_with_new_user(t_user *user)
 			cmd[len - 2] = '\0';
 		else if (len >= 1 && cmd[len - 1] == '\n')
 			cmd[len - 1] = '\0';
+		else
+			cmd[len] = '\0';
 		print_ctrl_output("<-- Received from Client", user->num, ":", cmd);
 		if (ft_strcmp(cmd, "QUIT") == 0)
 			break ;
