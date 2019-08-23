@@ -1,121 +1,119 @@
 #include "server.h"
 
-// static t_bool	is_regfile(char *path)
-// {
-// 	int			fd;
-// 	struct stat	buff;
-// 	t_bool		ret;
+static char		*get_stor_arg(t_user *user, char *cmd)
+{
+	char	**args;
+	int		size;
+	char	*rslt;
 
-// 	fd = open(path, O_RDONLY);
-// 	if (fd == -1)
-// 		return (FALSE);
-// 	if (fstat(fd, &buff) == -1)
-// 		return (FALSE);
-// 	ret = FALSE;
-// 	if (S_ISREG(buff.st_mode) == TRUE)
-// 		ret = TRUE;
-// 	close(fd);
-// 	return (ret);
-// }
+	args = ft_strsplit(cmd, ' ');
+	if (!args)
+		ft_exit(MALLOC_ERR, 1);
+	size = ft_tablen(args);
+	if (size != 2)
+	{
+		send_oneline_reply_to_user(user, RES_501);
+		ft_tabdel(&args);
+		return (NULL);
+	}
+	rslt = get_valid_path_from_user_input(args[1]);
+	ft_tabdel(&args);
+	if (!rslt)
+		send_oneline_reply_to_user(user, RES_550_1);
+	return (rslt);
+}
 
-// static char		*get_retr_arg(t_user *user, char *cmd)
-// {
-// 	char	**args;
-// 	int		size;
-// 	char	*rslt;
+static int	get_fd_for_transfer(t_user *user, char *cmd)
+{
+	char			*path;
+	int				fd;
 
-// 	args = ft_strsplit(cmd, ' ');
-// 	if (!args)
-// 		ft_exit(MALLOC_ERR, 1);
-// 	size = ft_tablen(args);
-// 	if (size != 2)
-// 	{
-// 		send_oneline_reply_to_user(user, RES_501);
-// 		ft_tabdel(&args);
-// 		return (NULL);
-// 	}
-// 	rslt = get_valid_path_from_user_input(args[1]);
-// 	ft_tabdel(&args);
-// 	if (!rslt)
-// 		send_oneline_reply_to_user(user, RES_550_1);
-// 	else if (is_regfile(rslt) == FALSE)
-// 	{
-// 		free(rslt);
-// 		send_oneline_reply_to_user(user, RES_550_2);
-// 		return (NULL);
-// 	}
-// 	return (rslt);
-// }
+	if ((path = get_stor_arg(user, cmd)) == NULL)
+	{
+		close_user_data_channel(user);
+		return (-1);
+	}
+	if (is_dt_channel_open(user) == FALSE)
+	{
+		free(path);
+		send_oneline_reply_to_user(user, RES_426);
+		close_user_data_channel(user);
+		return (-1);
+	}
+	if ((fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+	{
+		free(path);
+		send_oneline_reply_to_user(user, RES_451);
+		close_user_data_channel(user);
+		return (-1);
+	}
+	send_oneline_reply_to_user(user, RES_125);
+	free(path);
+	return (fd);
+}
 
-// static int	get_fd_for_transfer(t_user *user, char *cmd)
-// {
-// 	char			*path;
-// 	int				fd;
+static char		*get_file_content(t_user *user, int *size)
+{
+	char			buff[READ_BUFF];
+	char			*file_content;
+	char			*tmp;
+	int				ret;
+	int				total_size;
 
-// 	if ((path = get_retr_arg(user, cmd)) == NULL)
-// 	{
-// 		close_user_data_channel(user);
-// 		return (-1);
-// 	}
-// 	if (is_dt_channel_open(user) == FALSE)
-// 	{
-// 		free(path);
-// 		send_oneline_reply_to_user(user, RES_426);
-// 		close_user_data_channel(user);
-// 		return (-1);
-// 	}
-// 	if ((fd = open(path, O_RDONLY)) == -1)
-// 	{
-// 		free(path);
-// 		send_oneline_reply_to_user(user, RES_451);
-// 		close_user_data_channel(user);
-// 		return (-1);
-// 	}
-// 	send_oneline_reply_to_user(user, RES_125);
-// 	free(path);
-// 	return (fd);
-// }
+	total_size = 0;
+	file_content = NULL;
+	while ((ret = recv(user->dt_client_sock, buff, READ_BUFF, 0)) > 0)
+	{
+		tmp = file_content;
+		if (!(file_content = ft_memalloc(total_size + ret)))
+			ft_exit(MALLOC_ERR, 2);
+		ft_memmove(file_content, tmp, total_size);
+		ft_memmove(file_content + total_size, buff, ret);
+		free(tmp);
+		total_size += ret;
+	}
+	if (ret == -1)
+		perror("RECV");
+	*size = total_size;
+	return (file_content);
+}
 
-// static int		get_file_size(t_user *user, int fd)
-// {
-// 	struct stat		stat_struct;
+static t_ex_ret	write_content_into_new_file(int fd, char *content, int size)
+{
+	int	size_written;
+	int	ret;
 
-// 	if (fstat(fd, &stat_struct) == -1)
-// 	{
-// 		send_oneline_reply_to_user(user, RES_451);
-// 		close_user_data_channel(user);
-// 		return (-1);
-// 	}
-// 	return (stat_struct.st_size);
-// }
+	size_written = 0;
+	ret = 0;
+	while(size_written < size)
+	{
+		ret = write(fd, content, size - size_written);
+		if (ret == -1)
+			return (FAILURE);
+		size_written += ret;
+	}
+	return (SUCCESS);
+}
 
 void			exec_stor_cmd(t_user *user, char *cmd)
 {
-	(void)user;
-	(void)cmd;
-	// int				size;
-	// t_byte			*ptr;
-	// int				fd;
-	// int				total_send;
+	int		fd;
+	char	*file_content;
+	int		file_size;
 
-	// if ((fd = get_fd_for_transfer(user, cmd)) == -1)
-	// 	return ;
-	// if ((size = get_file_size(user, fd)) == -1)
-	// {
-	// 	close(fd);
-	// 	return ;
-	// }
-	// if ((ptr = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0)) == NULL)
-	// {
-	// 	send_oneline_reply_to_user(user, RES_451);
-	// 	close_user_data_channel(user);
-	// 	close(fd);
-	// 	return ;
-	// }
-	// total_send = 0;
-	// while (total_send < size)
-	// 	total_send += send(user->dt_client_sock, ptr, size - total_send, 0);
-	// close_user_data_channel(user);
-	// send_oneline_reply_to_user(user, RES_226);
-	// close(fd);
+	if ((fd = get_fd_for_transfer(user, cmd)) == -1)
+		return ;
+	if ((file_content = get_file_content(user, &file_size)) == NULL)
+	{
+		send_oneline_reply_to_user(user, RES_451);
+		close_user_data_channel(user);
+		return ;
+	}
+	if (write_content_into_new_file(fd, file_content, file_size) == FAILURE)
+		send_oneline_reply_to_user(user, RES_451);
+	else
+		send_oneline_reply_to_user(user, RES_226);
+	close(fd);
+	free(file_content);
+	close_user_data_channel(user);
 }
