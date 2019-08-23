@@ -34,7 +34,7 @@
 # define DEF_SIN_ADDR	INADDR_ANY
 # define TCP_PROTONAME	"tcp"
 # define READ_BUFF		2048
-# define CMD_NB			7
+# define CMD_NB			8
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -114,6 +114,7 @@ void			exec_pasv_cmd(t_user *user, char *cmd);
 void			exec_port_cmd(t_user *user, char *cmd);
 void			exec_list_cmd(t_user *user, char *cmd);
 void			exec_retr_cmd(t_user *user, char *cmd);
+void			exec_stor_cmd(t_user *user, char *cmd);
 void			exec_pwd_cmd(t_user *user, char *cmd);
 void			exec_cwd_cmd(t_user *user, char *cmd);
 void			exec_type_cmd(t_user *user, char *cmd);

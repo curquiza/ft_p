@@ -8,6 +8,7 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "PWD", &exec_pwd_cmd },
 	{ "CWD", &exec_cwd_cmd },
 	{ "RETR", &exec_retr_cmd },
+	{ "STOR", &exec_stor_cmd },
 	{ "TYPE", &exec_type_cmd }
 };
 

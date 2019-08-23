@@ -12,6 +12,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		close_connection.c \
 		listen_to_clients.c \
 		exec_retr_cmd.c \
+		exec_stor_cmd.c \
 		exec_pasv_cmd.c \
 		exec_list_cmd.c \
 		exec_port_cmd.c \
