@@ -7,6 +7,7 @@
 SERVER:
 - les différentes commandes et leurs possibles réponses
 - gerer un maximum de client connecté ? => gerer les signaux
+- pq les leaks ??
 
 CLIENT:
 - gerer localhost
