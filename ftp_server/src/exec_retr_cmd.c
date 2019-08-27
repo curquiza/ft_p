@@ -84,7 +84,6 @@ static int		get_file_size(t_user *user, int fd)
 	{
 		send_oneline_reply_to_user(user, RES_451);
 		close_user_data_channel(user);
-		// close(fd);
 		return (-1);
 	}
 	return (stat_struct.st_size);
@@ -96,6 +95,7 @@ void			exec_retr_cmd(t_user *user, char *cmd)
 	t_byte			*ptr;
 	int				fd;
 	int				total_send;
+	int				ret;
 
 	if ((fd = get_fd_for_transfer(user, cmd)) == -1)
 		return ;
@@ -112,9 +112,21 @@ void			exec_retr_cmd(t_user *user, char *cmd)
 		return ;
 	}
 	total_send = 0;
+	ret = 0;
 	while (total_send < size)
-		total_send += send(user->dt_client_sock, ptr, size - total_send, 0);
+	{
+		ret = send(user->dt_client_sock, ptr, size - total_send, 0);
+		if (ret == -1)
+			break;
+		total_send += ret;
+	}
+	if (ret == -1)
+		send_oneline_reply_to_user(user, RES_451);
+	else
+	{
+		send_oneline_reply_to_user(user, RES_226);
+		log_data_sent_into_dt_channel(user, "* FILE *");
+	}
 	close_user_data_channel(user);
-	send_oneline_reply_to_user(user, RES_226);
 	close(fd);
 }
