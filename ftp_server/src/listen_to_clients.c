@@ -84,8 +84,17 @@ static void	child_process(int num, int ctrl_client_sock)
 	t_user				user;
 
 	child_signals_handler();
-	print_ctrl_output("Client", num, "connected", NULL);
 	init_new_user(&user, ctrl_client_sock, num);
+	print_ctrl_output("Client", num, "connected", NULL);
+	g_user_nb++;
+	print_debug_output("Number of users currently connected :", g_user_nb,
+			NULL, NULL);
+	if (g_user_nb > 3)
+	{
+		send_oneline_reply_to_user(&user, RES_550_4);
+		print_ctrl_output("Client", num, "was disconnected", NULL);
+		return ;
+	}
 	communicate_with_new_user(&user);
 	print_ctrl_output("Client", num, "has quit", NULL);
 	close(ctrl_client_sock);
@@ -115,6 +124,7 @@ t_ex_ret	listen_to_clients(int server_sock)
 		}
 		else
 			close(ctrl_client_sock);
+		g_user_nb++;
 		num++;
 	}
 	return (SUCCESS);
