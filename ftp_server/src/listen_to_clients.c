@@ -89,7 +89,7 @@ static void	child_process(int num, int ctrl_client_sock)
 	g_user_nb++;
 	print_debug_output("Number of users currently connected :", g_user_nb,
 			NULL, NULL);
-	if (g_user_nb > 3)
+	if (g_user_nb > MAX_USERS)
 	{
 		send_oneline_reply_to_user(&user, RES_550_4);
 		print_ctrl_output("Client", num, "was disconnected", NULL);

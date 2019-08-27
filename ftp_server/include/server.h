@@ -35,6 +35,7 @@
 # define TCP_PROTONAME	"tcp"
 # define READ_BUFF		2048
 # define CMD_NB			8
+# define MAX_USERS		3
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
