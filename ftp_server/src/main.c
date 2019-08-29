@@ -9,8 +9,10 @@ static t_ex_ret	init(int argc, char **argv)
 	}
 	g_server_sock = -1;
 	g_flags = 0;
+	g_user_nb = 0;
 	g_root_path = NULL;
 	signal(SIGINT, sigint_handler);
+	signal(SIGCHLD, sigchld_handler);
 	return (SUCCESS);
 }
 

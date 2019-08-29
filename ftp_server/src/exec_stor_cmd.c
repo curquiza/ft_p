@@ -72,9 +72,12 @@ static char		*get_file_content(t_user *user, int *size)
 		free(tmp);
 		total_size += ret;
 	}
-	if (ret == -1)
-		perror("RECV");
 	*size = total_size;
+	if (ret == -1)
+	{
+		*size = 0;
+		return (NULL);
+	}
 	return (file_content);
 }
 

@@ -33,8 +33,9 @@
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
 # define TCP_PROTONAME	"tcp"
-# define READ_BUFF		2048
+# define READ_BUFF		100000
 # define CMD_NB			8
+# define MAX_USERS		3
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -51,6 +52,7 @@
 # define RES_550_1	"550 Requested action not taken."
 # define RES_550_2	"550 File unavailable."
 # define RES_550_3	"550 Not a directory."
+# define RES_550_4	"550 Requested action not taken. Too many clients connected."
 
 /*
 ** STRUCTURES
@@ -83,8 +85,9 @@ typedef struct	s_cmd
 ** GLOBALS
 */
 
-int				g_server_sock;
 uint8_t			g_flags;
+int				g_server_sock;
+int				g_user_nb;
 t_cmd			g_cmd_tab[CMD_NB];
 char			*g_root_path;
 
@@ -101,6 +104,7 @@ t_bool			is_dt_channel_open(t_user *user);
 t_bool			cmd_has_no_arg(t_user *user, char *cmd);
 
 void			sigint_handler(int sig);
+void			sigchld_handler(int sig);
 void			child_signals_handler(void);
 
 char			*get_current_wd_in_server(void);
