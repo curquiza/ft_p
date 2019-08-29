@@ -33,7 +33,7 @@
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
 # define TCP_PROTONAME	"tcp"
-# define READ_BUFF		2048
+# define READ_BUFF		100000
 # define CMD_NB			8
 # define MAX_USERS		3
 
