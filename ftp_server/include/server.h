@@ -117,6 +117,9 @@ void			child_signals_handler(void);
 char			*get_current_wd_in_server(void);
 char			*get_valid_path_from_user_input(char *path);
 
+void			clean_list(t_chunk **list);
+void			list_push_back(t_chunk **alst, t_chunk *new, t_chunk **end);
+t_chunk			*new_chunk(int size, char *content);
 char			*get_file_content(t_user *user, int *size);
 
 t_ex_ret		listen_to_clients(int server_sock);
