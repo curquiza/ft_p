@@ -33,7 +33,7 @@
 # define PORT_MAX_RANGE	USHRT_MAX
 # define DEF_SIN_ADDR	INADDR_ANY
 # define TCP_PROTONAME	"tcp"
-# define READ_BUFF		100000
+# define READ_BUFF		10000
 # define CMD_NB			8
 # define MAX_USERS		3
 
@@ -81,6 +81,13 @@ typedef struct	s_cmd
 	void		(*f)(t_user *user, char *cmd);
 }				t_cmd;
 
+typedef struct			s_chunk
+{
+	int				size;
+	char			content[READ_BUFF];
+	struct s_chunk	*next;
+}						t_chunk;
+
 /*
 ** GLOBALS
 */
@@ -109,6 +116,8 @@ void			child_signals_handler(void);
 
 char			*get_current_wd_in_server(void);
 char			*get_valid_path_from_user_input(char *path);
+
+char			*get_file_content(t_user *user, int *size);
 
 t_ex_ret		listen_to_clients(int server_sock);
 

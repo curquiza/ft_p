@@ -52,34 +52,34 @@ static int	get_fd_for_transfer(t_user *user, char *cmd)
 	return (fd);
 }
 
-static char		*get_file_content(t_user *user, int *size)
-{
-	char			buff[READ_BUFF];
-	char			*file_content;
-	char			*tmp;
-	int				ret;
-	int				total_size;
+// static char		*get_file_content(t_user *user, int *size)
+// {
+// 	char			buff[READ_BUFF];
+// 	char			*file_content;
+// 	char			*tmp;
+// 	int				ret;
+// 	int				total_size;
 
-	total_size = 0;
-	file_content = NULL;
-	while ((ret = recv(user->dt_client_sock, buff, READ_BUFF, 0)) > 0)
-	{
-		tmp = file_content;
-		if (!(file_content = ft_memalloc(total_size + ret)))
-			ft_exit(MALLOC_ERR, 2);
-		ft_memmove(file_content, tmp, total_size);
-		ft_memmove(file_content + total_size, buff, ret);
-		free(tmp);
-		total_size += ret;
-	}
-	*size = total_size;
-	if (ret == -1)
-	{
-		*size = 0;
-		return (NULL);
-	}
-	return (file_content);
-}
+// 	total_size = 0;
+// 	file_content = NULL;
+// 	while ((ret = recv(user->dt_client_sock, buff, READ_BUFF, 0)) > 0)
+// 	{
+// 		tmp = file_content;
+// 		if (!(file_content = ft_memalloc(total_size + ret)))
+// 			ft_exit(MALLOC_ERR, 2);
+// 		ft_memmove(file_content, tmp, total_size);
+// 		ft_memmove(file_content + total_size, buff, ret);
+// 		free(tmp);
+// 		total_size += ret;
+// 	}
+// 	*size = total_size;
+// 	if (ret == -1)
+// 	{
+// 		*size = 0;
+// 		return (NULL);
+// 	}
+// 	return (file_content);
+// }
 
 static t_ex_ret	write_content_into_new_file(int fd, char *content, int size)
 {
