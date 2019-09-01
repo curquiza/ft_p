@@ -1,3 +1,15 @@
+BONUS :
+=====
+
+- RFC
+- ipv6
+- optimisation pour le transfert : lecture rapide
+- limitation du nombres de clients connectés en même temps
+- debug mode sur le server : afficher les tentative de port, les users connectés/deconnectés...
+- logs détaillés pour le server
+
+
+
 INCLUDES :
 ========
 /usr/include/netinet/in.h

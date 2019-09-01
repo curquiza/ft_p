@@ -32,7 +32,7 @@ static void	child_process(t_user *user, char *ls_arg)
 	char	*args[4];
 
 	args[0] = "/bin/ls";
-	args[1] = "-l";
+	args[1] = "-la";
 	args[2] = ls_arg;
 	args[3] = NULL;
 	send_oneline_reply_to_user(user, RES_125);

@@ -8,6 +8,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		options.c \
 		display_logs.c \
 		misc.c \
+		misc_chunk_list.c \
 		signal.c \
 		close_connection.c \
 		listen_to_clients.c \
@@ -19,6 +20,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		exec_pwd_cmd.c \
 		exec_type_cmd.c \
 		exec_cwd_cmd.c \
+		get_file_content.c \
 		path_access.c \
 		send.c \
 		main.c)
