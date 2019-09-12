@@ -27,11 +27,13 @@
 # define INET_ERR			"ERROR: inet_addr."
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
+# define IPv6_ERR			"ERROR: Ipv6 not supported, testing IPv4..."
 
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024
 # define PORT_MAX_RANGE	USHRT_MAX
-# define DEF_SIN_ADDR	INADDR_ANY
+# define DEFAULT_SIN_ADDR	INADDR_ANY
+# define DEFAULT_SIN6_ADDR	in6addr_any
 # define TCP_PROTONAME	"tcp"
 # define READ_BUFF		10000
 # define CMD_NB			9
@@ -94,6 +96,7 @@ typedef struct			s_chunk
 
 uint8_t			g_flags;
 int				g_server_sock;
+sa_family_t		g_addr_family;
 int				g_user_nb;
 t_cmd			g_cmd_tab[CMD_NB];
 char			*g_root_path;
@@ -123,6 +126,8 @@ t_chunk			*new_chunk(int size, char *content);
 char			*get_file_content(t_user *user, int *size);
 
 t_ex_ret		listen_to_clients(int server_sock);
+
+t_ex_ret		bind_server(int sock, uint16_t port);
 
 void			send_oneline_reply_to_user(t_user *user, char *str);
 

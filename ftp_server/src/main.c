@@ -8,6 +8,7 @@ static t_ex_ret	init(int argc, char **argv)
 		return (FAILURE);
 	}
 	g_server_sock = -1;
+	g_addr_family = 0;
 	g_flags = 0;
 	g_user_nb = 0;
 	g_root_path = NULL;
@@ -58,17 +59,19 @@ static int		create_server_socket(uint16_t port)
 {
 	int					sock;
 	struct protoent		*proto;
-	struct sockaddr_in	sin;
 
 	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 		return (ret_err_neg(PROTOBYNAME_ERR));
-	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
-		return (ret_err_neg(SOCKET_ERR));
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = htonl(DEF_SIN_ADDR);
-	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-		return (ret_err_neg(BIND_ERR));
+	g_addr_family = AF_INET6;
+	if ((sock = socket(PF_INET6, SOCK_STREAM, proto->p_proto)) == -1)
+	{
+		print_debug_output(NULL, 0, IPv6_ERR, NULL);
+		g_addr_family = AF_INET;
+		if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
+			return (ret_err_neg(SOCKET_ERR));
+	}
+	if (bind_server(sock, port) == FAILURE)
+		return (-1);
 	if (listen(sock, LISTEN_NB) == -1)
 		return (ret_err_neg(LISTEN_ERR));
 	return (sock);

@@ -25,7 +25,7 @@ static t_ex_ret		get_user_dt_port(t_user *user, int sock)
 	uint16_t			port;
 
 	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = htonl(DEF_SIN_ADDR);
+	sin.sin_addr.s_addr = htonl(DEFAULT_SIN_ADDR);
 	port = PORT_MIN_RANGE;
 	while (port <= PORT_MAX_RANGE)
 	{
@@ -84,7 +84,7 @@ void		exec_pasv_cmd(t_user *user, char *cmd)
 	}
 	print_data_output("Socket server listening on port", user->dt_port,
 		NULL, NULL);
-	send_pasv_response(user, DEF_SIN_ADDR);
+	send_pasv_response(user, DEFAULT_SIN_ADDR);
 	if ((user->dt_client_sock = accept(user->dt_server_sock,
 		(struct sockaddr *)&dt_sin, &dt_size)) < 0)
 	{
