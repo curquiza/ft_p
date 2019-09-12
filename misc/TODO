@@ -3,10 +3,14 @@
 - faire des vrais recv avec comme arret le CRLF
 - checker les leaks
 - checker les liens symboliques
+- gerer les '\r\n'
 
 SERVER:
 - gerer un maximum de client connecté ? => gerer les signaux
 - pq les leaks ??
+- get/put avec la racine genre 'get /src/signal.c'
+- error qd 'ls /Users/curquiza'
+- mode ASCII/BIN
 
 CLIENT:
 - gerer localhost
