@@ -15,6 +15,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		exec_retr_cmd.c \
 		exec_stor_cmd.c \
 		exec_pasv_cmd.c \
+		exec_epsv_cmd.c \
 		exec_list_cmd.c \
 		exec_port_cmd.c \
 		exec_pwd_cmd.c \
