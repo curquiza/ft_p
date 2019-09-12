@@ -23,5 +23,5 @@ t_ex_ret		bind_server(int sock, uint16_t port)
 		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 			return (ft_ret_err(BIND_ERR));
 	}
-	return (0);
+	return (SUCCESS);
 }

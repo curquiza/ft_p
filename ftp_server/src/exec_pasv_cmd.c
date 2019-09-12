@@ -31,7 +31,8 @@ static t_ex_ret		get_user_dt_port(t_user *user, int sock)
 	{
 		sin.sin_port = htons(port);
 		print_debug_output("Testing port", port, "for DT channel...", NULL);
-		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) != -1)
+		// if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) != -1)
+		if (bind_server(sock, port) == SUCCESS)
 		{
 			user->dt_port = port;
 			print_debug_output("Available port found :", port, NULL, NULL);
