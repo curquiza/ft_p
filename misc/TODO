@@ -6,7 +6,6 @@
 - gerer les '\r\n'
 
 SERVER:
-- gerer un maximum de client connecté ? => gerer les signaux
 - pq les leaks ??
 - get/put avec la racine genre 'get /src/signal.c'
 - error qd 'ls /Users/curquiza'
@@ -18,6 +17,7 @@ CLIENT:
 - reussir à faire que le client se ferme quand le server s'eteint ?
 
 DONE:
+- gerer un maximum de client connecté ? => gerer les signaux
 - est ce que se connecter sur le server marche depuis une autre machine sur le même réseau ? Oui grace au ANYADRESS
 - changer le verbose
 - la creation du canal de données
