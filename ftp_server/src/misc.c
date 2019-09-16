@@ -28,3 +28,9 @@ t_bool	cmd_has_no_arg(t_user *user, char *cmd)
 	ft_tabdel(&args);
 	return (ret);
 }
+
+int		ret_err_neg(char *s)
+{
+	ft_dprintf(2, "%s\n", s);
+	return (-1);
+}

@@ -49,12 +49,6 @@ static uint16_t	get_port_uint16(char *port_str)
 	return ((uint16_t)port);
 }
 
-static int		ret_err_neg(char *s)
-{
-	ft_dprintf(2, "%s\n", s);
-	return (-1);
-}
-
 static int		create_server_socket(uint16_t port)
 {
 	int					sock;
