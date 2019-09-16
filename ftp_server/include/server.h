@@ -12,7 +12,7 @@
 # include <sys/stat.h>
 # include <sys/mman.h>
 
-# define OPTIONS		"d"
+# define OPTIONS		"d6"
 
 # define PORT_ERR			"Port number unavailable (1024-65335)"
 # define ROOT_PATH_ERR		"ERROR: when getting server root path. Exiting..."
@@ -27,7 +27,6 @@
 # define INET_ERR			"ERROR: inet_addr."
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
-# define IPv6_ERR			"ERROR: Ipv6 not supported, testing IPv4..."
 
 # define LISTEN_NB		40
 # define PORT_MIN_RANGE	1024

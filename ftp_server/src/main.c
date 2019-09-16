@@ -62,10 +62,14 @@ static int		create_server_socket(uint16_t port)
 
 	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 		return (ret_err_neg(PROTOBYNAME_ERR));
-	g_addr_family = AF_INET6;
-	if ((sock = socket(PF_INET6, SOCK_STREAM, proto->p_proto)) == -1)
+	if (opt_is_activated('6') == TRUE)
 	{
-		print_debug_output(NULL, 0, IPv6_ERR, NULL);
+		g_addr_family = AF_INET6;
+		if ((sock = socket(PF_INET6, SOCK_STREAM, proto->p_proto)) == -1)
+			return (ret_err_neg(SOCKET_ERR));
+	}
+	else
+	{
 		g_addr_family = AF_INET;
 		if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) == -1)
 			return (ret_err_neg(SOCKET_ERR));
