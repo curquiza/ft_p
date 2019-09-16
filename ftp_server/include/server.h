@@ -12,7 +12,7 @@
 # include <sys/stat.h>
 # include <sys/mman.h>
 
-# define OPTIONS		"d6"
+# define OPTIONS			"d6"
 
 # define PORT_ERR			"Port number unavailable (1024-65335)"
 # define ROOT_PATH_ERR		"ERROR: when getting server root path. Exiting..."
@@ -28,15 +28,15 @@
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
 
-# define LISTEN_NB		40
-# define PORT_MIN_RANGE	1024
-# define PORT_MAX_RANGE	USHRT_MAX
+# define LISTEN_NB			40
+# define PORT_MIN_RANGE		1024
+# define PORT_MAX_RANGE		USHRT_MAX
 # define DEFAULT_SIN_ADDR	INADDR_ANY
 # define DEFAULT_SIN6_ADDR	in6addr_any
-# define TCP_PROTONAME	"tcp"
-# define READ_BUFF		10000
-# define CMD_NB			9
-# define MAX_USERS		3
+# define TCP_PROTONAME		"tcp"
+# define READ_BUFF			10000
+# define CMD_NB				9
+# define MAX_USERS			3
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
