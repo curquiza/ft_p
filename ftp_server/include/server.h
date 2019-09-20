@@ -12,7 +12,7 @@
 # include <sys/stat.h>
 # include <sys/mman.h>
 
-# define OPTIONS		"d"
+# define OPTIONS			"d6"
 
 # define PORT_ERR			"Port number unavailable (1024-65335)"
 # define ROOT_PATH_ERR		"ERROR: when getting server root path. Exiting..."
@@ -28,14 +28,15 @@
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
 
-# define LISTEN_NB		40
-# define PORT_MIN_RANGE	1024
-# define PORT_MAX_RANGE	USHRT_MAX
-# define DEF_SIN_ADDR	INADDR_ANY
-# define TCP_PROTONAME	"tcp"
-# define READ_BUFF		10000
-# define CMD_NB			8
-# define MAX_USERS		3
+# define LISTEN_NB			40
+# define PORT_MIN_RANGE		1024
+# define PORT_MAX_RANGE		USHRT_MAX
+# define DEFAULT_SIN_ADDR	INADDR_ANY
+# define DEFAULT_SIN6_ADDR	in6addr_any
+# define TCP_PROTONAME		"tcp"
+# define READ_BUFF			10000
+# define CMD_NB				10
+# define MAX_USERS			3
 
 # define RES_125	"125 Data connection already open. Transfer starting."
 
@@ -94,6 +95,7 @@ typedef struct			s_chunk
 
 uint8_t			g_flags;
 int				g_server_sock;
+sa_family_t		g_addr_family;
 int				g_user_nb;
 t_cmd			g_cmd_tab[CMD_NB];
 char			*g_root_path;
@@ -109,6 +111,7 @@ int				get_all_options(int argc, char **argv);
 void			usage(char *prgm);
 t_bool			is_dt_channel_open(t_user *user);
 t_bool			cmd_has_no_arg(t_user *user, char *cmd);
+int				ret_err_neg(char *s);
 
 void			sigint_handler(int sig);
 void			sigchld_handler(int sig);
@@ -124,10 +127,14 @@ char			*get_file_content(t_user *user, int *size);
 
 t_ex_ret		listen_to_clients(int server_sock);
 
+t_ex_ret		bind_server(int sock, uint16_t port);
+
 void			send_oneline_reply_to_user(t_user *user, char *str);
 
 void			exec_pasv_cmd(t_user *user, char *cmd);
+void			exec_epsv_cmd(t_user *user, char *cmd);
 void			exec_port_cmd(t_user *user, char *cmd);
+void			exec_eprt_cmd(t_user *user, char *cmd);
 void			exec_list_cmd(t_user *user, char *cmd);
 void			exec_retr_cmd(t_user *user, char *cmd);
 void			exec_stor_cmd(t_user *user, char *cmd);

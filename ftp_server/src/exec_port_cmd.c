@@ -93,7 +93,10 @@ static char		**get_arg_tab(char *cmd)
 	arg_tab = ft_strsplit(cmd_args[1], ',');
 	ft_tabdel(&cmd_args);
 	if (!arg_tab || ft_tablen(arg_tab) != 6 || args_are_valid(arg_tab) == FALSE)
+	{
+		ft_tabdel(&arg_tab);
 		return (NULL);
+	}
 	return (arg_tab);
 }
 

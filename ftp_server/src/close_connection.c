@@ -14,14 +14,15 @@ t_ex_ret	close_server(int server_sock)
 
 void		close_user_data_channel(t_user *user)
 {
-	if (user->mode == PASSIVE)
+	if (user->mode == PASSIVE && user->dt_port != 0)
 		print_data_output("Closing DT channel on port", user->dt_port,
 			NULL, NULL);
-	else
+	else if (user->dt_port != 0)
 		print_data_output("Closing DT channel with user's port", user->dt_port,
 			NULL, NULL);
-	close(user->dt_client_sock);
-	if (user->mode == PASSIVE)
+	if (user->dt_client_sock > 0)
+		close(user->dt_client_sock);
+	if (user->mode == PASSIVE && user->dt_server_sock > 0)
 		close(user->dt_server_sock);
 	user->dt_client_sock = -1;
 	user->dt_server_sock = -1;
