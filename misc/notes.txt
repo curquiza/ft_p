@@ -41,6 +41,7 @@ LIST :
     - quand on fait "ls .." on renvoie une 550
     - pas ouf : on peut faire "ls ../ftp_server/." et ca marche
     - pas ouf : on peut faire "ls /src/signal.c" et on voit tout le path
+    - pas ouf : on fait un "ls /Users/curquiza" et on voit tout le path dans l'erreur
 
 CWD:
     - la RFC se contredit entre la section "Commande FTP" (4.1) et l'Appendice II : l'un indique que CWD doit renvoyer une 250 alors que l'appendix une 200.
