@@ -35,7 +35,7 @@
 # define DEFAULT_SIN6_ADDR	in6addr_any
 # define TCP_PROTONAME		"tcp"
 # define READ_BUFF			10000
-# define CMD_NB				9
+# define CMD_NB				10
 # define MAX_USERS			3
 
 # define RES_125	"125 Data connection already open. Transfer starting."
@@ -134,6 +134,7 @@ void			send_oneline_reply_to_user(t_user *user, char *str);
 void			exec_pasv_cmd(t_user *user, char *cmd);
 void			exec_epsv_cmd(t_user *user, char *cmd);
 void			exec_port_cmd(t_user *user, char *cmd);
+void			exec_eprt_cmd(t_user *user, char *cmd);
 void			exec_list_cmd(t_user *user, char *cmd);
 void			exec_retr_cmd(t_user *user, char *cmd);
 void			exec_stor_cmd(t_user *user, char *cmd);

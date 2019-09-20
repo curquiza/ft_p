@@ -10,6 +10,7 @@ SERVER:
 - get/put avec la racine genre 'get /src/signal.c'
 - error qd 'ls /Users/curquiza'
 - mode ASCII/BIN
+- option verbose ?
 
 CLIENT:
 - gerer localhost

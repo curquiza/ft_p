@@ -5,6 +5,7 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "PASV", &exec_pasv_cmd },
 	{ "EPSV", &exec_epsv_cmd },
 	{ "PORT", &exec_port_cmd },
+	{ "EPRT", &exec_eprt_cmd },
 	{ "LIST", &exec_list_cmd },
 	{ "PWD", &exec_pwd_cmd },
 	{ "CWD", &exec_cwd_cmd },

@@ -18,6 +18,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		exec_epsv_cmd.c \
 		exec_list_cmd.c \
 		exec_port_cmd.c \
+		exec_eprt_cmd.c \
 		exec_pwd_cmd.c \
 		exec_type_cmd.c \
 		exec_cwd_cmd.c \
