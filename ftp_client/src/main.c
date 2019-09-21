@@ -55,6 +55,5 @@ int		main(int argc, char **argv)
 		return (FAILURE);
 	if ((g_sock = connect_to_server(addr, port)) == -1)
 		return (FAILURE);
-	communicate_with_server(g_sock);
-	return (SUCCESS);
+	return (communicate_with_server(g_sock));
 }

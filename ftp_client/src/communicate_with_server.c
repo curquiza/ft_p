@@ -1,6 +1,6 @@
 #include "client.h"
 
-void	communicate_with_server(int sock)
+t_ex_ret	communicate_with_server(int sock)
 {
 	char	*cmd;
 	char	*buff;
@@ -13,7 +13,7 @@ void	communicate_with_server(int sock)
 		ft_printf("Your command: ");
 		ret = get_next_line(0, &buff);
 		if (ret == -1)
-			; // return (ft_ret_err(READ_CMD_ERR));
+			return (ft_ret_err(READ_CMD_ERR));
 		else if (ret == 0)
 			break ;
 		cmd = ft_strjoin(buff, "\n");
@@ -37,11 +37,12 @@ void	communicate_with_server(int sock)
 		// ret = read(sock, &buff2, 500000);
 		buff2[ret] = '\0';
 		if (ret == -1)
-			; // return (ft_ret_err(READ_SERV_ASW_ERR));
+			return (ft_ret_err(READ_SERV_ASW_ERR));
 		else if (ret == 0)
 			break ;
 		ft_printf("Server reply: %s", buff2);
 		// ft_printf("(recv return = %d)\n", ret);
 	}
 	quit_cmd(NULL);
+	return (SUCCESS);
 }
