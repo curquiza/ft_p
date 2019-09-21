@@ -48,6 +48,12 @@ static uint16_t	get_port(char **args)
 	return (addr);
 }
 
+static int		print_and_ret_neg(char *str)
+{
+	print_debug_output(NULL, 0, str, NULL);
+	return (-1);
+}
+
 static int		connect_to_user(char *addr, uint16_t port)
 {
 	int					sock;
@@ -55,23 +61,15 @@ static int		connect_to_user(char *addr, uint16_t port)
 	struct sockaddr_in	sin;
 
 	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
-	{
-		print_debug_output(NULL, 0, PROTOBYNAME_ERR, NULL);
-		return (-1);
-	}
+		print_and_ret_neg(PROTOBYNAME_ERR);
 	if ((sock = socket(PF_INET, SOCK_STREAM, proto->p_proto)) < 0)
-	{
-		print_debug_output(NULL, 0, SOCKET_ERR, NULL);
-		return (-1);
-	}
+		print_and_ret_neg(SOCKET_ERR);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = inet_addr(addr);
+	if ((sin.sin_addr.s_addr = inet_addr(addr)) == INADDR_NONE)
+		print_and_ret_neg(INET_ADDR_ERR);
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
-	{
-		print_debug_output(NULL, 0, CONNECT_ERR, NULL);
-		return (-1);
-	}
+		print_and_ret_neg(CONNECT_ERR);
 	return (sock);
 }
 

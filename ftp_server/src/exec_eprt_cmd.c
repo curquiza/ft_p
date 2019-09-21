@@ -80,7 +80,8 @@ static t_ex_ret		connect_according_to_af(char *type, char *addr, uint16_t port, 
 	{
 		sin.sin_family = AF_INET;
 		sin.sin_port = htons(port);
-		sin.sin_addr.s_addr = inet_addr(addr);
+		if ((sin.sin_addr.s_addr = inet_addr(addr)) == INADDR_NONE)
+			return (print_and_return_failure(INET_ADDR_ERR));
 		if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 			return (print_and_return_failure(CONNECT_ERR));
 	}
