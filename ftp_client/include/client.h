@@ -52,6 +52,8 @@ int			get_all_options(int argc, char **argv);
 
 void		sigint_handler(int sig);
 
+void		send_to_server(char *str);
+
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
 
