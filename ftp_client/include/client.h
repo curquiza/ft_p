@@ -23,6 +23,7 @@
 ** GLOBALS
 */
 uint8_t			g_flags;
+sa_family_t		g_addr_family;
 
 /*
 ** FUNCTION PROTOTYPES

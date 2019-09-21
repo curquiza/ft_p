@@ -35,6 +35,7 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 		return (FAILURE);
 	}
 	g_flags = 0;
+	g_addr_family = opt_is_activated('6') ? AF_INET6 : AF_INET;
 	if ((first_arg_index = get_all_options(argc, argv)) == -1)
 		return (FAILURE);
 	if (first_arg_index + 2 != argc)
@@ -61,7 +62,7 @@ static t_ex_ret		connect_according_to_af(char *addr, uint16_t port, int sock)
 	struct sockaddr_in	sin;
 	struct sockaddr_in6	sin6;
 
-	if (opt_is_activated('6') == TRUE)
+	if (g_addr_family == AF_INET6)
 	{
 		sin6.sin6_family = AF_INET6;
 		sin6.sin6_port = htons(port);
@@ -89,7 +90,7 @@ static int		connect_to_server(char *addr, uint16_t port)
 
 	if ((proto = getprotobyname("tcp")) == NULL)
 		return (ret_err_neg("During getprotobyname"));
-	if ((sock = socket((opt_is_activated('6') ? PF_INET6 : PF_INET),
+	if ((sock = socket((g_addr_family == AF_INET6 ? PF_INET6 : PF_INET),
 			SOCK_STREAM, proto->p_proto)) < 0)
 		return (ret_err_neg(SOCKET_ERR));
 	if (connect_according_to_af(addr, port, sock) == FAILURE)
