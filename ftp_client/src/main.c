@@ -6,6 +6,30 @@ static int		ret_err_neg(char *s)
 	return (-1);
 }
 
+static t_ex_ret	init(int argc, char **argv, char *addr, char *port)
+{
+	int		first_arg_index;
+
+	if (argc < 3)
+	{
+		usage(argv[0]);
+		return (FAILURE);
+	}
+	g_flags = 0;
+	if ((first_arg_index = get_all_options(argc, argv)) == -1)
+		return (FAILURE);
+	if (first_arg_index + 2 != argc)
+	{
+		usage(argv[0]);
+		return (FAILURE);
+	}
+	ft_bzero(addr, ADDR_MAX_SIZE + 1);
+	ft_bzero(port, PORT_MAX_SIZE + 1);
+	ft_strncpy(addr, argv[first_arg_index], ADDR_MAX_SIZE);
+	ft_strncpy(port, argv[first_arg_index + 1], PORT_MAX_SIZE);
+	return (SUCCESS);
+}
+
 int		create_client(char *addr, int port)
 {
 	int		sock;
@@ -71,21 +95,21 @@ t_ex_ret	communicate_with_server(int sock)
 
 int		main(int argc, char **argv)
 {
-	int		sock;
-	int		ret;
+	// int		sock;
+	// int		ret;
+	char	addr[ADDR_MAX_SIZE + 1];
+	char	port_str[PORT_MAX_SIZE + 1];
 
-	if (argc != 3)
-	{
-		usage(argv[0]);
+	if (init(argc, argv, addr, port_str) == FAILURE)
 		return (FAILURE);
-	}
-	sock = create_client(argv[1], ft_atoi(argv[2]));
-	if (sock == -1)
-		return (FAILURE);
+	ft_printf("addr = %s, port = %s\n", addr, port_str);
+	// sock = create_client(argv[1], ft_atoi(argv[2]));
+	// if (sock == -1)
+	// 	return (FAILURE);
 
-	ret = communicate_with_server(sock);
+	// ret = communicate_with_server(sock);
 
-	printf("Quitting FTP Client...\n");
-	close(sock);
-	return (ret);
+	// printf("Quitting FTP Client...\n");
+	// close(sock);
+	// return (ret);
 }
