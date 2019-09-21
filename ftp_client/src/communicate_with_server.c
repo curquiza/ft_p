@@ -1,48 +1,66 @@
 #include "client.h"
 
-t_ex_ret	communicate_with_server(int sock)
+t_cmd	g_cmd_tab[CMD_NB] =
 {
-	char	*cmd;
-	char	*buff;
+	{ "quit", &quit_cmd },
+};
+
+static char	*get_cmd_name(char *cmd)
+{
+	int		i;
+	char	*cmd_name;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != ' ')
+		i++;
+	cmd_name = ft_strnew(i);
+	if (cmd_name == NULL)
+		ft_exit(MALLOC_ERR, 1);
+	ft_memmove(cmd_name, cmd, i);
+	return (cmd_name);
+}
+
+static void	exec_cmd(char *input)
+{
+	int		i;
+	char	*cmd_name;
+
+	i = 0;
+	cmd_name = get_cmd_name(input);
+	while (i < CMD_NB)
+	{
+		if (ft_strcmp(cmd_name, g_cmd_tab[i].name) == 0)
+		{
+			g_cmd_tab[i].f(input);
+			free(cmd_name);
+			return ;
+		}
+		i++;
+	}
+	free(cmd_name);
+	ft_dprintf(2, "%s\n", UNKNOWN_CMD_ERR);
+}
+
+t_ex_ret	communicate_with_server(void)
+{
+	char	*input;
 	int		ret;
 
-	buff = NULL;
-	while (1)
+	input = NULL;
+	while (g_run == TRUE)
 	{
-		// GET USER COMMAND
-		ft_printf("Your command: ");
-		ret = get_next_line(0, &buff);
+		ft_printf("curqui_ftp $> ");
+		ret = get_next_line(0, &input);
 		if (ret == -1)
 			return (ft_ret_err(READ_CMD_ERR));
 		else if (ret == 0)
-			break ;
-		cmd = ft_strjoin(buff, "\n");
-
-		// CHECK QUIT COMMAND
-		if (ft_strcmp(cmd, "quit\n") == 0)
 		{
-			free(buff);
-			free(cmd);
-			break ;
+			ft_putchar('\n');
+			quit_cmd(input);
 		}
-
-		// WRITE TO SERVER
-		send(sock, cmd, ft_strlen(cmd), 0);
-		free(buff);
-		free(cmd);
-
-		// READ SERVER reply
-		char	buff2[500001];
-		ret = recv(sock, &buff2, 500000, 0);
-		// ret = read(sock, &buff2, 500000);
-		buff2[ret] = '\0';
-		if (ret == -1)
-			return (ft_ret_err(READ_SERV_ASW_ERR));
-		else if (ret == 0)
-			break ;
-		ft_printf("Server reply: %s", buff2);
-		// ft_printf("(recv return = %d)\n", ret);
+		else
+			exec_cmd(input);
+		free(input);
 	}
-	quit_cmd(NULL);
 	return (SUCCESS);
 }

@@ -29,6 +29,7 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 		return (FAILURE);
 	}
 	g_flags = 0;
+	g_run = TRUE;
 	if ((first_arg_index = get_all_options(argc, argv)) == -1)
 		return (FAILURE);
 	if (first_arg_index + 2 != argc)
@@ -55,5 +56,5 @@ int		main(int argc, char **argv)
 		return (FAILURE);
 	if ((g_sock = connect_to_server(addr, port)) == -1)
 		return (FAILURE);
-	return (communicate_with_server(g_sock));
+	return (communicate_with_server());
 }
