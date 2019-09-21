@@ -37,6 +37,7 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 		return (FAILURE);
 	}
 	g_addr_family = (opt_is_activated('6') == TRUE) ? AF_INET6 : AF_INET;
+	signal(SIGINT, sigint_handler);
 	ft_bzero(addr, ADDR_MAX_SIZE + 1);
 	ft_strncpy(addr, argv[first_arg_index], ADDR_MAX_SIZE);
 	*port = get_port_uint16(argv[first_arg_index + 1]);
@@ -101,8 +102,6 @@ int		main(int argc, char **argv)
 		return (FAILURE);
 	if ((g_sock = connect_to_server(addr, port)) == -1)
 		return (FAILURE);
-
-	// communicate_with_server(g_sock);
-
+	communicate_with_server(g_sock);
 	return (SUCCESS);
 }

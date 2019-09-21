@@ -34,6 +34,9 @@ t_ex_ret	activate_opt(char opt_letter);
 t_bool		opt_is_activated(char opt_letter);
 int			get_all_options(int argc, char **argv);
 
+void		sigint_handler(int sig);
+
+
 int			connect_to_server(char *addr, uint16_t port);
 
 void		quit_cmd(char *input);

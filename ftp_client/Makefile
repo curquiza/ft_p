@@ -9,6 +9,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		options.c \
 		connect_to_server.c \
 		quit_cmd.c \
+		signal.c \
 		main.c)
 
 OBJ_DIR = obj
