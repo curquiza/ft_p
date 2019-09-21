@@ -1,0 +1,66 @@
+#include "client.h"
+
+t_cmd	g_cmd_tab[CMD_NB] =
+{
+	{ "quit", &quit_cmd },
+};
+
+static char	*get_cmd_name(char *cmd)
+{
+	int		i;
+	char	*cmd_name;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != ' ')
+		i++;
+	cmd_name = ft_strnew(i);
+	if (cmd_name == NULL)
+		ft_exit(MALLOC_ERR, 1);
+	ft_memmove(cmd_name, cmd, i);
+	return (cmd_name);
+}
+
+static void	exec_cmd(char *input)
+{
+	int		i;
+	char	*cmd_name;
+
+	i = 0;
+	cmd_name = get_cmd_name(input);
+	while (i < CMD_NB)
+	{
+		if (ft_strcmp(cmd_name, g_cmd_tab[i].name) == 0)
+		{
+			g_cmd_tab[i].f(input);
+			free(cmd_name);
+			return ;
+		}
+		i++;
+	}
+	free(cmd_name);
+	ft_dprintf(2, "%s\n", UNKNOWN_CMD_ERR);
+}
+
+t_ex_ret	communicate_with_server(void)
+{
+	char	*input;
+	int		ret;
+
+	input = NULL;
+	while (g_run == TRUE)
+	{
+		ft_printf("curqui_ftp $> ");
+		ret = get_next_line(0, &input);
+		if (ret == -1)
+			return (ft_ret_err(READ_CMD_ERR));
+		else if (ret == 0)
+		{
+			ft_putchar('\n');
+			quit_cmd(input);
+		}
+		else
+			exec_cmd(input);
+		free(input);
+	}
+	return (SUCCESS);
+}

@@ -6,6 +6,12 @@ CC = gcc $(FLAG)
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
 		utils.c \
+		options.c \
+		connect_to_server.c \
+		communicate_with_server.c \
+		quit_cmd.c \
+		signal.c \
+		send.c \
 		main.c)
 
 OBJ_DIR = obj
