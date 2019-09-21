@@ -16,8 +16,7 @@
 # define PORT_ERR			"Port number unavailable (1-65335)"
 # define SOCKET_ERR			"ERROR: socket syscall."
 # define CONNECT_ERR		"ERROR: connect syscall."
-# define INET_ERR			"ERROR: inet_addr."
-
+# define INET_PTON_ERR		"ERROR: inet_pton. IPv6 address not parsable."
 
 /*
 ** GLOBALS

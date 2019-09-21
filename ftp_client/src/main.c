@@ -29,7 +29,6 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 		return (FAILURE);
 	}
 	g_flags = 0;
-	g_addr_family = opt_is_activated('6') ? AF_INET6 : AF_INET;
 	if ((first_arg_index = get_all_options(argc, argv)) == -1)
 		return (FAILURE);
 	if (first_arg_index + 2 != argc)
@@ -37,6 +36,7 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 		usage(argv[0]);
 		return (FAILURE);
 	}
+	g_addr_family = (opt_is_activated('6') == TRUE) ? AF_INET6 : AF_INET;
 	ft_bzero(addr, ADDR_MAX_SIZE + 1);
 	ft_strncpy(addr, argv[first_arg_index], ADDR_MAX_SIZE);
 	*port = get_port_uint16(argv[first_arg_index + 1]);
