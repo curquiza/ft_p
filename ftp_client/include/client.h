@@ -23,6 +23,7 @@
 */
 uint8_t			g_flags;
 sa_family_t		g_addr_family;
+int				g_sock;
 
 /*
 ** FUNCTION PROTOTYPES
@@ -34,5 +35,7 @@ t_bool		opt_is_activated(char opt_letter);
 int			get_all_options(int argc, char **argv);
 
 int			connect_to_server(char *addr, uint16_t port);
+
+void		quit_cmd(char *input);
 
 #endif

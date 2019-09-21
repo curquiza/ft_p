@@ -88,24 +88,21 @@ t_ex_ret	communicate_with_server(int sock)
 		ft_printf("Server reply: %s", buff2);
 		// ft_printf("(recv return = %d)\n", ret);
 	}
+	quit_cmd(NULL);
 	return (SUCCESS);
 }
 
 int		main(int argc, char **argv)
 {
-	int			sock;
-	// int		ret;
 	char		addr[ADDR_MAX_SIZE + 1];
 	uint16_t	port;
 
 	if (init(argc, argv, addr, &port) == FAILURE)
 		return (FAILURE);
-	if ((sock = connect_to_server(addr, port)) == -1)
+	if ((g_sock = connect_to_server(addr, port)) == -1)
 		return (FAILURE);
 
-	// ret = communicate_with_server(sock);
+	// communicate_with_server(g_sock);
 
-	// printf("Quitting FTP Client...\n");
-	// close(sock);
-	// return (ret);
+	return (SUCCESS);
 }
