@@ -66,11 +66,7 @@ static int		connect_to_user(char *addr, uint16_t port)
 	}
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	if ((sin.sin_addr.s_addr = inet_addr(addr)) == 0)
-	{
-		print_debug_output(NULL, 0, INET_ERR, NULL);
-		return (-1);
-	}
+	sin.sin_addr.s_addr = inet_addr(addr);
 	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 	{
 		print_debug_output(NULL, 0, CONNECT_ERR, NULL);

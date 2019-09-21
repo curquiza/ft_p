@@ -24,7 +24,6 @@
 # define LISTEN_ERR			"ERROR: listen syscall."
 # define CHDIR_ERR			"ERROR: chdir syscall."
 # define PROTOBYNAME_ERR	"ERROR: getprotobyname function."
-# define INET_ERR			"ERROR: inet_addr."
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
 

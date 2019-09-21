@@ -71,8 +71,7 @@ static t_ex_ret		connect_according_to_af(char *type, char *addr, uint16_t port, 
 	{
 		sin6.sin6_family = AF_INET6;
 		sin6.sin6_port = htons(port);
-		if (inet_pton(AF_INET6, addr, &sin6.sin6_addr) == 0)
-			return (print_and_return_failure(INET_ERR));
+		inet_pton(AF_INET6, addr, &sin6.sin6_addr);
 		if ((connect(sock, (const struct sockaddr *)&sin6, sizeof(sin6))) == -1)
 			return (print_and_return_failure(CONNECT_ERR));
 	}
@@ -80,8 +79,7 @@ static t_ex_ret		connect_according_to_af(char *type, char *addr, uint16_t port, 
 	{
 		sin.sin_family = AF_INET;
 		sin.sin_port = htons(port);
-		if ((sin.sin_addr.s_addr = inet_addr(addr)) == 0)
-			return (print_and_return_failure(INET_ERR));
+		sin.sin_addr.s_addr = inet_addr(addr);
 		if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
 			return (print_and_return_failure(CONNECT_ERR));
 	}
