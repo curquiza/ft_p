@@ -25,7 +25,7 @@ static uint16_t	get_port_uint16(char *port_str)
 }
 
 
-static t_ex_ret	init(int argc, char **argv, char *addr, int *port)
+static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 {
 	int		first_arg_index;
 
@@ -50,20 +50,50 @@ static t_ex_ret	init(int argc, char **argv, char *addr, int *port)
 	return (SUCCESS);
 }
 
-int		create_client(char *addr, int port)
+static t_ex_ret		print_and_return_failure(char *str)
+{
+	ft_dprintf(2, "%s\n", str);
+	return (FAILURE);
+}
+
+static t_ex_ret		connect_according_to_af(char *addr, uint16_t port, int sock)
+{
+	struct sockaddr_in	sin;
+	struct sockaddr_in6	sin6;
+
+	if (opt_is_activated('6') == TRUE)
+	{
+		sin6.sin6_family = AF_INET6;
+		sin6.sin6_port = htons(port);
+		if (inet_pton(AF_INET6, addr, &sin6.sin6_addr) == 0)
+			return (print_and_return_failure(INET_ERR));
+		if ((connect(sock, (const struct sockaddr *)&sin6, sizeof(sin6))) == -1)
+			return (print_and_return_failure(CONNECT_ERR));
+	}
+	else
+	{
+		sin.sin_family = AF_INET;
+		sin.sin_port = htons(port);
+		if ((sin.sin_addr.s_addr = inet_addr(addr)) == 0)
+			return (print_and_return_failure(INET_ERR));
+		if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
+			return (print_and_return_failure(CONNECT_ERR));
+	}
+	return (SUCCESS);
+}
+
+static int		connect_to_server(char *addr, uint16_t port)
 {
 	int					sock;
 	struct protoent		*proto;
-	struct sockaddr_in	sin;
 
 	if ((proto = getprotobyname("tcp")) == NULL)
 		return (ret_err_neg("During getprotobyname"));
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = inet_addr(addr);
-	if ((connect(sock, (const struct sockaddr *)&sin, sizeof(sin))) == -1)
-		return (ret_err_neg("During connect"));
+	if ((sock = socket((opt_is_activated('6') ? PF_INET6 : PF_INET),
+			SOCK_STREAM, proto->p_proto)) < 0)
+		return (ret_err_neg(SOCKET_ERR));
+	if (connect_according_to_af(addr, port, sock) == FAILURE)
+		return (-1);
 	return (sock);
 }
 
@@ -115,14 +145,14 @@ t_ex_ret	communicate_with_server(int sock)
 
 int		main(int argc, char **argv)
 {
-	int		sock;
+	int			sock;
 	// int		ret;
-	char	addr[ADDR_MAX_SIZE + 1];
-	int		port;
+	char		addr[ADDR_MAX_SIZE + 1];
+	uint16_t	port;
 
 	if (init(argc, argv, addr, &port) == FAILURE)
 		return (FAILURE);
-	if ((sock = create_client(addr, port)) == -1)
+	if ((sock = connect_to_server(addr, port)) == -1)
 		return (FAILURE);
 
 	// ret = communicate_with_server(sock);
