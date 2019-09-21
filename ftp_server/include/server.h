@@ -26,6 +26,7 @@
 # define PROTOBYNAME_ERR	"ERROR: getprotobyname function."
 # define NO_PORT_ERR		"ERROR: no port available to create DT channel."
 # define LS_ERR				"ERROR: during ls execution process."
+# define INET_PTON_ERR		"ERROR: inet_pton. IPv6 address not parsable."
 
 # define LISTEN_NB			40
 # define PORT_MIN_RANGE		1024
