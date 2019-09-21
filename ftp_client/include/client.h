@@ -36,8 +36,8 @@ int			get_all_options(int argc, char **argv);
 
 void		sigint_handler(int sig);
 
-
 int			connect_to_server(char *addr, uint16_t port);
+void		communicate_with_server(int sock);
 
 void		quit_cmd(char *input);
 

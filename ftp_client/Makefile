@@ -8,6 +8,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		utils.c \
 		options.c \
 		connect_to_server.c \
+		communicate_with_server.c \
 		quit_cmd.c \
 		signal.c \
 		main.c)
