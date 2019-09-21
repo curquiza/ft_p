@@ -2,8 +2,9 @@
 
 void	usage(char *prgm)
 {
-	ft_dprintf(2, "Usage: %s: ./server [-d] <port>\n", prgm);
+	ft_dprintf(2, "Usage: %s: ./server [-d6] <port>\n", prgm);
 	ft_dprintf(2, "  -d : debug mode\n");
+	ft_dprintf(2, "  -6 : IPv6\n");
 }
 
 t_bool	is_dt_channel_open(t_user *user)
