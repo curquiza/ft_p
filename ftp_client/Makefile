@@ -7,6 +7,7 @@ SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
 		utils.c \
 		options.c \
+		connect_to_server.c \
 		main.c)
 
 OBJ_DIR = obj
