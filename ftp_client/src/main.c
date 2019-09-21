@@ -6,7 +6,26 @@ static int		ret_err_neg(char *s)
 	return (-1);
 }
 
-static t_ex_ret	init(int argc, char **argv, char *addr, char *port)
+static uint16_t	get_port_uint16(char *port_str)
+{
+	int32_t		port;
+
+	if (ft_is_int(port_str) == FALSE)
+	{
+		ft_dprintf(2, "ERROR: %s: %s\n", port_str, PORT_ERR);
+		return (0);
+	}
+	port = ft_atoi(port_str);
+	if (port < 1 || port > USHRT_MAX)
+	{
+		ft_dprintf(2, "ERROR: %d: %s\n", port, PORT_ERR);
+		return (0);
+	}
+	return ((uint16_t)port);
+}
+
+
+static t_ex_ret	init(int argc, char **argv, char *addr, int *port)
 {
 	int		first_arg_index;
 
@@ -24,17 +43,18 @@ static t_ex_ret	init(int argc, char **argv, char *addr, char *port)
 		return (FAILURE);
 	}
 	ft_bzero(addr, ADDR_MAX_SIZE + 1);
-	ft_bzero(port, PORT_MAX_SIZE + 1);
 	ft_strncpy(addr, argv[first_arg_index], ADDR_MAX_SIZE);
-	ft_strncpy(port, argv[first_arg_index + 1], PORT_MAX_SIZE);
+	*port = get_port_uint16(argv[first_arg_index + 1]);
+	if (*port == 0)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
 int		create_client(char *addr, int port)
 {
-	int		sock;
+	int					sock;
 	struct protoent		*proto;
-	struct sockaddr_in	sin;			// /usr/include/netinet/in.h
+	struct sockaddr_in	sin;
 
 	if ((proto = getprotobyname("tcp")) == NULL)
 		return (ret_err_neg("During getprotobyname"));
@@ -95,17 +115,15 @@ t_ex_ret	communicate_with_server(int sock)
 
 int		main(int argc, char **argv)
 {
-	// int		sock;
+	int		sock;
 	// int		ret;
 	char	addr[ADDR_MAX_SIZE + 1];
-	char	port_str[PORT_MAX_SIZE + 1];
+	int		port;
 
-	if (init(argc, argv, addr, port_str) == FAILURE)
+	if (init(argc, argv, addr, &port) == FAILURE)
 		return (FAILURE);
-	ft_printf("addr = %s, port = %s\n", addr, port_str);
-	// sock = create_client(argv[1], ft_atoi(argv[2]));
-	// if (sock == -1)
-	// 	return (FAILURE);
+	if ((sock = create_client(addr, port)) == -1)
+		return (FAILURE);
 
 	// ret = communicate_with_server(sock);
 

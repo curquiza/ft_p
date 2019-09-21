@@ -9,10 +9,10 @@
 # define OPTIONS			"6"
 
 # define ADDR_MAX_SIZE		15
-# define PORT_MAX_SIZE		5
 
 # define READ_CMD_ERR		"When reading user command"
 # define READ_SERV_ASW_ERR	"When reading server reply"
+# define PORT_ERR			"Port number unavailable (1-65335)"
 
 
 /*
