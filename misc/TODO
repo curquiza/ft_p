@@ -1,11 +1,10 @@
 - retour de tous les appels : listen, inet_addr, fork, accept, connect, fstat, dup2...
 - checker les leaks
 - checker les liens symboliques
-- gerer les '\r\n' ?
 
 SERVER:
 - pq les leaks ??
-- mode ASCII/BIN
+- mode ASCII/BIN -> gerer les '\r\n' ?
 - option verbose ?
 
 CLIENT:
