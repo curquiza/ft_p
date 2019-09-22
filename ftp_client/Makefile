@@ -13,6 +13,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		cd_cmd.c \
 		help_cmd.c \
 		mode_cmd.c \
+		pass_cmd.c \
 		pwd_cmd.c \
 		signal.c \
 		send.c \

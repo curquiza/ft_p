@@ -31,6 +31,7 @@
 # define GET_USAGE			"get <filename> [new_filename]"
 # define PUT_USAGE			"put <filename>"
 # define MODE_USAGE			"mode"
+# define PASS_USAGE			"pass"
 
 # define HELP_DES			"Display all commands."
 # define QUIT_DES			"Close the connection and exit the client."
@@ -40,8 +41,9 @@
 # define GET_DES			"Downlaod the file on the server."
 # define PUT_DES			"Upload the file on the server."
 # define MODE_DES			"Display the current mode (active/passive)."
+# define PASS_DES			"On/off the passive mode."
 
-# define CMD_NB				5
+# define CMD_NB				6
 
 /*
 ** STRUCTURES
@@ -92,6 +94,7 @@ int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
 
 void		help_cmd(char *input);
+void		pass_cmd(char *input);
 void		mode_cmd(char *input);
 void		quit_cmd(char *input);
 void		cd_cmd(char *input);
