@@ -47,7 +47,18 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 	return (SUCCESS);
 }
 
-int		main(int argc, char **argv)
+static t_ex_ret	first_connection(void)
+{
+	ft_printf("Connection...\n");
+	if (parse_and_display_reply() != 0)
+	{
+		ft_printf("Impossible to etablish a connection. Exiting...\n");
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+int			main(int argc, char **argv)
 {
 	char		addr[ADDR_MAX_SIZE + 1];
 	uint16_t	port;
@@ -55,6 +66,8 @@ int		main(int argc, char **argv)
 	if (init(argc, argv, addr, &port) == FAILURE)
 		return (FAILURE);
 	if ((g_sock = connect_to_server(addr, port)) == -1)
+		return (FAILURE);
+	if (first_connection() == FAILURE)
 		return (FAILURE);
 	return (communicate_with_server());
 }
