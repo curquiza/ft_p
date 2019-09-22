@@ -9,6 +9,8 @@ SERVER:
 
 CLIENT:
 - gerer localhost
+- plus beau prompt avec le path dedans
+- commande 'help'
 - le client doit verifier que le DT est ouvert avant de lancer des commandes type LIST
 - reussir à faire que le client se ferme quand le server s'eteint ?
 

@@ -6,8 +6,13 @@ BONUS :
 - optimisation pour le transfert : lecture rapide
 - limitation du nombres de clients connectés en même temps
 - debug mode sur le server : afficher les tentative de port, les users connectés/deconnectés...
+- debug mode pour le client ?
 - logs détaillés pour le server
-
+- gestion du CtrlC : on quitte proprement
+- un second parametre pour get = renommer le fichier ?
+- la commande TYPE ?
+- prompt avec current_path ?
+- commande help dans le client
 
 
 INCLUDES :
@@ -22,9 +27,6 @@ Une commande c'est
 - des arguments
 
 Code = au plus 4 caractères alphabétiques, sans tenir compte de la casse.
-
-La casse ne s'applique pas non plus au code valeur des arguments.
-(Je ne sais pas encore ce qu'est un code valeur d'argument. L'exemple pris est 'a' ou 'A' pour le type ascii)
 
 Une commande (C-->S) ou une réponse (C<--S) se termine par un CRLF = \r\n = char 13 + char 10
 
