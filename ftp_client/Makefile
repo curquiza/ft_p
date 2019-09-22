@@ -11,6 +11,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		communicate_with_server.c \
 		quit_cmd.c \
 		cd_cmd.c \
+		help_cmd.c \
 		pwd_cmd.c \
 		signal.c \
 		send.c \

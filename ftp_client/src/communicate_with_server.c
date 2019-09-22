@@ -2,6 +2,7 @@
 
 t_cmd	g_cmd_tab[CMD_NB] =
 {
+	{ "help", &help_cmd },
 	{ "quit", &quit_cmd },
 	{ "cd", &cd_cmd },
 	{ "pwd", &pwd_cmd },

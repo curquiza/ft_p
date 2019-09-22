@@ -23,7 +23,7 @@
 # define ARG_NB_ERR			"ERROR: Wrong number of argument."
 # define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
 
-# define CMD_NB				3
+# define CMD_NB				4
 
 /*
 ** STRUCTURES
@@ -64,6 +64,7 @@ int			parse_and_display_reply(char *reply_buff);
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
 
+void		help_cmd(char *input);
 void		quit_cmd(char *input);
 void		cd_cmd(char *input);
 void		pwd_cmd(char *input);
