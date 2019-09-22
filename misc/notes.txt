@@ -1,19 +1,25 @@
 BONUS :
 =====
 
+Les deux :
 - RFC
 - ipv6
+- gestion du CtrlC : on quitte proprement
 - optimisation pour le transfert : lecture rapide
+- la commande TYPE ?
+
+Server :
 - limitation du nombres de clients connectés en même temps
 - debug mode sur le server : afficher les tentative de port, les users connectés/deconnectés...
-- debug mode pour le client ?
 - logs détaillés pour le server
-- gestion du CtrlC : on quitte proprement
-- un second parametre pour get = renommer le fichier ?
-- la commande TYPE ?
-- prompt avec current_path ?
-- commande help dans le client
 
+Client :
+- option a pour choisir son mode au depart
+- commande mode pour check le mode active/passive
+- commande help
+- prompt avec current_path
+- debug mode pour le client ?
+- un second parametre pour get = renommer le fichier ?
 
 INCLUDES :
 ========
