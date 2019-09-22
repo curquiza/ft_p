@@ -44,10 +44,10 @@ static void	exec_cmd(char *input)
 
 static void	display_prompt(void)
 {
-	ft_printf(PINK"curqui_ftp ");
+	ft_printf(B_PINK"curqui_ftp "DEF);
 	if (g_current_path != NULL)
-		ft_printf("%s ", g_current_path);
-	ft_printf("$> "DEF);
+		ft_printf(B_GREEN"%s "DEF, g_current_path);
+	ft_printf(B_PINK"$> "DEF);
 }
 
 t_ex_ret	communicate_with_server(void)
