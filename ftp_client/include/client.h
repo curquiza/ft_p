@@ -48,6 +48,8 @@ typedef struct	s_cmd
 {
 	char		*name;
 	void		(*f)(char *cmd);
+	char		*usage;
+	char		*description;
 }				t_cmd;
 
 /*

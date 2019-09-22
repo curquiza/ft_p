@@ -2,10 +2,10 @@
 
 t_cmd	g_cmd_tab[CMD_NB] =
 {
-	{ "help", &help_cmd },
-	{ "quit", &quit_cmd },
-	{ "cd", &cd_cmd },
-	{ "pwd", &pwd_cmd },
+	{ "help", &help_cmd, HELP_USAGE, HELP_DES },
+	{ "quit", &quit_cmd, QUIT_USAGE, QUIT_DES },
+	{ "cd", &cd_cmd, CD_USAGE, CD_DES },
+	{ "pwd", &pwd_cmd, PWD_USAGE, PWD_DES },
 };
 
 static char	*get_cmd_name(char *cmd)
