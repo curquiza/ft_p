@@ -13,6 +13,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		cd_cmd.c \
 		signal.c \
 		send.c \
+		reply_parser.c \
 		main.c)
 
 OBJ_DIR = obj

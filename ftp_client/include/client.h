@@ -9,6 +9,7 @@
 # define OPTIONS			"6"
 
 # define ADDR_MAX_SIZE		15
+# define REPLY_MAX_SIZE		1000
 
 # define READ_CMD_ERR		"When reading user command. Exiting..."
 # define READ_SERV_ASW_ERR	"When reading server reply. Exiting..."
@@ -21,6 +22,7 @@
 # define INET_ADDR_ERR		"ERROR: inet_addr."
 # define UNKNOWN_CMD_ERR	"ERROR: Unknown command."
 # define ARG_NB_ERR			"ERROR: Wrong number of argument."
+# define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
 
 # define CMD_NB				2
 
@@ -56,6 +58,8 @@ int			get_all_options(int argc, char **argv);
 void		sigint_handler(int sig);
 
 void		send_to_server(char *str);
+
+int			parse_and_display_reply(void);
 
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
