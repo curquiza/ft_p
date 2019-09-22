@@ -23,6 +23,22 @@
 # define ARG_NB_ERR			"ERROR: Wrong number of argument."
 # define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
 
+# define HELP_USAGE			"help"
+# define QUIT_USAGE			"quit"
+# define CD_USAGE			"cd <path>"
+# define PWD_USAGE			"pwd"
+# define LS_USAGE			"ls [path]"
+# define GET_USAGE			"get <filename> [new_filename]"
+# define PUT_USAGE			"put <filename>"
+
+# define HELP_DES			"Display all commands."
+# define QUIT_DES			"Close the connection and exit the client."
+# define CD_DES				"Change the current working directory on the server."
+# define PWD_DES			"Get the current working directory on the server."
+# define LS_DES				"Execute ls command."
+# define GET_DES			"Downlaod the file on the server."
+# define PUT_DES			"Upload the file on the server."
+
 # define CMD_NB				4
 
 /*
