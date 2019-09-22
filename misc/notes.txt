@@ -11,6 +11,8 @@ BONUS :
 - gestion du CtrlC : on quitte proprement
 - un second parametre pour get = renommer le fichier ?
 - la commande TYPE ?
+- prompt avec current_path ?
+- commande help dans le client
 
 
 INCLUDES :
