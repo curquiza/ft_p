@@ -12,7 +12,6 @@
 # define REPLY_MAX_SIZE		1000
 
 # define READ_CMD_ERR		"When reading user command. Exiting..."
-# define READ_SERV_ASW_ERR	"When reading server reply. Exiting..."
 # define MALLOC_ERR			"ERROR: malloc. Exiting..."
 
 # define PORT_ERR			"Port number unavailable (1-65335)"
@@ -41,6 +40,7 @@ typedef struct	s_cmd
 uint8_t			g_flags;
 sa_family_t		g_addr_family;
 int				g_sock;
+char			*g_current_path;
 t_bool			g_run;
 t_cmd			g_cmd_tab[CMD_NB];
 

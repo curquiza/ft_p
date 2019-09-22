@@ -42,18 +42,31 @@ static void	exec_cmd(char *input)
 	ft_dprintf(2, "%s\n", UNKNOWN_CMD_ERR);
 }
 
+static void	display_prompt(void)
+{
+	ft_printf(PINK"curqui_ftp ");
+	if (g_current_path != NULL)
+		ft_printf("%s ", g_current_path);
+	ft_printf("$> "DEF);
+}
+
 t_ex_ret	communicate_with_server(void)
 {
 	char	*input;
 	int		ret;
 
 	input = NULL;
+	g_current_path = ft_strdup("/");
 	while (g_run == TRUE)
 	{
-		ft_printf("curqui_ftp $> ");
+		// ft_printf("curqui_ftp $> ");
+		display_prompt();
 		ret = get_next_line(0, &input);
 		if (ret == -1)
+		{
+			free(g_current_path);
 			return (ft_ret_err(READ_CMD_ERR));
+		}
 		else if (ret == 0)
 		{
 			ft_putchar('\n');
