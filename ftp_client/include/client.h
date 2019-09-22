@@ -20,6 +20,7 @@
 # define INET_PTON_ERR		"ERROR: inet_pton. IPv6 address not parsable."
 # define INET_ADDR_ERR		"ERROR: inet_addr."
 # define UNKNOWN_CMD_ERR	"ERROR: Unknown command."
+# define ARG_NB_ERR			"ERROR: Wrong number of argument."
 
 # define CMD_NB				2
 
@@ -45,6 +46,8 @@ t_cmd			g_cmd_tab[CMD_NB];
 ** FUNCTION PROTOTYPES
 */
 void		usage(char *prgm);
+t_bool		has_no_arg(char *input);
+t_bool		has_only_one_arg(char *input);
 
 t_ex_ret	activate_opt(char opt_letter);
 t_bool		opt_is_activated(char opt_letter);
