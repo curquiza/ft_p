@@ -59,7 +59,7 @@ void		sigint_handler(int sig);
 
 void		send_to_server(char *str);
 
-int			parse_and_display_reply(void);
+int			parse_and_display_reply(char *reply_buff);
 
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);

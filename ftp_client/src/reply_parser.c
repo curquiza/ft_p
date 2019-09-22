@@ -29,22 +29,22 @@ static int	parse_reply(char *reply)
 	}
 }
 
-int			parse_and_display_reply(void)
+int			parse_and_display_reply(char *reply_buff)
 {
-	char	reply[REPLY_MAX_SIZE];
 	int		len;
 
-	if ((len = recv(g_sock, &reply, REPLY_MAX_SIZE, 0)) > 0)
+	ft_bzero(reply_buff, REPLY_MAX_SIZE);
+	if ((len = recv(g_sock, reply_buff, REPLY_MAX_SIZE, 0)) > 0)
 	{
-		if (len >= 2 && reply[len - 2] == '\r')
-			reply[len - 2] = '\0';
-		else if (len >= 1 && reply[len - 1] == '\n')
-			reply[len - 1] = '\0';
+		if (len >= 2 && reply_buff[len - 2] == '\r')
+			reply_buff[len - 2] = '\0';
+		else if (len >= 1 && reply_buff[len - 1] == '\n')
+			reply_buff[len - 1] = '\0';
 		else
 		{
 			ft_dprintf(2, "%s\n", REP_BAD_FORMAT_ERR);
 			return (-1);
 		}
 	}
-	return (parse_reply(reply));
+	return (parse_reply(reply_buff));
 }

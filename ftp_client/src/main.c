@@ -49,8 +49,10 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 
 static t_ex_ret	first_connection(void)
 {
+	char	reply_buff[REPLY_MAX_SIZE];
+
 	ft_printf("Connection...\n");
-	if (parse_and_display_reply() != 0)
+	if (parse_and_display_reply(reply_buff) != 0)
 	{
 		ft_printf("Impossible to etablish a connection. Exiting...\n");
 		return (FAILURE);
