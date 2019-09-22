@@ -57,7 +57,7 @@ t_ex_ret	communicate_with_server(void)
 		else if (ret == 0)
 		{
 			ft_putchar('\n');
-			quit_cmd(input);
+			quit_cmd("quit");
 		}
 		else
 			exec_cmd(input);
