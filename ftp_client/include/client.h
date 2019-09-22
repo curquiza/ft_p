@@ -21,7 +21,7 @@
 # define INET_ADDR_ERR		"ERROR: inet_addr."
 # define UNKNOWN_CMD_ERR	"ERROR: Unknown command."
 
-# define CMD_NB				1
+# define CMD_NB				2
 
 /*
 ** STRUCTURES
@@ -58,5 +58,6 @@ int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
 
 void		quit_cmd(char *input);
+void		cd_cmd(char *input);
 
 #endif
