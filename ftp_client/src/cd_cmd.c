@@ -19,7 +19,7 @@ void		cd_cmd(char *input)
 	if (has_only_one_arg(input) == FALSE)
 	{
 		ft_dprintf(2, "%s\n", ARG_NB_ERR);
-		ft_dprintf(2, "Usage: cd <path>\n");
+		ft_dprintf(2, "Usage: %s\n", CD_USAGE);
 		return ;
 	}
 	send_cwd_cmd_to_server(input);
