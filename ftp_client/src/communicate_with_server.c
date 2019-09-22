@@ -4,6 +4,7 @@ t_cmd	g_cmd_tab[CMD_NB] =
 {
 	{ "quit", &quit_cmd },
 	{ "cd", &cd_cmd },
+	{ "pwd", &pwd_cmd },
 };
 
 static char	*get_cmd_name(char *cmd)
@@ -59,7 +60,6 @@ t_ex_ret	communicate_with_server(void)
 	g_current_path = ft_strdup("/");
 	while (g_run == TRUE)
 	{
-		// ft_printf("curqui_ftp $> ");
 		display_prompt();
 		ret = get_next_line(0, &input);
 		if (ret == -1)
