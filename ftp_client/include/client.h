@@ -6,7 +6,7 @@
 # include <netdb.h>
 # include <arpa/inet.h>
 
-# define OPTIONS			"6"
+# define OPTIONS			"6a"
 
 # define ADDR_MAX_SIZE		15
 # define REPLY_MAX_SIZE		1000
@@ -30,6 +30,7 @@
 # define LS_USAGE			"ls [path]"
 # define GET_USAGE			"get <filename> [new_filename]"
 # define PUT_USAGE			"put <filename>"
+# define MODE_USAGE			"mode"
 
 # define HELP_DES			"Display all commands."
 # define QUIT_DES			"Close the connection and exit the client."
@@ -38,8 +39,9 @@
 # define LS_DES				"Execute ls command."
 # define GET_DES			"Downlaod the file on the server."
 # define PUT_DES			"Upload the file on the server."
+# define MODE_DES			"Display the current mode (active/passive)."
 
-# define CMD_NB				4
+# define CMD_NB				5
 
 /*
 ** STRUCTURES
@@ -52,11 +54,18 @@ typedef struct	s_cmd
 	char		*description;
 }				t_cmd;
 
+typedef enum	e_mode
+{
+	PASSIVE,
+	ACTIVE
+}				t_mode;
+
 /*
 ** GLOBALS
 */
 uint8_t			g_flags;
 sa_family_t		g_addr_family;
+t_mode			g_mode;
 int				g_sock;
 char			*g_current_path;
 t_bool			g_run;
@@ -83,6 +92,7 @@ int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
 
 void		help_cmd(char *input);
+void		mode_cmd(char *input);
 void		quit_cmd(char *input);
 void		cd_cmd(char *input);
 void		pwd_cmd(char *input);

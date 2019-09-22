@@ -4,6 +4,7 @@ void	usage(char *prgm)
 {
 	ft_dprintf(2, "Usage: %s: ./client [-6] <address> <port>\n", prgm);
 	ft_dprintf(2, "  -6 : IPv6\n");
+	ft_dprintf(2, "  -a : force active mode\n");
 }
 
 t_bool	has_no_arg(char *input)

@@ -6,6 +6,7 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "quit", &quit_cmd, QUIT_USAGE, QUIT_DES },
 	{ "cd", &cd_cmd, CD_USAGE, CD_DES },
 	{ "pwd", &pwd_cmd, PWD_USAGE, PWD_DES },
+	{ "mode", &mode_cmd, MODE_USAGE, MODE_DES },
 };
 
 static char	*get_cmd_name(char *cmd)

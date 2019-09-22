@@ -37,6 +37,7 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 		usage(argv[0]);
 		return (FAILURE);
 	}
+	g_mode = (opt_is_activated('a') == TRUE) ? ACTIVE : PASSIVE;
 	g_addr_family = (opt_is_activated('6') == TRUE) ? AF_INET6 : AF_INET;
 	signal(SIGINT, sigint_handler);
 	ft_bzero(addr, ADDR_MAX_SIZE + 1);
