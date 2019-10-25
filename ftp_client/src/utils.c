@@ -7,6 +7,12 @@ void	usage(char *prgm)
 	ft_dprintf(2, "  -a : force active mode\n");
 }
 
+t_ex_ret		print_and_return_failure(char *str)
+{
+	ft_printf("%s\n", str);
+	return (FAILURE);
+}
+
 t_bool	has_no_arg(char *input)
 {
 	char	**args_tab;

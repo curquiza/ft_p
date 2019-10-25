@@ -10,6 +10,7 @@ void	quit_cmd(char *input)
 	}
 	g_run = FALSE;
 	free(g_current_path);
+	free(g_addr);
 	printf("Quitting FTP Client...\n");
 	close(g_sock);
 }

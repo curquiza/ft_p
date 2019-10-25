@@ -9,7 +9,6 @@
 # define OPTIONS			"6a"
 
 # define TCP_PROTONAME		"tcp"
-# define ADDR_MAX_SIZE		15
 # define REPLY_MAX_SIZE		1000
 
 # define READ_CMD_ERR		"When reading user command. Exiting..."
@@ -81,6 +80,7 @@ t_cmd			g_cmd_tab[CMD_NB];
 ** FUNCTION PROTOTYPES
 */
 void		usage(char *prgm);
+t_ex_ret	print_and_return_failure(char *str);
 t_bool		has_no_arg(char *input);
 t_bool		has_only_one_arg(char *input);
 t_bool		has_zero_or_one_arg(char *input);
@@ -95,8 +95,10 @@ void		send_to_server(char *str);
 
 int			parse_and_display_reply(char *reply_buff);
 
-int			etablish_data_connection();
+char		**get_connection_args_passive(char *cmd);
+int			etablish_data_connection_passive(void);
 
+int			etablish_data_connection(void);
 
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
