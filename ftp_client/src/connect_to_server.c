@@ -56,19 +56,18 @@ int				connect_to_server(char *addr, uint16_t port)
 {
 	int					sock;
 	struct protoent		*proto;
-	char				*real_addr;
 
+	g_addr = NULL;
 	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 		return (ret_err_neg(PROTOBYNAME_ERR));
 	if ((sock = socket((g_addr_family == AF_INET6 ? PF_INET6 : PF_INET),
 			SOCK_STREAM, proto->p_proto)) < 0)
 		return (ret_err_neg(SOCKET_ERR));
-	real_addr = get_real_addr(addr);
-	if (connect_according_to_af(real_addr, port, sock) == FAILURE)
+	g_addr = get_real_addr(addr);
+	if (connect_according_to_af(g_addr, port, sock) == FAILURE)
 	{
-		free(real_addr);
+		ft_strdel(&g_addr);
 		return (-1);
 	}
-	free(real_addr);
 	return (sock);
 }

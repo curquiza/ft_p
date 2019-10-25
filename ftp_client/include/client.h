@@ -72,6 +72,7 @@ uint8_t			g_flags;
 sa_family_t		g_addr_family;
 t_mode			g_mode;
 int				g_sock;
+char			*g_addr;
 char			*g_current_path;
 t_bool			g_run;
 t_cmd			g_cmd_tab[CMD_NB];
