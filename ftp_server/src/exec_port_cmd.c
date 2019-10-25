@@ -97,7 +97,7 @@ static char		**get_arg_tab(char *cmd)
 void			exec_port_cmd(t_user *user, char *cmd)
 {
 	char		**arg_tab;
-	char		addr[15];
+	char		addr[16];
 
 	if ((arg_tab = get_arg_tab(cmd)) == NULL)
 	{
