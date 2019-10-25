@@ -30,3 +30,8 @@ t_bool	has_only_one_arg(char *input)
 		return (FALSE);
 	return (TRUE);
 }
+
+t_bool	has_zero_or_one_arg(char *input)
+{
+	return (has_no_arg(input) || has_only_one_arg(input));
+}
