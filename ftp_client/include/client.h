@@ -43,7 +43,7 @@
 # define MODE_DES			"Display the current mode (active/passive)."
 # define PASS_DES			"On/off the passive mode."
 
-# define CMD_NB				6
+# define CMD_NB				7
 
 /*
 ** STRUCTURES
@@ -94,6 +94,7 @@ int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
 
 void		help_cmd(char *input);
+void		ls_cmd(char *input);
 void		pass_cmd(char *input);
 void		mode_cmd(char *input);
 void		quit_cmd(char *input);
