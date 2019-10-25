@@ -19,6 +19,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		signal.c \
 		send.c \
 		reply_parser.c \
+		etablish_data_connection.c \
 		main.c)
 
 OBJ_DIR = obj

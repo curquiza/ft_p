@@ -58,8 +58,8 @@ int				connect_to_server(char *addr, uint16_t port)
 	struct protoent		*proto;
 	char				*real_addr;
 
-	if ((proto = getprotobyname("tcp")) == NULL)
-		return (ret_err_neg("During getprotobyname"));
+	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
+		return (ret_err_neg(PROTOBYNAME_ERR));
 	if ((sock = socket((g_addr_family == AF_INET6 ? PF_INET6 : PF_INET),
 			SOCK_STREAM, proto->p_proto)) < 0)
 		return (ret_err_neg(SOCKET_ERR));

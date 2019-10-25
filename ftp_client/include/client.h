@@ -8,6 +8,7 @@
 
 # define OPTIONS			"6a"
 
+# define TCP_PROTONAME		"tcp"
 # define ADDR_MAX_SIZE		15
 # define REPLY_MAX_SIZE		1000
 
@@ -15,6 +16,7 @@
 # define MALLOC_ERR			"ERROR: malloc. Exiting..."
 
 # define PORT_ERR			"Port number unavailable (1-65335)"
+# define PROTOBYNAME_ERR	"ERROR: getprotobyname function."
 # define SOCKET_ERR			"ERROR: socket syscall."
 # define CONNECT_ERR		"ERROR: connect syscall."
 # define INET_PTON_ERR		"ERROR: inet_pton. IPv6 address not parsable."
@@ -22,6 +24,7 @@
 # define UNKNOWN_CMD_ERR	"ERROR: Unknown command."
 # define ARG_NB_ERR			"ERROR: Wrong number of argument."
 # define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
+# define DATA_CONN_ERR		"ERROR: Impossible to etablish data connection."
 
 # define HELP_USAGE			"help"
 # define QUIT_USAGE			"quit"
@@ -89,6 +92,9 @@ void		sigint_handler(int sig);
 void		send_to_server(char *str);
 
 int			parse_and_display_reply(char *reply_buff);
+
+int			etablish_data_connection();
+
 
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);
