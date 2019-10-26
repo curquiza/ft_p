@@ -89,21 +89,16 @@ int		etablish_data_connection_passive(void)
 	int			dt_client_sock;
 	char		*addr;
 
+	send_to_server(g_addr_family == AF_INET6 ? "EPSV" : "PASV");
 	if (parse_and_display_reply(reply_buff) != 0
 		|| !(conn_args = get_connection_args_passive(reply_buff)))
-	{
-		ft_printf("%s\n", DATA_CONN_ERR);
-		return (-1);
-	}
+		return (print_and_return_neg(DATA_CONN_ERR));
 	addr = get_addr(conn_args);
 	dt_port = get_port(conn_args);
 	ft_tabdel(&conn_args);
 	dt_client_sock = connect_to_user(addr, dt_port);
 	free(addr);
 	if (dt_client_sock == -1)
-	{
-		ft_printf("%s\n", DATA_CONN_ERR);
-		return (-1);
-	}
+		return (print_and_return_neg(DATA_CONN_ERR));
 	return (dt_client_sock);
 }

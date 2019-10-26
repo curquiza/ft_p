@@ -13,6 +13,12 @@ t_ex_ret		print_and_return_failure(char *str)
 	return (FAILURE);
 }
 
+int				print_and_return_neg(char *str)
+{
+	ft_printf("%s\n", str);
+	return (-1);
+}
+
 t_bool	has_no_arg(char *input)
 {
 	char	**args_tab;

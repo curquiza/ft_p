@@ -81,6 +81,7 @@ t_cmd			g_cmd_tab[CMD_NB];
 */
 void		usage(char *prgm);
 t_ex_ret	print_and_return_failure(char *str);
+int			print_and_return_neg(char *str);
 t_bool		has_no_arg(char *input);
 t_bool		has_only_one_arg(char *input);
 t_bool		has_zero_or_one_arg(char *input);
@@ -97,6 +98,8 @@ int			parse_and_display_reply(char *reply_buff);
 
 char		**get_connection_args_passive(char *cmd);
 int			etablish_data_connection_passive(void);
+
+int			etablish_data_connection_active(void);
 
 int			etablish_data_connection(void);
 
