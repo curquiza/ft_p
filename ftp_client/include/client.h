@@ -8,8 +8,13 @@
 
 # define OPTIONS			"6a"
 
+# define LISTEN_NB			40
 # define TCP_PROTONAME		"tcp"
 # define REPLY_MAX_SIZE		1000
+# define PORT_MIN_RANGE		1024
+# define DEFAULT_SIN_ADDR	INADDR_ANY
+# define DEFAULT_SIN6_ADDR	in6addr_any
+# define PORT_MAX_RANGE		USHRT_MAX
 
 # define READ_CMD_ERR		"When reading user command. Exiting..."
 # define MALLOC_ERR			"ERROR: malloc. Exiting..."
