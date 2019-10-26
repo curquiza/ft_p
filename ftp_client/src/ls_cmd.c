@@ -6,8 +6,8 @@ void		ls_cmd(char *input)
 
 	if (has_zero_or_one_arg(input) == FALSE)
 	{
-		ft_dprintf(2, "%s\n", ARG_NB_ERR);
-		ft_dprintf(2, "Usage: %s\n", LS_USAGE);
+		ft_printf("%s\n", ARG_NB_ERR);
+		ft_printf("Usage: %s\n", LS_USAGE);
 		return ;
 	}
 	if ((dt_client_sock = etablish_data_connection()) == -1)

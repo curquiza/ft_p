@@ -2,9 +2,9 @@
 
 void	usage(char *prgm)
 {
-	ft_dprintf(2, "Usage: %s: ./client [-6] <address> <port>\n", prgm);
-	ft_dprintf(2, "  -6 : IPv6\n");
-	ft_dprintf(2, "  -a : force active mode\n");
+	ft_printf("Usage: %s: ./client [-6] <address> <port>\n", prgm);
+	ft_printf("  -6 : IPv6\n");
+	ft_printf("  -a : force active mode\n");
 }
 
 t_ex_ret		print_and_return_failure(char *str)

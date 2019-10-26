@@ -28,8 +28,8 @@ void		pwd_cmd(char *input)
 
 	if (has_no_arg(input) == FALSE)
 	{
-		ft_dprintf(2, "%s\n", ARG_NB_ERR);
-		ft_dprintf(2, "Usage: %s\n", PWD_USAGE);
+		ft_printf("%s\n", ARG_NB_ERR);
+		ft_printf("Usage: %s\n", PWD_USAGE);
 		return ;
 	}
 	send_to_server("PWD");

@@ -44,7 +44,7 @@ static void	exec_cmd(char *input)
 		i++;
 	}
 	free(cmd_name);
-	ft_dprintf(2, "%s\n", UNKNOWN_CMD_ERR);
+	ft_printf("%s\n", UNKNOWN_CMD_ERR);
 }
 
 static void	display_prompt(void)
