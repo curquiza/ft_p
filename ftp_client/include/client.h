@@ -104,6 +104,7 @@ int			parse_and_display_reply(char *reply_buff);
 char		**get_connection_args_passive(char *cmd);
 int			etablish_data_connection_passive(void);
 
+int			create_server_socket_on_valid_port(uint16_t *dt_port);
 int			etablish_data_connection_active(void);
 
 int			etablish_data_connection(void);
