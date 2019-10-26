@@ -11,7 +11,7 @@ t_ex_ret		bind_server(int sock, uint16_t port)
 		sin6.sin6_port = htons(port);
 		sin6.sin6_addr = DEFAULT_SIN6_ADDR;
 		if (bind(sock, (const struct sockaddr *)&sin6, sizeof(sin6)) == -1)
-			return (ft_ret_err(BIND_ERR));
+			return (FAILURE);
 	}
 	else
 	{
@@ -19,7 +19,7 @@ t_ex_ret		bind_server(int sock, uint16_t port)
 		sin.sin_port = htons(port);
 		sin.sin_addr.s_addr = DEFAULT_SIN_ADDR;
 		if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-			return (ft_ret_err(BIND_ERR));
+			return (FAILURE);
 	}
 	return (SUCCESS);
 }

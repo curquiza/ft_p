@@ -71,7 +71,7 @@ static int		create_server_socket(uint16_t port)
 			return (ret_err_neg(SOCKET_ERR));
 	}
 	if (bind_server(sock, port) == FAILURE)
-		return (-1);
+		return (ret_err_neg(BIND_ERR));
 	if (listen(sock, LISTEN_NB) == -1)
 		return (ret_err_neg(LISTEN_ERR));
 	return (sock);
