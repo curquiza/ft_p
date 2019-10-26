@@ -5,7 +5,8 @@ CC = gcc $(FLAG)
 
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
-		utils.c \
+		misc.c \
+		misc_arg_check.c \
 		options.c \
 		connect_to_server.c \
 		communicate_with_server.c \
