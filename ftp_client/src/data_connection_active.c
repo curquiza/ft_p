@@ -50,17 +50,18 @@ static int	accept_according_to_af(int dt_server_sock)
 	return (dt_client_sock);
 }
 
-int		etablish_data_connection_active(void)
+t_ex_ret	etablish_data_connection_active(t_dt_socks *dt)
 {
-	int			dt_server_sock;
 	uint16_t	dt_port;
-	int			dt_client_sock;
+	char		reply_buff[REPLY_MAX_SIZE];
 
-	dt_server_sock = create_server_socket_on_valid_port(&dt_port);
-	if (dt_server_sock == -1)
-		return (print_and_return_neg(DATA_CONN_ERR));
+	dt->server_sock = create_server_socket_on_valid_port(&dt_port);
+	if (dt->server_sock == -1)
+		return (print_and_return_failure(DATA_CONN_ERR));
 	send_request_connection_to_server(dt_port);
-	if ((dt_client_sock = accept_according_to_af(dt_server_sock)) == -1)
-		return (print_and_return_neg(DATA_CONN_ERR));
-	return (dt_client_sock);
+	if (parse_and_display_reply(reply_buff) != 0)
+		return (print_and_return_failure(DATA_CONN_ERR));
+	if ((dt->client_sock = accept_according_to_af(dt->server_sock)) == -1)
+		return (print_and_return_failure(DATA_CONN_ERR));
+	return (SUCCESS);
 }

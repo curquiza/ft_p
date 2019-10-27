@@ -1,6 +1,6 @@
 #include "client.h"
 
-static char	*get_addr(char **args)
+static char		*get_addr(char **args)
 {
 	int		i;
 	char	*final_addr;
@@ -34,7 +34,7 @@ static uint16_t	get_port(char **args)
 	return (addr);
 }
 
-static t_ex_ret		connect_according_to_af(char *addr, uint16_t port, int sock)
+static t_ex_ret	connect_according_to_af(char *addr, uint16_t port, int sock)
 {
 	struct sockaddr_in	sin;
 	struct sockaddr_in6	sin6;
@@ -81,24 +81,24 @@ static int		connect_to_user(char *addr, uint16_t port)
 }
 
 
-int		etablish_data_connection_passive(void)
+t_ex_ret		etablish_data_connection_passive(t_dt_socks *dt)
 {
 	char		reply_buff[REPLY_MAX_SIZE];
 	char		**conn_args;
 	uint16_t	dt_port;
-	int			dt_client_sock;
+	// int			dt_client_sock;
 	char		*addr;
 
 	send_to_server(g_addr_family == AF_INET6 ? "EPSV" : "PASV");
 	if (parse_and_display_reply(reply_buff) != 0
 		|| !(conn_args = get_connection_args_passive(reply_buff)))
-		return (print_and_return_neg(DATA_CONN_ERR));
+		return (print_and_return_failure(DATA_CONN_ERR));
 	addr = get_addr(conn_args);
 	dt_port = get_port(conn_args);
 	ft_tabdel(&conn_args);
-	dt_client_sock = connect_to_user(addr, dt_port);
+	dt->client_sock = connect_to_user(addr, dt_port);
 	free(addr);
-	if (dt_client_sock == -1)
-		return (print_and_return_neg(DATA_CONN_ERR));
-	return (dt_client_sock);
+	if (dt->client_sock == -1)
+		return (print_and_return_failure(DATA_CONN_ERR));
+	return (SUCCESS);
 }

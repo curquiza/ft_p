@@ -15,6 +15,7 @@
 # define DEFAULT_SIN_ADDR	INADDR_ANY
 # define DEFAULT_SIN6_ADDR	in6addr_any
 # define PORT_MAX_RANGE		USHRT_MAX
+# define READ_BUFF			10000
 
 # define READ_CMD_ERR		"When reading user command. Exiting..."
 # define MALLOC_ERR			"ERROR: malloc. Exiting..."
@@ -69,6 +70,12 @@ typedef enum	e_mode
 	ACTIVE
 }				t_mode;
 
+typedef struct	s_dt_socks
+{
+	int			server_sock;
+	int			client_sock;
+}				t_dt_socks;
+
 /*
 ** GLOBALS
 */
@@ -102,12 +109,13 @@ void		send_to_server(char *str);
 int			parse_and_display_reply(char *reply_buff);
 
 char		**get_connection_args_passive(char *cmd);
-int			etablish_data_connection_passive(void);
+t_ex_ret	etablish_data_connection_passive(t_dt_socks *dt);
 
 int			create_server_socket_on_valid_port(uint16_t *dt_port);
-int			etablish_data_connection_active(void);
+t_ex_ret	etablish_data_connection_active(t_dt_socks *dt);
 
-int			etablish_data_connection(void);
+t_ex_ret	etablish_data_connection(t_dt_socks *dt);
+void		close_data_connection(t_dt_socks *dt);
 
 int			connect_to_server(char *addr, uint16_t port);
 t_ex_ret	communicate_with_server(void);

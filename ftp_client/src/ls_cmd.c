@@ -1,8 +1,40 @@
 #include "client.h"
 
+static void	read_and_display_ls(int dt_client_sock)
+{
+	int		ret;
+	char	buff[READ_BUFF + 1];
+
+	while ((ret = recv(dt_client_sock, buff, READ_BUFF, 0)) > 0)
+	{
+		buff[ret] = '\0';
+		ft_printf(buff);
+	}
+	if (ret == -1)
+		ft_printf("Error during ls output display.");
+}
+
+static void	send_list_command_to_server(char *input)
+{
+	char	**args;
+	char	*cmd;
+
+	args = ft_strsplit(input, ' ');
+	if (args[1] == NULL)
+		send_to_server("LIST");
+	else
+	{
+		cmd = ft_strjoin("LIST ", args[1]);
+		send_to_server(cmd);
+		free(cmd);
+	}
+	ft_tabdel(&args);
+}
+
 void		ls_cmd(char *input)
 {
-	int		dt_client_sock;
+	char		reply_buff[REPLY_MAX_SIZE];
+	t_dt_socks	dt;
 
 	if (has_zero_or_one_arg(input) == FALSE)
 	{
@@ -10,10 +42,20 @@ void		ls_cmd(char *input)
 		ft_printf("Usage: %s\n", LS_USAGE);
 		return ;
 	}
-	if ((dt_client_sock = etablish_data_connection()) == -1)
+	if (etablish_data_connection(&dt) == FAILURE)
 	{
-		ft_printf("LS command failed.\n");
+		close_data_connection(&dt);
+		ft_printf("LS command aborted.\n");
 		return ;
 	}
-	ft_printf("READ AND DISPLAY LS !!\n");
+	send_list_command_to_server(input);
+	if (parse_and_display_reply(reply_buff) != 0)
+	{
+		close_data_connection(&dt);
+		ft_printf("LS command aborted.\n");
+		return ;
+	}
+	read_and_display_ls(dt.client_sock);
+	parse_and_display_reply(reply_buff);
+	close_data_connection(&dt);
 }
