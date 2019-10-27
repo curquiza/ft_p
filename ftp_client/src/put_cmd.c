@@ -31,7 +31,7 @@ static int get_fd(char *input)
 
 	args = ft_strsplit(input, ' ');
 	fd = open(args[1], O_RDONLY);
-	free(args);
+	ft_tabdel(&args);
 	if (fd == -1)
 		return (print_and_return_neg(OPEN_ERR));
 	return (fd);
