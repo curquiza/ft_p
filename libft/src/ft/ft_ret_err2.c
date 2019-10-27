@@ -14,6 +14,6 @@
 
 t_ex_ret	ft_ret_err2(char *s1, char *s2)
 {
-	ft_dprintf(2, "Error: %s: %s\n", s1, s2);
+	ft_printf("Error: %s: %s\n", s1, s2);
 	return (FAILURE);
 }

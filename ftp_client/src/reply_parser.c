@@ -9,7 +9,7 @@ static int	parse_reply(char *reply)
 {
 	if (!reply || !reply[0])
 	{
-		ft_dprintf(2, "%s\n", REP_BAD_FORMAT_ERR);
+		ft_printf("%s\n", REP_BAD_FORMAT_ERR);
 		return (-1);
 	}
 	if (reply[0] == '1' || reply[0] == '2' || reply[0] == '3')
@@ -24,7 +24,7 @@ static int	parse_reply(char *reply)
 	}
 	else
 	{
-		ft_dprintf(2, "%s\n", REP_BAD_FORMAT_ERR);
+		ft_printf("%s\n", REP_BAD_FORMAT_ERR);
 		return (-1);
 	}
 }
@@ -42,7 +42,7 @@ int			parse_and_display_reply(char *reply_buff)
 			reply_buff[len - 1] = '\0';
 		else
 		{
-			ft_dprintf(2, "%s\n", REP_BAD_FORMAT_ERR);
+			ft_printf("%s\n", REP_BAD_FORMAT_ERR);
 			return (-1);
 		}
 	}

@@ -5,12 +5,14 @@ CC = gcc $(FLAG)
 
 SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
-		utils.c \
+		misc.c \
+		misc_arg_check.c \
 		options.c \
 		connect_to_server.c \
 		communicate_with_server.c \
 		quit_cmd.c \
 		cd_cmd.c \
+		ls_cmd.c \
 		help_cmd.c \
 		mode_cmd.c \
 		pass_cmd.c \
@@ -18,6 +20,11 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		signal.c \
 		send.c \
 		reply_parser.c \
+		etablish_data_connection.c \
+		data_connection_active.c \
+		data_connection_active_server_socket.c \
+		data_connection_passive.c \
+		data_connecton_passive_get_args.c \
 		main.c)
 
 OBJ_DIR = obj

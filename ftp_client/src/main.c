@@ -6,20 +6,31 @@ static uint16_t	get_port_uint16(char *port_str)
 
 	if (ft_is_int(port_str) == FALSE)
 	{
-		ft_dprintf(2, "ERROR: %s: %s\n", port_str, PORT_ERR);
+		ft_printf("ERROR: %s: %s\n", port_str, PORT_ERR);
 		return (0);
 	}
 	port = ft_atoi(port_str);
 	if (port < 1 || port > USHRT_MAX)
 	{
-		ft_dprintf(2, "ERROR: %d: %s\n", port, PORT_ERR);
+		ft_printf("ERROR: %d: %s\n", port, PORT_ERR);
 		return (0);
 	}
 	return ((uint16_t)port);
 }
 
+static char		*get_real_addr(char *addr)
+{
+	if (ft_strcmp(addr, "localhost") == 0)
+	{
+		if (g_addr_family == AF_INET6)
+			return (ft_strdup("::1"));
+		else
+			return (ft_strdup("127.0.0.1"));
+	}
+	return (ft_strdup(addr));
+}
 
-static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
+static t_ex_ret	init(int argc, char **argv, uint16_t *port)
 {
 	int		first_arg_index;
 
@@ -39,9 +50,8 @@ static t_ex_ret	init(int argc, char **argv, char *addr, uint16_t *port)
 	}
 	g_mode = (opt_is_activated('a') == TRUE) ? ACTIVE : PASSIVE;
 	g_addr_family = (opt_is_activated('6') == TRUE) ? AF_INET6 : AF_INET;
+	g_addr = get_real_addr(argv[first_arg_index]);
 	signal(SIGINT, sigint_handler);
-	ft_bzero(addr, ADDR_MAX_SIZE + 1);
-	ft_strncpy(addr, argv[first_arg_index], ADDR_MAX_SIZE);
 	*port = get_port_uint16(argv[first_arg_index + 1]);
 	if (*port == 0)
 		return (FAILURE);
@@ -63,12 +73,11 @@ static t_ex_ret	first_connection(void)
 
 int			main(int argc, char **argv)
 {
-	char		addr[ADDR_MAX_SIZE + 1];
 	uint16_t	port;
 
-	if (init(argc, argv, addr, &port) == FAILURE)
+	if (init(argc, argv, &port) == FAILURE)
 		return (FAILURE);
-	if ((g_sock = connect_to_server(addr, port)) == -1)
+	if ((g_sock = connect_to_server(g_addr, port)) == -1)
 		return (FAILURE);
 	if (first_connection() == FAILURE)
 		return (FAILURE);

@@ -37,13 +37,13 @@ static uint16_t	get_port_uint16(char *port_str)
 
 	if (ft_is_int(port_str) == FALSE)
 	{
-		ft_dprintf(2, "ERROR: %s: %s\n", port_str, PORT_ERR);
+		ft_printf("ERROR: %s: %s\n", port_str, PORT_ERR);
 		return (0);
 	}
 	port = ft_atoi(port_str);
 	if (port < PORT_MIN_RANGE || port > USHRT_MAX)
 	{
-		ft_dprintf(2, "ERROR: %d: %s\n", port, PORT_ERR);
+		ft_printf("ERROR: %d: %s\n", port, PORT_ERR);
 		return (0);
 	}
 	return ((uint16_t)port);
@@ -71,7 +71,7 @@ static int		create_server_socket(uint16_t port)
 			return (ret_err_neg(SOCKET_ERR));
 	}
 	if (bind_server(sock, port) == FAILURE)
-		return (-1);
+		return (ret_err_neg(BIND_ERR));
 	if (listen(sock, LISTEN_NB) == -1)
 		return (ret_err_neg(LISTEN_ERR));
 	return (sock);
@@ -83,7 +83,7 @@ static char		*get_root_path(void)
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
-		ft_dprintf(2, ROOT_PATH_ERR);
+		ft_printf(ROOT_PATH_ERR);
 	return (path);
 }
 

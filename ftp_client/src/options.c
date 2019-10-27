@@ -7,7 +7,7 @@ t_ex_ret	activate_opt(char opt_letter)
 
 	if (!(opt = ft_strchr(OPTIONS, opt_letter)))
 	{
-		ft_dprintf(2, "Error: -%c: Invalid option\n", opt_letter);
+		ft_printf("Error: -%c: Invalid option\n", opt_letter);
 		return (FAILURE);
 	}
 	opt_mask = (1 << (opt - OPTIONS));

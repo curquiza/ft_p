@@ -1,17 +1,5 @@
 #include "client.h"
 
-static t_ex_ret	print_and_return_failure(char *str)
-{
-	ft_dprintf(2, "%s\n", str);
-	return (FAILURE);
-}
-
-static int		ret_err_neg(char *s)
-{
-	ft_dprintf(2, "Error: %s\n", s);
-	return (-1);
-}
-
 static t_ex_ret	connect_according_to_af(char *addr, uint16_t port, int sock)
 {
 	struct sockaddr_in	sin;
@@ -40,35 +28,17 @@ static t_ex_ret	connect_according_to_af(char *addr, uint16_t port, int sock)
 	return (SUCCESS);
 }
 
-static char		*get_real_addr(char *addr)
-{
-	if (ft_strcmp(addr, "localhost") == 0)
-	{
-		if (g_addr_family == AF_INET6)
-			return (ft_strdup("::1"));
-		else
-			return (ft_strdup("127.0.0.1"));
-	}
-	return (ft_strdup(addr));
-}
-
 int				connect_to_server(char *addr, uint16_t port)
 {
 	int					sock;
 	struct protoent		*proto;
-	char				*real_addr;
 
-	if ((proto = getprotobyname("tcp")) == NULL)
-		return (ret_err_neg("During getprotobyname"));
+	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
+		return (print_and_return_neg(PROTOBYNAME_ERR));
 	if ((sock = socket((g_addr_family == AF_INET6 ? PF_INET6 : PF_INET),
 			SOCK_STREAM, proto->p_proto)) < 0)
-		return (ret_err_neg(SOCKET_ERR));
-	real_addr = get_real_addr(addr);
-	if (connect_according_to_af(real_addr, port, sock) == FAILURE)
-	{
-		free(real_addr);
+		return (print_and_return_neg(SOCKET_ERR));
+	if (connect_according_to_af(addr, port, sock) == FAILURE)
 		return (-1);
-	}
-	free(real_addr);
 	return (sock);
 }
