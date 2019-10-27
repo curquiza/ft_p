@@ -5,6 +5,7 @@
 # include <sys/socket.h>
 # include <netdb.h>
 # include <arpa/inet.h>
+# include <fcntl.h>
 
 # define OPTIONS			"6a"
 
@@ -30,6 +31,8 @@
 # define ARG_NB_ERR			"ERROR: Wrong number of argument."
 # define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
 # define DATA_CONN_ERR		"ERROR: Impossible to etablish data connection."
+# define OPEN_ERR			"ERROR: when opening file."
+# define READ_ERR			"ERROR: when reading file."
 
 # define HELP_USAGE			"help"
 # define QUIT_USAGE			"quit"
