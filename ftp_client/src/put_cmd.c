@@ -1,5 +1,18 @@
 #include "client.h"
 
+static int get_fd(char *input)
+{
+	int		fd;
+	char	**args;
+
+	args = ft_strsplit(input, ' ');
+	fd = open(args[1], O_RDONLY);
+	ft_tabdel(&args);
+	if (fd == -1)
+		return (print_and_return_neg(OPEN_ERR));
+	return (fd);
+}
+
 static void	send_stor_command_to_server(char *input)
 {
 	char	**args;
@@ -24,30 +37,22 @@ static t_ex_ret	send_file_to_server(int dt_client_sock, int fd)
 	return (SUCCESS);
 }
 
-static int get_fd(char *input)
-{
-	int		fd;
-	char	**args;
-
-	args = ft_strsplit(input, ' ');
-	fd = open(args[1], O_RDONLY);
-	ft_tabdel(&args);
-	if (fd == -1)
-		return (print_and_return_neg(OPEN_ERR));
-	return (fd);
-}
-
 static void manipulate_file(t_dt_socks dt, char *input, int fd)
 {
-	char		reply_buff[REPLY_MAX_SIZE];
+	char	reply_buff[REPLY_MAX_SIZE];
 
 	send_stor_command_to_server(input);
-	if (parse_and_display_reply(reply_buff) != 0
-		|| send_file_to_server(dt.client_sock, fd) == FAILURE)
+	if (parse_and_display_reply(reply_buff) != 0)
+	{
+		ft_printf("PUT command aborted.\n");
+		close_data_connection(&dt);
+		close(fd);
+		return ;
+	}
+	if (send_file_to_server(dt.client_sock, fd) == FAILURE)
 		ft_printf("PUT command aborted.\n");
 	close_data_connection(&dt);
-	if (fd > -1)
-		close(fd);
+	close(fd);
 	parse_and_display_reply(reply_buff);
 }
 
