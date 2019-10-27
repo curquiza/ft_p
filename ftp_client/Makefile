@@ -14,6 +14,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		cd_cmd.c \
 		ls_cmd.c \
 		put_cmd.c \
+		get_cmd.c \
 		help_cmd.c \
 		mode_cmd.c \
 		pass_cmd.c \

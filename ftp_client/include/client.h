@@ -32,6 +32,7 @@
 # define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
 # define DATA_CONN_ERR		"ERROR: Impossible to etablish data connection."
 # define OPEN_ERR			"ERROR: when opening file."
+# define CREATE_FILE_ERR	"ERROR: when creating new file."
 # define READ_ERR			"ERROR: when reading file."
 
 # define HELP_USAGE			"help"
@@ -54,7 +55,7 @@
 # define MODE_DES			"Display the current mode (active/passive)."
 # define PASS_DES			"On/off the passive mode."
 
-# define CMD_NB				8
+# define CMD_NB				9
 
 /*
 ** STRUCTURES
@@ -105,6 +106,7 @@ int			print_and_return_neg(char *str);
 t_bool		has_no_arg(char *input);
 t_bool		has_only_one_arg(char *input);
 t_bool		has_zero_or_one_arg(char *input);
+t_bool		has_one_or_two_args(char *input);
 
 t_ex_ret	activate_opt(char opt_letter);
 t_bool		opt_is_activated(char opt_letter);
@@ -131,6 +133,7 @@ t_ex_ret	communicate_with_server(void);
 void		help_cmd(char *input);
 void		ls_cmd(char *input);
 void		put_cmd(char *input);
+void		get_cmd(char *input);
 void		pass_cmd(char *input);
 void		mode_cmd(char *input);
 void		quit_cmd(char *input);
