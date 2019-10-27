@@ -5,6 +5,7 @@
 # include <sys/socket.h>
 # include <netdb.h>
 # include <arpa/inet.h>
+# include <fcntl.h>
 
 # define OPTIONS			"6a"
 
@@ -30,6 +31,8 @@
 # define ARG_NB_ERR			"ERROR: Wrong number of argument."
 # define REP_BAD_FORMAT_ERR	"ERROR: Reply bad formatted."
 # define DATA_CONN_ERR		"ERROR: Impossible to etablish data connection."
+# define OPEN_ERR			"ERROR: when opening file."
+# define READ_ERR			"ERROR: when reading file."
 
 # define HELP_USAGE			"help"
 # define QUIT_USAGE			"quit"
@@ -51,7 +54,7 @@
 # define MODE_DES			"Display the current mode (active/passive)."
 # define PASS_DES			"On/off the passive mode."
 
-# define CMD_NB				7
+# define CMD_NB				8
 
 /*
 ** STRUCTURES
@@ -127,6 +130,7 @@ t_ex_ret	communicate_with_server(void);
 
 void		help_cmd(char *input);
 void		ls_cmd(char *input);
+void		put_cmd(char *input);
 void		pass_cmd(char *input);
 void		mode_cmd(char *input);
 void		quit_cmd(char *input);

@@ -6,6 +6,7 @@ t_cmd	g_cmd_tab[CMD_NB] =
 	{ "cd", &cd_cmd, CD_USAGE, CD_DES },
 	{ "pwd", &pwd_cmd, PWD_USAGE, PWD_DES },
 	{ "ls", &ls_cmd, LS_USAGE, LS_DES },
+	{ "put", &put_cmd, PUT_USAGE, PUT_DES },
 	{ "mode", &mode_cmd, MODE_USAGE, MODE_DES },
 	{ "pass", &pass_cmd, PASS_USAGE, PASS_DES },
 	{ "quit", &quit_cmd, QUIT_USAGE, QUIT_DES },
