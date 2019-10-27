@@ -13,7 +13,7 @@ void	send_to_server(char *str)
 	ft_memmove(cmd, str, str_len);
 	cmd[str_len] = '\r';
 	cmd[str_len + 1] = '\n';
-	send(g_sock, cmd, str_len + 2, 0);
+	send(g_client.sock, cmd, str_len + 2, 0);
 	ft_printf("--> Sent to server : %s\n", str);
 	free(cmd);
 }

@@ -8,5 +8,6 @@ void		mode_cmd(char *input)
 		ft_printf("Usage: %s\n", MODE_USAGE);
 		return ;
 	}
-	ft_printf("Current mode: %s\n", (g_mode == ACTIVE ? "ACTIVE" : "PASSIVE"));
+	ft_printf("Current mode: %s\n",
+		(g_client.mode == ACTIVE ? "ACTIVE" : "PASSIVE"));
 }

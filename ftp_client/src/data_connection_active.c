@@ -6,7 +6,7 @@ static void	send_request_connection_to_server(uint16_t dt_port)
 	char		*tmp_int;
 	char		*tmp_res;
 
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 	{
 		tmp_int = ft_itoa(dt_port);
 		response = ft_strjoin3("EPRT |2|::|",
@@ -35,7 +35,7 @@ static int	accept_according_to_af(int dt_server_sock)
 	struct sockaddr_in6	dt_sin6;
 	int					dt_client_sock;
 
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 	{
 		if ((dt_client_sock = accept(dt_server_sock,
 			(struct sockaddr *)&dt_sin6, &dt_size)) < 0)

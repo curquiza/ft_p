@@ -5,8 +5,8 @@ static char		*get_addr(char **args)
 	int		i;
 	char	*final_addr;
 
-	if (g_addr_family == AF_INET6)
-		return (ft_strdup(g_addr));
+	if (g_client.addr_family == AF_INET6)
+		return (ft_strdup(g_client.addr));
 	final_addr = ft_strdup(args[0]);
 	i = 0;
 	while (final_addr[i])
@@ -23,7 +23,7 @@ static uint16_t	get_port(char **args)
 	uint16_t	addr;
 	int			tmp;
 
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 		return (ft_atoi(args[1]));
 	addr = 0;
 	tmp = ft_atoi(args[4]);
@@ -39,7 +39,7 @@ static t_ex_ret	connect_according_to_af(char *addr, uint16_t port, int sock)
 	struct sockaddr_in	sin;
 	struct sockaddr_in6	sin6;
 
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 	{
 		sin6.sin6_family = AF_INET6;
 		sin6.sin6_port = htons(port);
@@ -70,7 +70,7 @@ static int		connect_to_user(char *addr, uint16_t port)
 		ft_printf("%s\n", PROTOBYNAME_ERR);
 		return (-1);
 	}
-	if ((sock = socket(g_addr_family, SOCK_STREAM, proto->p_proto)) < 0)
+	if ((sock = socket(g_client.addr_family, SOCK_STREAM, proto->p_proto)) < 0)
 	{
 		ft_printf("%s\n", SOCKET_ERR);
 		return (-1);
@@ -89,7 +89,7 @@ t_ex_ret		etablish_data_connection_passive(t_dt_socks *dt)
 	// int			dt_client_sock;
 	char		*addr;
 
-	send_to_server(g_addr_family == AF_INET6 ? "EPSV" : "PASV");
+	send_to_server(g_client.addr_family == AF_INET6 ? "EPSV" : "PASV");
 	if (parse_and_display_reply(reply_buff) != 0
 		|| !(conn_args = get_connection_args_passive(reply_buff)))
 		return (print_and_return_failure(DATA_CONN_ERR));

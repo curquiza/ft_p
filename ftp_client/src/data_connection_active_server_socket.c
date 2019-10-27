@@ -5,7 +5,7 @@ t_ex_ret		bind_server(int sock, uint16_t port)
 	struct sockaddr_in	sin;
 	struct sockaddr_in6	sin6;
 
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 	{
 		sin6.sin6_family = AF_INET6;
 		sin6.sin6_port = htons(port);
@@ -51,7 +51,7 @@ static int	socket_according_to_af(void)
 	sock = -1;
 	if ((proto = getprotobyname(TCP_PROTONAME)) == NULL)
 		return (print_and_return_neg(PROTOBYNAME_ERR));
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 	{
 		if ((sock = socket(PF_INET6, SOCK_STREAM, proto->p_proto)) == -1)
 			return (print_and_return_neg(SOCKET_ERR));

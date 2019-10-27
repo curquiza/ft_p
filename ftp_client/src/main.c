@@ -22,7 +22,7 @@ static char		*get_real_addr(char *addr)
 {
 	if (ft_strcmp(addr, "localhost") == 0)
 	{
-		if (g_addr_family == AF_INET6)
+		if (g_client.addr_family == AF_INET6)
 			return (ft_strdup("::1"));
 		else
 			return (ft_strdup("127.0.0.1"));
@@ -48,9 +48,9 @@ static t_ex_ret	init(int argc, char **argv, uint16_t *port)
 		usage(argv[0]);
 		return (FAILURE);
 	}
-	g_mode = (opt_is_activated('a') == TRUE) ? ACTIVE : PASSIVE;
-	g_addr_family = (opt_is_activated('6') == TRUE) ? AF_INET6 : AF_INET;
-	g_addr = get_real_addr(argv[first_arg_index]);
+	g_client.mode = (opt_is_activated('a') == TRUE) ? ACTIVE : PASSIVE;
+	g_client.addr_family = (opt_is_activated('6') == TRUE) ? AF_INET6 : AF_INET;
+	g_client.addr = get_real_addr(argv[first_arg_index]);
 	signal(SIGINT, sigint_handler);
 	*port = get_port_uint16(argv[first_arg_index + 1]);
 	if (*port == 0)
@@ -77,7 +77,7 @@ int			main(int argc, char **argv)
 
 	if (init(argc, argv, &port) == FAILURE)
 		return (FAILURE);
-	if ((g_sock = connect_to_server(g_addr, port)) == -1)
+	if ((g_client.sock = connect_to_server(g_client.addr, port)) == -1)
 		return (FAILURE);
 	if (first_connection() == FAILURE)
 		return (FAILURE);

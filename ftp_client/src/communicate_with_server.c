@@ -50,8 +50,8 @@ static void	exec_cmd(char *input)
 static void	display_prompt(void)
 {
 	ft_printf(B_PINK"curqui_ftp "DEF);
-	if (g_current_path != NULL)
-		ft_printf(B_GREEN"%s "DEF, g_current_path);
+	if (g_client.current_path != NULL)
+		ft_printf(B_GREEN"%s "DEF, g_client.current_path);
 	ft_printf(B_PINK"$> "DEF);
 }
 
@@ -61,14 +61,14 @@ t_ex_ret	communicate_with_server(void)
 	int		ret;
 
 	input = NULL;
-	g_current_path = ft_strdup("/");
+	g_client.current_path = ft_strdup("/");
 	while (g_run == TRUE)
 	{
 		display_prompt();
 		ret = get_next_line(0, &input);
 		if (ret == -1)
 		{
-			free(g_current_path);
+			free(g_client.current_path);
 			return (ft_ret_err(READ_CMD_ERR));
 		}
 		else if (ret == 0)

@@ -8,14 +8,14 @@ void		pass_cmd(char *input)
 		ft_printf("Usage: %s\n", PASS_USAGE);
 		return ;
 	}
-	if (g_mode == ACTIVE)
+	if (g_client.mode == ACTIVE)
 	{
-		g_mode = PASSIVE;
+		g_client.mode = PASSIVE;
 		ft_printf("Passive mode ON\n");
 	}
 	else
 	{
-		g_mode = ACTIVE;
+		g_client.mode = ACTIVE;
 		ft_printf("Passive mode OFF\n");
 	}
 }
