@@ -76,15 +76,20 @@ typedef struct	s_dt_socks
 	int			client_sock;
 }				t_dt_socks;
 
+typedef struct	s_client_info
+{
+	int				sock;
+	char			*addr;
+	sa_family_t		addr_family;
+	t_mode			mode;
+	char			*current_path;
+}				t_client_info;
+
 /*
 ** GLOBALS
 */
+t_client_info	g_client;
 uint8_t			g_flags;
-sa_family_t		g_addr_family;
-t_mode			g_mode;
-int				g_sock;
-char			*g_addr;
-char			*g_current_path;
 t_bool			g_run;
 t_cmd			g_cmd_tab[CMD_NB];
 

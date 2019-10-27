@@ -5,8 +5,8 @@ static void	get_new_path(char *reply)
 	char	**reply_tab;
 	char	*new_path;
 
-	free(g_current_path);
-	g_current_path = NULL;
+	free(g_client.current_path);
+	g_client.current_path = NULL;
 	if (!reply || !reply[0])
 		return ;
 	reply_tab = ft_strsplit(reply, ' ');
@@ -16,10 +16,10 @@ static void	get_new_path(char *reply)
 	if (new_path[0] && new_path[0] == '"')
 	{
 		new_path[ft_strlen(new_path) - 1] = '\0';
-		g_current_path = ft_strdup(new_path + 1);
+		g_client.current_path = ft_strdup(new_path + 1);
 	}
 	else
-		g_current_path = ft_strdup(new_path);
+		g_client.current_path = ft_strdup(new_path);
 }
 
 void		pwd_cmd(char *input)

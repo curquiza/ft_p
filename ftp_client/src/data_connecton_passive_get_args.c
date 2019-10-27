@@ -66,7 +66,7 @@ char		**get_args_for_inet(char *cmd)
 
 char		**get_connection_args_passive(char *cmd)
 {
-	if (g_addr_family == AF_INET6)
+	if (g_client.addr_family == AF_INET6)
 		return (get_args_for_inet6(cmd));
 	return (get_args_for_inet(cmd));
 }
