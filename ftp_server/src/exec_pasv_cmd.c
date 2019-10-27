@@ -19,7 +19,7 @@ static void		send_pasv_response(t_user *user, int addr)
 	free(response);
 }
 
-static t_ex_ret		get_user_dt_port(t_user *user, int sock)
+static t_ex_ret	get_user_dt_port(t_user *user, int sock)
 {
 	struct sockaddr_in	sin;
 	uint16_t			port;
@@ -70,7 +70,7 @@ static int		create_server_socket_on_valid_port(t_user *user)
 	return (sock);
 }
 
-void		exec_pasv_cmd(t_user *user, char *cmd)
+void			exec_pasv_cmd(t_user *user, char *cmd)
 {
 	unsigned int		dt_size;
 	struct sockaddr_in	dt_sin;
