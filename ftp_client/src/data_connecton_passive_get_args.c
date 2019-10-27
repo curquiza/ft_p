@@ -28,7 +28,7 @@ static t_bool	args_are_valid(char **args)
 	return (TRUE);
 }
 
-char		**get_args_for_inet6(char *cmd)
+static char		**get_args_for_inet6(char *cmd)
 {
 	char	**conn_args;
 
@@ -42,7 +42,7 @@ char		**get_args_for_inet6(char *cmd)
 	return (conn_args);
 }
 
-char		**get_args_for_inet(char *cmd)
+static char		**get_args_for_inet(char *cmd)
 {
 	char	**conn_args;
 	char	**first_split;
@@ -64,7 +64,7 @@ char		**get_args_for_inet(char *cmd)
 	return (conn_args);
 }
 
-char		**get_connection_args_passive(char *cmd)
+char			**get_connection_args_passive(char *cmd)
 {
 	if (g_client.addr_family == AF_INET6)
 		return (get_args_for_inet6(cmd));

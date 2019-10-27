@@ -71,7 +71,7 @@ static t_ex_ret	first_connection(void)
 	return (SUCCESS);
 }
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	uint16_t	port;
 

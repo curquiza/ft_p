@@ -1,6 +1,6 @@
 #include "client.h"
 
-void		help_cmd(char *input)
+void	help_cmd(char *input)
 {
 	int		i;
 

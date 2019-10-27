@@ -1,6 +1,6 @@
 #include "server.h"
 
-static char		*get_ls_arg(t_user *user, char *cmd)
+static char	*get_ls_arg(t_user *user, char *cmd)
 {
 	char	**args;
 	int		size;

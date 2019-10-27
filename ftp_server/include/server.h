@@ -83,12 +83,12 @@ typedef struct	s_cmd
 	void		(*f)(t_user *user, char *cmd);
 }				t_cmd;
 
-typedef struct			s_chunk
+typedef struct	s_chunk
 {
 	int				size;
 	char			content[READ_BUFF];
 	struct s_chunk	*next;
-}						t_chunk;
+}				t_chunk;
 
 /*
 ** GLOBALS
@@ -113,6 +113,7 @@ void			usage(char *prgm);
 t_bool			is_dt_channel_open(t_user *user);
 t_bool			cmd_has_no_arg(t_user *user, char *cmd);
 int				ret_err_neg(char *s);
+t_ex_ret		print_and_return_failure(char *str);
 
 void			sigint_handler(int sig);
 void			sigchld_handler(int sig);
@@ -126,17 +127,23 @@ void			list_push_back(t_chunk **alst, t_chunk *new, t_chunk **end);
 t_chunk			*new_chunk(int size, char *content);
 char			*get_file_content(t_user *user, int *size);
 
+void			communicate_with_new_user(t_user *user);
 t_ex_ret		listen_to_clients(int server_sock);
+
+int				create_main_server_socket(uint16_t port);
 
 t_ex_ret		bind_server(int sock, uint16_t port);
 
 void			send_oneline_reply_to_user(t_user *user, char *str);
 
 void			exec_pasv_cmd(t_user *user, char *cmd);
+t_ex_ret		accept_according_to_af(t_user *user);
 void			exec_epsv_cmd(t_user *user, char *cmd);
+char			**port_get_arg_tab(char *cmd);
 void			exec_port_cmd(t_user *user, char *cmd);
 void			exec_eprt_cmd(t_user *user, char *cmd);
 void			exec_list_cmd(t_user *user, char *cmd);
+void			send_file(t_user *user, t_byte *ptr, int size);
 void			exec_retr_cmd(t_user *user, char *cmd);
 void			exec_stor_cmd(t_user *user, char *cmd);
 void			exec_pwd_cmd(t_user *user, char *cmd);

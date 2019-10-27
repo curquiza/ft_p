@@ -1,6 +1,6 @@
 #include "server.h"
 
-t_ex_ret		bind_server(int sock, uint16_t port)
+t_ex_ret	bind_server(int sock, uint16_t port)
 {
 	struct sockaddr_in	sin;
 	struct sockaddr_in6	sin6;

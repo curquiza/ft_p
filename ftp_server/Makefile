@@ -7,16 +7,21 @@ SRC_DIR = src
 SRC = $(addprefix $(SRC_DIR)/, \
 		options.c \
 		display_logs.c \
+		display_logs2.c \
 		misc.c \
 		misc_chunk_list.c \
 		signal.c \
 		close_connection.c \
+		communicate_with_new_user.c \
 		listen_to_clients.c \
+		exec_retr_cmd_send_file.c \
 		exec_retr_cmd.c \
 		exec_stor_cmd.c \
 		exec_pasv_cmd.c \
+		exec_epsv_cmd_accept.c \
 		exec_epsv_cmd.c \
 		exec_list_cmd.c \
+		exec_port_cmd_arg_tab.c \
 		exec_port_cmd.c \
 		exec_eprt_cmd.c \
 		exec_pwd_cmd.c \
@@ -26,6 +31,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		bind_server.c \
 		path_access.c \
 		send.c \
+		create_main_server_socket.c \
 		main.c)
 
 OBJ_DIR = obj

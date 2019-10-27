@@ -48,16 +48,16 @@ all : $(NAME)
 
 $(LIBFT) :
 	@make -C $(LIBFT_DIR)
-	@printf "%-45s\033[1;32m%s\033[0m\n" "Make $@" "OK"
+	@printf "%-50s\033[1;32m%s\033[0m\n" "Make $@" "OK"
 
 $(NAME) : $(LIBFT) $(OBJ)
 	@$(CC) $(OBJ) -o $@ $(LIBFT)
-	@printf "%-45s\033[1;32m%s\033[0m\n" "Make $@" "OK"
+	@printf "%-50s\033[1;32m%s\033[0m\n" "Make $@" "OK"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(H_DIR)
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(INCL) -c $< -o $@
-	@printf "%-45s\033[1;32m%s\033[0m\n" "Make $@" "OK"
+	@printf "%-50s\033[1;32m%s\033[0m\n" "Make $@" "OK"
 
 clean :
 	@rm -rf $(OBJ_DIR)

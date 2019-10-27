@@ -1,20 +1,20 @@
 #include "server.h"
 
-void	usage(char *prgm)
+void		usage(char *prgm)
 {
 	ft_printf("Usage: %s: ./server [-d6] <port>\n", prgm);
 	ft_printf("  -d : debug mode\n");
 	ft_printf("  -6 : IPv6\n");
 }
 
-t_bool	is_dt_channel_open(t_user *user)
+t_bool		is_dt_channel_open(t_user *user)
 {
 	if (user->dt_client_sock == -1)
 		return (FALSE);
 	return (TRUE);
 }
 
-t_bool	cmd_has_no_arg(t_user *user, char *cmd)
+t_bool		cmd_has_no_arg(t_user *user, char *cmd)
 {
 	char 	**args;
 	t_bool	ret;
@@ -30,8 +30,14 @@ t_bool	cmd_has_no_arg(t_user *user, char *cmd)
 	return (ret);
 }
 
-int		ret_err_neg(char *s)
+int			ret_err_neg(char *s)
 {
 	ft_printf("%s\n", s);
 	return (-1);
+}
+
+t_ex_ret	print_and_return_failure(char *str)
+{
+	print_debug_output(NULL, 0, str, NULL);
+	return (FAILURE);
 }

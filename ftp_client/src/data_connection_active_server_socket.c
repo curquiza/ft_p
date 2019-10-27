@@ -25,7 +25,7 @@ t_ex_ret		bind_server(int sock, uint16_t port)
 }
 
 
-static t_ex_ret		get_user_dt_port(uint16_t *dt_port, int sock)
+static t_ex_ret	get_user_dt_port(uint16_t *dt_port, int sock)
 {
 	uint16_t			port;
 
@@ -43,7 +43,7 @@ static t_ex_ret		get_user_dt_port(uint16_t *dt_port, int sock)
 }
 
 
-static int	socket_according_to_af(void)
+static int		socket_according_to_af(void)
 {
 	int					sock;
 	struct protoent		*proto;
@@ -64,7 +64,7 @@ static int	socket_according_to_af(void)
 	return (sock);
 }
 
-int		create_server_socket_on_valid_port(uint16_t *dt_port)
+int				create_server_socket_on_valid_port(uint16_t *dt_port)
 {
 	int					sock;
 

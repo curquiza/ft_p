@@ -14,7 +14,7 @@ static void		send_epsv_response(t_user *user, int addr)
 	free(response);
 }
 
-static t_ex_ret		get_user_dt_port(t_user *user, int sock)
+static t_ex_ret	get_user_dt_port(t_user *user, int sock)
 {
 	uint16_t			port;
 
@@ -33,7 +33,7 @@ static t_ex_ret		get_user_dt_port(t_user *user, int sock)
 	return (FAILURE);
 }
 
-static int	socket_according_to_af(void)
+static int		socket_according_to_af(void)
 {
 	int					sock;
 	struct protoent		*proto;
@@ -76,28 +76,7 @@ static int		create_server_socket_on_valid_port(t_user *user)
 	return (sock);
 }
 
-static t_ex_ret	accept_according_to_af(t_user *user)
-{
-	unsigned int		dt_size;
-	struct sockaddr_in	dt_sin;
-	struct sockaddr_in6	dt_sin6;
-
-	if (g_addr_family == AF_INET6)
-	{
-		if ((user->dt_client_sock = accept(user->dt_server_sock,
-			(struct sockaddr *)&dt_sin6, &dt_size)) < 0)
-			return (FAILURE);
-	}
-	else
-	{
-		if ((user->dt_client_sock = accept(user->dt_server_sock,
-			(struct sockaddr *)&dt_sin, &dt_size)) < 0)
-			return (FAILURE);
-	}
-	return (SUCCESS);
-}
-
-void		exec_epsv_cmd(t_user *user, char *cmd)
+void			exec_epsv_cmd(t_user *user, char *cmd)
 {
 	if (cmd_has_no_arg(user, cmd) == FALSE)
 		return ;
