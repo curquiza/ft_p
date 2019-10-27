@@ -1,6 +1,6 @@
 #include "client.h"
 
-static int get_fd(char *input)
+static int		get_fd(char *input)
 {
 	int		fd;
 	char	**args;
@@ -16,7 +16,7 @@ static int get_fd(char *input)
 	return (fd);
 }
 
-static void	send_retr_cmd_to_server(char *input)
+static void		send_retr_cmd_to_server(char *input)
 {
 	char	**args;
 	char	*cmd;
@@ -40,7 +40,7 @@ static t_ex_ret	get_file_from_server(int dt_client_sock, int fd)
 	return (SUCCESS);
 }
 
-static void manipulate_file(t_dt_socks dt, char *input, int fd)
+static void		manipulate_file(t_dt_socks dt, char *input, int fd)
 {
 	char	reply_buff[REPLY_MAX_SIZE];
 
@@ -59,7 +59,7 @@ static void manipulate_file(t_dt_socks dt, char *input, int fd)
 	parse_and_display_reply(reply_buff);
 }
 
-void		get_cmd(char *input)
+void			get_cmd(char *input)
 {
 	t_dt_socks	dt;
 	int			fd;

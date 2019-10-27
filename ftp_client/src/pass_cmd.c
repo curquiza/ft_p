@@ -1,6 +1,6 @@
 #include "client.h"
 
-void		pass_cmd(char *input)
+void	pass_cmd(char *input)
 {
 	if (has_no_arg(input) == FALSE)
 	{

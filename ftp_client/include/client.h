@@ -9,6 +9,7 @@
 
 # define OPTIONS			"6a"
 
+# define CMD_NB				9
 # define LISTEN_NB			40
 # define TCP_PROTONAME		"tcp"
 # define REPLY_MAX_SIZE		1000
@@ -35,27 +36,26 @@
 # define CREATE_FILE_ERR	"ERROR: when creating new file."
 # define READ_ERR			"ERROR: when reading file."
 
-# define HELP_USAGE			"help"
-# define QUIT_USAGE			"quit"
-# define CD_USAGE			"cd <path>"
-# define PWD_USAGE			"pwd"
-# define LS_USAGE			"ls [path]"
-# define GET_USAGE			"get <filename> [new_filename]"
-# define PUT_USAGE			"put <filename>"
-# define MODE_USAGE			"mode"
-# define PASS_USAGE			"pass"
+# define HELP_USAGE	"help"
+# define QUIT_USAGE	"quit"
+# define CD_USAGE	"cd <path>"
+# define PWD_USAGE	"pwd"
+# define LS_USAGE	"ls [path]"
+# define GET_USAGE	"get <filename> [new_filename]"
+# define PUT_USAGE	"put <filename>"
+# define MODE_USAGE	"mode"
+# define PASS_USAGE	"pass"
 
-# define HELP_DES			"Display all commands."
-# define QUIT_DES			"Close the connection and exit the client."
-# define CD_DES				"Change the current working directory on the server."
-# define PWD_DES			"Get the current working directory on the server."
-# define LS_DES				"Execute ls command."
-# define GET_DES			"Downlaod the file on the server."
-# define PUT_DES			"Upload the file on the server."
-# define MODE_DES			"Display the current mode (active/passive)."
-# define PASS_DES			"On/off the passive mode."
+# define HELP_DES	"Display all commands."
+# define QUIT_DES	"Close the connection and exit the client."
+# define CD_DES		"Change the current working directory on the server."
+# define PWD_DES	"Get the current working directory on the server."
+# define LS_DES		"Execute ls command."
+# define GET_DES	"Downlaod the file on the server."
+# define PUT_DES	"Upload the file on the server."
+# define MODE_DES	"Display the current mode (active/passive)."
+# define PASS_DES	"On/off the passive mode."
 
-# define CMD_NB				9
 
 /*
 ** STRUCTURES
@@ -100,44 +100,44 @@ t_cmd			g_cmd_tab[CMD_NB];
 /*
 ** FUNCTION PROTOTYPES
 */
-void		usage(char *prgm);
-t_ex_ret	print_and_return_failure(char *str);
-int			print_and_return_neg(char *str);
-t_bool		has_no_arg(char *input);
-t_bool		has_only_one_arg(char *input);
-t_bool		has_zero_or_one_arg(char *input);
-t_bool		has_one_or_two_args(char *input);
+void			usage(char *prgm);
+t_ex_ret		print_and_return_failure(char *str);
+int				print_and_return_neg(char *str);
+t_bool			has_no_arg(char *input);
+t_bool			has_only_one_arg(char *input);
+t_bool			has_zero_or_one_arg(char *input);
+t_bool			has_one_or_two_args(char *input);
 
-t_ex_ret	activate_opt(char opt_letter);
-t_bool		opt_is_activated(char opt_letter);
-int			get_all_options(int argc, char **argv);
+t_ex_ret		activate_opt(char opt_letter);
+t_bool			opt_is_activated(char opt_letter);
+int				get_all_options(int argc, char **argv);
 
-void		sigint_handler(int sig);
+void			sigint_handler(int sig);
 
-void		send_to_server(char *str);
+void			send_to_server(char *str);
 
-int			parse_and_display_reply(char *reply_buff);
+int				parse_and_display_reply(char *reply_buff);
 
-char		**get_connection_args_passive(char *cmd);
-t_ex_ret	etablish_data_connection_passive(t_dt_socks *dt);
+char			**get_connection_args_passive(char *cmd);
+t_ex_ret		etablish_data_connection_passive(t_dt_socks *dt);
 
-int			create_server_socket_on_valid_port(uint16_t *dt_port);
-t_ex_ret	etablish_data_connection_active(t_dt_socks *dt);
+int				create_server_socket_on_valid_port(uint16_t *dt_port);
+t_ex_ret		etablish_data_connection_active(t_dt_socks *dt);
 
-t_ex_ret	etablish_data_connection(t_dt_socks *dt);
-void		close_data_connection(t_dt_socks *dt);
+t_ex_ret		etablish_data_connection(t_dt_socks *dt);
+void			close_data_connection(t_dt_socks *dt);
 
-int			connect_to_server(char *addr, uint16_t port);
-t_ex_ret	communicate_with_server(void);
+int				connect_to_server(char *addr, uint16_t port);
+t_ex_ret		communicate_with_server(void);
 
-void		help_cmd(char *input);
-void		ls_cmd(char *input);
-void		put_cmd(char *input);
-void		get_cmd(char *input);
-void		pass_cmd(char *input);
-void		mode_cmd(char *input);
-void		quit_cmd(char *input);
-void		cd_cmd(char *input);
-void		pwd_cmd(char *input);
+void			help_cmd(char *input);
+void			ls_cmd(char *input);
+void			put_cmd(char *input);
+void			get_cmd(char *input);
+void			pass_cmd(char *input);
+void			mode_cmd(char *input);
+void			quit_cmd(char *input);
+void			cd_cmd(char *input);
+void			pwd_cmd(char *input);
 
 #endif
