@@ -4,6 +4,8 @@ School project.
 
 FTP client and server based on [RFC959](https://tools.ietf.org/html/rfc959) and [RFC2428](https://tools.ietf.org/html/rfc2428) (IPv6 extension).
 
+![FTP schema](misc/ftp.png)
+
 ## Compilation
 ```bash
 $> make
