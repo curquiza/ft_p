@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   listen_to_clients.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:28:39 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:28:40 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 t_cmd	g_cmd_tab[CMD_NB] =
@@ -56,9 +68,8 @@ t_ex_ret	listen_to_clients(int server_sock)
 	num = 1;
 	while (1)
 	{
-		ctrl_client_sock = accept(server_sock,
-			(struct sockaddr *)&client_sin, &client_size);
-		if (ctrl_client_sock < 0)
+		if ((ctrl_client_sock = accept(server_sock,
+			(struct sockaddr *)&client_sin, &client_size)) < 0)
 			return (ft_ret_err("During accept"));
 		if ((pid = fork()) < 0)
 			return (ft_ret_err("During fork"));

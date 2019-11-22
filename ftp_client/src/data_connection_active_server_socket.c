@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data_connection_active_server_socket.c             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 14:46:22 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 14:46:23 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "client.h"
 
 t_ex_ret		bind_server(int sock, uint16_t port)
@@ -24,7 +36,6 @@ t_ex_ret		bind_server(int sock, uint16_t port)
 	return (SUCCESS);
 }
 
-
 static t_ex_ret	get_user_dt_port(uint16_t *dt_port, int sock)
 {
 	uint16_t			port;
@@ -41,7 +52,6 @@ static t_ex_ret	get_user_dt_port(uint16_t *dt_port, int sock)
 	}
 	return (FAILURE);
 }
-
 
 static int		socket_according_to_af(void)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:24:01 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:24:04 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SERVER_H
 # define SERVER_H
 
@@ -54,7 +66,7 @@
 # define RES_550_1	"550 Requested action not taken."
 # define RES_550_2	"550 File unavailable."
 # define RES_550_3	"550 Not a directory."
-# define RES_550_4	"550 Requested action not taken. Too many clients connected."
+# define RES_550_4	"550 Requested action not taken. Too many clients."
 
 /*
 ** STRUCTURES

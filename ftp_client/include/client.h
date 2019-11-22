@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 14:45:37 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 14:45:39 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CLIENT_H
 # define CLIENT_H
 
@@ -55,7 +67,6 @@
 # define PUT_DES	"Upload the file on the server."
 # define MODE_DES	"Display the current mode (active/passive)."
 # define PASS_DES	"On/off the passive mode."
-
 
 /*
 ** STRUCTURES

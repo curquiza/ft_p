@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_stor_cmd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:28:28 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:28:29 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 static char		*get_stor_arg(t_user *user, char *cmd)
@@ -59,7 +71,7 @@ static t_ex_ret	write_content_into_new_file(int fd, char *content, int size)
 
 	size_written = 0;
 	ret = 0;
-	while(size_written < size)
+	while (size_written < size)
 	{
 		ret = write(fd, content, size - size_written);
 		if (ret == -1)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_retr_cmd_send_file.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:28:25 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:28:25 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 void		send_file(t_user *user, t_byte *ptr, int size)
@@ -11,7 +23,7 @@ void		send_file(t_user *user, t_byte *ptr, int size)
 	{
 		ret = send(user->dt_client_sock, ptr, size - total_send, 0);
 		if (ret == -1)
-			break;
+			break ;
 		total_send += ret;
 	}
 	if (ret == -1)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 14:46:36 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 14:46:37 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "client.h"
 
 static int		get_fd(char *input)
@@ -30,7 +42,7 @@ static void		send_retr_cmd_to_server(char *input)
 
 static t_ex_ret	get_file_from_server(int dt_client_sock, int fd)
 {
-	int	ret;
+	int		ret;
 	char	buff[READ_BUFF];
 
 	while ((ret = recv(dt_client_sock, buff, READ_BUFF, 0)) > 0)

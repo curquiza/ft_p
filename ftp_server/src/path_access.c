@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_access.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:29:00 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:29:01 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 static t_bool	path_is_in_server_folder(char *path)
@@ -72,7 +84,7 @@ char			*get_valid_path_from_user_input(char *path)
 	return (NULL);
 }
 
-char	*get_current_wd_in_server(void)
+char			*get_current_wd_in_server(void)
 {
 	char	*current_path;
 	char	*new_path;

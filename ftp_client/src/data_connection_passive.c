@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data_connection_passive.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 14:46:24 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 14:46:25 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "client.h"
 
 static char		*get_addr(char **args)
@@ -80,13 +92,11 @@ static int		connect_to_user(char *addr, uint16_t port)
 	return (sock);
 }
 
-
 t_ex_ret		etablish_data_connection_passive(t_dt_socks *dt)
 {
 	char		reply_buff[REPLY_MAX_SIZE];
 	char		**conn_args;
 	uint16_t	dt_port;
-	// int			dt_client_sock;
 	char		*addr;
 
 	send_to_server(g_client.addr_family == AF_INET6 ? "EPSV" : "PASV");

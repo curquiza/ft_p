@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_cwd_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:27:42 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:27:43 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 static t_bool	is_dir(char *path)
@@ -56,7 +68,7 @@ void			exec_cwd_cmd(t_user *user, char *cmd)
 		return ;
 	if (chdir(path) != 0)
 	{
-		print_debug_output(NULL, 0,CHDIR_ERR, NULL);
+		print_debug_output(NULL, 0, CHDIR_ERR, NULL);
 		send_oneline_reply_to_user(user, RES_451);
 	}
 	else

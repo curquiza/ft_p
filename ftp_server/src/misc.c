@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   misc.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:28:44 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:28:45 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 void		usage(char *prgm)
@@ -16,7 +28,7 @@ t_bool		is_dt_channel_open(t_user *user)
 
 t_bool		cmd_has_no_arg(t_user *user, char *cmd)
 {
-	char 	**args;
+	char	**args;
 	t_bool	ret;
 
 	args = ft_strsplit(cmd, ' ');

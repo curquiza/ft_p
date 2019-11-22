@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_file_content.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:28:36 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:28:37 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 /*
 ** Creates chunk linked list and returns total size
 ** Returns -1 if failure
 */
+
 static int	get_chunks_list(t_user *user, t_chunk **chunks)
 {
 	char		buff[READ_BUFF];
@@ -33,7 +46,7 @@ static char	*list_to_char(t_chunk *chunks, int tot_size)
 	if (rslt == NULL)
 		ft_exit(MALLOC_ERR, 1);
 	i = 0;
-	while(chunks)
+	while (chunks)
 	{
 		ft_memmove(rslt + i, chunks->content, chunks->size);
 		i += chunks->size;
@@ -44,7 +57,6 @@ static char	*list_to_char(t_chunk *chunks, int tot_size)
 
 char		*get_file_content(t_user *user, int *size)
 {
-
 	t_chunk		*chunks;
 	char		*file_content;
 

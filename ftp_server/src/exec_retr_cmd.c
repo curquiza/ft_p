@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_retr_cmd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: curquiza <curquiza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:28:21 by curquiza          #+#    #+#             */
+/*   Updated: 2019/11/22 12:28:22 by curquiza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 static t_bool	is_regfile(char *path)
@@ -47,7 +59,7 @@ static char		*get_retr_arg(t_user *user, char *cmd)
 	return (rslt);
 }
 
-static int	get_fd_for_transfer(t_user *user, char *cmd)
+static int		get_fd_for_transfer(t_user *user, char *cmd)
 {
 	char			*path;
 	int				fd;
