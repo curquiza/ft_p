@@ -67,6 +67,7 @@ static char		**get_args_for_inet(char *cmd)
 	}
 	first_split[1][ft_strlen(first_split[1]) - 1] = '\0';
 	conn_args = ft_strsplit(first_split[1], ',');
+	ft_tabdel(&first_split);
 	if (!conn_args || ft_tablen(conn_args) != 6
 		|| args_are_valid(conn_args) == FALSE)
 	{

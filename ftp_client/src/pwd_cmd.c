@@ -32,6 +32,7 @@ static void	get_new_path(char *reply)
 	}
 	else
 		g_client.current_path = ft_strdup(new_path);
+	ft_tabdel(&reply_tab);
 }
 
 void		pwd_cmd(char *input)
